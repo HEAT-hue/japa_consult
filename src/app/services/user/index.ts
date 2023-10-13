@@ -1,0 +1,1 @@
+export { useLazyGetUserProfileQuery } from "./userAPI";
