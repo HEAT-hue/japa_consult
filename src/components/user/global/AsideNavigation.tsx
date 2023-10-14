@@ -62,7 +62,7 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                     {/* Dashboard home page */}
                     <li className={`ease-in-out transition duration-500 hover:bg-[#a3fdc7]`}>
                         <NavLink
-                            to="/home"
+                            to="/"
                             onClick={closeNav}
                         >
                             {({ isActive }) => (

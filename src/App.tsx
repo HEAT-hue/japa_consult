@@ -22,7 +22,7 @@ export default function App() {
 
             {/* Only signed in users can access these routes */}
             <Route element={<UserLayout />}>
-              <Route path="/home" element={<p>This is the home page</p>} />
+              <Route path="/" element={<p>This is the home page</p>} />
               <Route path="/users" element={<p>This is the users page</p>} />
               <Route path="/messages" element={<p>This is the messages page</p>} />
               <Route path="/notes" element={<p>This is the notes page</p>} />

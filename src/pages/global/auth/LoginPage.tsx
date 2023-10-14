@@ -76,7 +76,7 @@ export const LoginPage: React.FC = () => {
 
         if (userInfo.role == USERROLES.USER) {
             // Direct User to Dashboard
-            navigate("/home")
+            navigate("/")
         }
 
         else {
