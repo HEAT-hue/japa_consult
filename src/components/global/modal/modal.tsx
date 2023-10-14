@@ -1,6 +1,6 @@
 // jshint esversion:6
 import { ReactNode, useEffect } from "react";
-import closeIconImg from "../../../../assets/images/dashboard/close.png";
+import closeIconImg from "@/assets/global/close.png";
 
 type ModalProps = {
     closeModal: () => void;

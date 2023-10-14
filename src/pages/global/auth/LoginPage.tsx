@@ -4,7 +4,6 @@ import slashEye from "@/assets/auth/eye-slash.svg"
 import AuthImg from "@/assets/auth/auth_img.png";
 import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
 import jwt_decode from "jwt-decode";
-import { LineLoader } from "@/components/global/loader";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,9 +13,10 @@ import { useState } from "react";
 // import { useAuthLoginHook } from "../../../../hooks/global/auth/authLoginHook";
 import { useAuthLoginHook } from "@/hooks/global/auth";
 import { AuthLoginResponse } from "@/data/global/auth";
-import { LoginTokenDecodeType } from "@/data/global/auth/auth";
+import { LoginTokenDecodeType, USERROLES } from "@/data/global/auth/auth";
 
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Create user Schema for form data
 const schema = z.object({
@@ -29,6 +29,9 @@ type FormData = z.infer<typeof schema>;
 
 
 export const LoginPage: React.FC = () => {
+
+    // Get Navigator
+    const navigate = useNavigate();
 
     // Hide or View password
     const [passwordShown, setPasswordShown] = useState<boolean>(true);
@@ -71,7 +74,15 @@ export const LoginPage: React.FC = () => {
             return;
         }
 
-        // Direct User to Dashboard
+        if (userInfo.role == USERROLES.USER) {
+            // Direct User to Dashboard
+            navigate("/home")
+        }
+
+        else {
+            alert("Admin Page coming soon!");
+        }
+
     };
 
     return (

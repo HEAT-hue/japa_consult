@@ -6,25 +6,40 @@ import { useLocation } from 'react-router-dom'
 import { LineLoader } from '../../loader'
 import { Modal } from '../..'
 import { Notification } from '../..'
+import { useEffect } from 'react'
 
 export const RequireAuth: React.FC = () => {
-
     // Get User previous location history
     const location = useLocation();
 
     // Check the store for any existing user? Return children routes : Direct them to login page
-    const { user } = useAppSelector((state) => state.auth)
+    const { token } = useAppSelector((state) => state.auth)
 
-    // Check if user is signed in
-    if (user == null) {
-        return <Navigate to="/login" state={{ from: location }} replace />
-    }
+    console.log(token);
 
     // Get user profile
     const { trigger: getUserProfile, result: getUserProfileResult } = useGetUserProfileHook()
 
-    // Fetch User Profile
-    getUserProfile();
+    useEffect(() => {
+
+        console.log(token);
+
+        if (!token) {
+            return;
+        }
+
+        // Fetch User Profile
+        // getUserProfile();
+
+    }, [token])
+
+    // Check if any token exists
+    if (token == null) {
+        console.log(token);
+        return <Navigate to="/login" state={{ from: location }} replace />
+    }
+
+    console.log(getUserProfileResult);
 
     // Display loader
     if (getUserProfileResult.isFetching) {

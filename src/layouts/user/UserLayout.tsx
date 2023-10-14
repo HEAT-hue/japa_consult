@@ -4,9 +4,9 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 import defaultAvatar from "@/assets/global/defaultAvatar.png";
 import { AsideNavigation } from "@/components/user";
-import { useAppSelector } from "@/hooks/typedHooks";
-import ProfileImage from "../assets/images/accounts/user.png";
-import { Link } from "react-router-dom";
+// import { useAppSelector } from "@/hooks/typedHooks";
+import ProfileImage from "@/assets/global/defaultAvatar.png";
+// import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export function UserLayout() {
@@ -42,7 +42,6 @@ export function UserLayout() {
                             src={defaultAvatar}
                             alt="profile pix"
                             className="w-full h-full hover:cursor-pointer rounded-full"
-                            onClick={() => navigateTo("/account")}
                         />
                     </div>
                 </nav>
@@ -57,7 +56,7 @@ export function UserLayout() {
 
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold absolute left-[50%] translate-x-[-50%]">
-                    {currentLocationPathname == "/trades" && "Trade History"}
+                    {currentLocationPathname == "/files" && "Files"}
                     {currentLocationPathname == "/giftcards" && "Sell Gift Card"}
                     {currentLocationPathname == "/wallets" && "Wallet"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
@@ -90,7 +89,7 @@ export function UserLayout() {
             </div >
 
             {/* Render Outlet, Each page */}
-            <div className="lg:ml-[14rem] mt-[67px]" onClick={() => setIsNavOpen(false)} >
+            <div className="px-7 lg:ml-[14rem] mt-[67px]" onClick={() => setIsNavOpen(false)} >
                 <Outlet />
             </div >
         </>

@@ -1,5 +1,5 @@
 // jshint esversion:6
-import LogoutIcon from "../../../assets/images/global/signout.png";
+import LogoutIcon from "@/assets/global/signout.png";
 
 type SignoutProps = {
     next: () => void
