@@ -12,6 +12,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { USERROLES } from "@/data/global/auth";
 
+import { useNavigate } from "react-router-dom";
+
 // Create user Schema for form data
 const schema = z.object({
     firstname: z.string().nonempty({ message: "First name is required" }),
@@ -27,6 +29,8 @@ type FormData = z.infer<typeof schema>;
 
 export const RegisterPage: React.FC = () => {
 
+    const navigate = useNavigate();
+
     // Hide or View password
     const [passwordShown, setPasswordShown] = useState<boolean>(true);
 
@@ -38,14 +42,17 @@ export const RegisterPage: React.FC = () => {
     const { authRegister, isError, isLoading: signUploading, } = useAuthRegisterHook()
 
     const onSubmit = async (data: FormData) => {
-        console.log(data);
-
+        
         // Register user
         const response = await authRegister({ firstname: data.firstname, lastname: data.lastname, phone: data.phone, email: data.email, password: data.password, role: USERROLES.USER });
 
         if (!response.success) {
             setErrorMessage(response.message ?? "Could not login!")
         }
+
+        // Navigate to login
+        navigate("/login");
+
     };
 
     return (
@@ -184,7 +191,7 @@ export const RegisterPage: React.FC = () => {
                                 >
                                     {signUploading ? "Loading..." : "Create Account"}
                                 </button>
-                                
+
                                 {/* Sign in */}
                                 <div className="mt-3 flex justify-start text-[14px]">
                                     <p className="font-Inter-Light">
