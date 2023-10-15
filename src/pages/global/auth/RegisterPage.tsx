@@ -26,7 +26,6 @@ const schema = z.object({
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
 
-
 export const RegisterPage: React.FC = () => {
 
     const navigate = useNavigate();
@@ -41,18 +40,19 @@ export const RegisterPage: React.FC = () => {
 
     const { authRegister, isError, isLoading: signUploading, } = useAuthRegisterHook()
 
+    // Register
     const onSubmit = async (data: FormData) => {
-        
+
         // Register user
         const response = await authRegister({ firstname: data.firstname, lastname: data.lastname, phone: data.phone, email: data.email, password: data.password, role: USERROLES.USER });
 
+        // Registration not successful
         if (!response.success) {
             setErrorMessage(response.message ?? "Could not login!")
         }
 
         // Navigate to login
         navigate("/login");
-
     };
 
     return (
@@ -67,11 +67,13 @@ export const RegisterPage: React.FC = () => {
                         </section>
 
                         <div className="p-9 pt-5 w-full max-w-[550px] h-[645px] relative">
+
                             {/* Image Container */}
                             <div className="flex justify-end">
                                 <img src={BrandLogo} alt="brand" />
                             </div>
 
+                            {/* Sign up page */}
                             <h1 className="mb-1 text-left lg:text-[40px] text-3xl font-Sora-Bold">
                                 Sign Up
                             </h1>

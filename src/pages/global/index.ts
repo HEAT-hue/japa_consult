@@ -1,1 +1,1 @@
-export { LoginPage, RegisterPage } from "./auth";
+export { LoginPage, RegisterPage, VerifyUserEmailPage } from "./auth";

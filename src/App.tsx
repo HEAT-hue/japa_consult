@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom"
 import { Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux"
 import { store } from "./app/store"
-import { LoginPage, RegisterPage } from "@/pages/global"
+import { LoginPage, RegisterPage, VerifyUserEmailPage } from "@/pages/global"
 import { FilesPage } from "@/pages/user";
 import { RequireAuth } from "@/components/global/auth/protectedRoute";
 import { UserLayout } from "@/layouts/user";
@@ -15,6 +15,8 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/auth/verifyEmail" element={<VerifyUserEmailPage />} />
+
 
           {/* User protected routes */}
           {/* Ensure user is signed in before accessing the protected routes */}

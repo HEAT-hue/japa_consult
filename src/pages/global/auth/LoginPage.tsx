@@ -4,6 +4,7 @@ import slashEye from "@/assets/auth/eye-slash.svg"
 import AuthImg from "@/assets/auth/auth_img.png";
 import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
 import jwt_decode from "jwt-decode";
+import { Modal, Notification } from "@/components/global";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,6 +34,9 @@ export const LoginPage: React.FC = () => {
     // Get Navigator
     const navigate = useNavigate();
 
+    // Verification Modal
+    const [verificationModalOpen, setVerificationModalOpen] = useState<boolean>(false);
+
     // Hide or View password
     const [passwordShown, setPasswordShown] = useState<boolean>(true);
 
@@ -47,6 +51,7 @@ export const LoginPage: React.FC = () => {
     const { authLogin, isError, isLoading: signInloading, } = useAuthLoginHook()
 
     const onSubmit = async (data: FormData) => {
+
         // Clear all errors
         setTokenError(false);
 
@@ -68,12 +73,21 @@ export const LoginPage: React.FC = () => {
         // Decode the Access token
         try {
             userInfo = jwt_decode(accessToken ?? "");
+            console.log(userInfo);
+
         } catch (error) {
             setTokenError(true);
             setErrorMessage("An error occurred while retreiving your details!");
             return;
         }
 
+        // Inform user if not verified
+        if (!userInfo.is_verified) {
+            setVerificationModalOpen(true);
+            return;
+        }
+
+        // Get USER Roles
         if (userInfo.role == USERROLES.USER) {
             // Direct User to Dashboard
             navigate("/")
@@ -182,6 +196,18 @@ export const LoginPage: React.FC = () => {
                     </div>
                 </section >
             </section >
+
+            {verificationModalOpen && (
+                <Modal closeModal={() => {
+                    setVerificationModalOpen(false);
+                }}>
+                    <Notification title="Info"
+                        desc={<p>A verification link has been sent to your email address, please cliclk on the link to verify your email.</p>}
+                        action={() => {
+                            setVerificationModalOpen(false);
+                        }} buttonTitle="Close" />
+                </Modal>
+            )}
         </>
     )
 }

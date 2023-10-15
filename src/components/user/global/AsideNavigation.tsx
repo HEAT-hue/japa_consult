@@ -5,8 +5,8 @@ import { useAppDispatch } from "@/hooks/typedHooks";
 import { AuthSliceActions } from "@/features/global/authSlice";
 import React, { useState } from "react";
 import { Modal } from "@/components/global";
-// import { Signout } from "@/assets/global/signout.png";
 import { Signout } from "@/components/global/SignOut";
+import { useAuthLogoutHook } from "@/hooks/global/auth";
 
 /* Nav links Icons */
 import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png";
@@ -20,12 +20,22 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
     // GET a navigator
     const navigate = useNavigate();
 
+    // Logout hook to invalidate token
+    const { authLogout, isLoading } = useAuthLogoutHook();
+
+    // Logout modal
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 
     const dispatch = useAppDispatch()
 
-    function logout() {
+    async function logout() {
+        // Clear all tokens in state
         dispatch(AuthSliceActions.logout());
+
+        // Invalidate token
+        await authLogout();
+
+        // Navigate to login page
         navigate("/login");
     }
 
@@ -174,7 +184,7 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
             {
                 isLogoutModalOpen && (
                     <Modal closeModal={() => setIsLogoutModalOpen(false)}>
-                        <Signout next={logout} cancel={() => setIsLogoutModalOpen(false)} />
+                        <Signout next={logout} cancel={() => setIsLogoutModalOpen(false)} loading={isLoading} />
                     </Modal>
                 )
             }

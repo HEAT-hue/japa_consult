@@ -21,12 +21,25 @@ export type AuthUserRegisterRequest = {
 }
 
 export type AuthUserRegisterResponse = {
-    "detail": string,
-    "details": string,
+    "detail"?: string,
+    "details"?: string,
     "status": USERSTATUS,
     "token": "string"
 }
 
 export type AuthSendEmailToken = {
     "mail": string
+}
+
+export type AuthVerifyEmailTokenRequest = {
+    token: string
+}
+
+export type AuthVerifyEmailTokenResponse = {
+    detail?: string,
+    msg?: string
+}
+
+export type AuthLogoutResponse = {
+    "msg": string
 }

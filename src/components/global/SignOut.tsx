@@ -2,11 +2,12 @@
 import LogoutIcon from "@/assets/global/signout.png";
 
 type SignoutProps = {
+    loading?: boolean
     next: () => void
     cancel?: () => void
 }
 
-export const Signout: React.FC<SignoutProps> = ({ next, cancel }) => {
+export const Signout: React.FC<SignoutProps> = ({ next, loading, cancel }) => {
 
     function nextAction() {
         next();
@@ -24,7 +25,7 @@ export const Signout: React.FC<SignoutProps> = ({ next, cancel }) => {
 
 
             <div className="flex justify-between">
-                <button className="py-3 w-[140px] bg-[#C93636] rounded font-bold text-white" onClick={nextAction}>Yes</button>
+                <button className="py-3 w-[140px] bg-[#C93636] rounded font-bold text-white" onClick={nextAction}>{loading ? "Loading" : "Yes"}</button>
                 <button className="py-3 w-[140px] rounded border-[1px] font-bold" onClick={cancel}>No</button>
             </div>
         </div>

@@ -1,6 +1,10 @@
 // jshint esversion:6
 import { emptySplitApi } from "../api";
-import { AuthLoginResponse, AuthUserRegisterRequest, AuthUserRegisterResponse, AuthSendEmailToken } from "../../../data/global/auth";
+import {
+    AuthLoginResponse, AuthUserRegisterRequest,
+    AuthUserRegisterResponse, AuthSendEmailToken,
+    AuthLogoutResponse, AuthVerifyEmailTokenRequest, AuthVerifyEmailTokenResponse
+} from "../../../data/global/auth";
 
 export const authAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -30,7 +34,21 @@ export const authAPI = emptySplitApi.injectEndpoints({
                 body: credentials,
             }),
         }),
+
+        // Send Email token
+        verifyEmailToken: builder.query<AuthVerifyEmailTokenResponse, AuthVerifyEmailTokenRequest>({
+            query: (params) => ({
+                url: 'auth/verifyEmail',
+                method: 'GET',
+                params
+            }),
+        }),
+
+        // Logout User
+        logout: builder.query<AuthLogoutResponse, void>({
+            query: () => ({ url: "auth/logout" }),
+        }),
     })
 })
 
-export const { useLoginMutation, useSignupMutation, useSendEmailTokenMutation } = authAPI
+export const { useLoginMutation, useSignupMutation, useSendEmailTokenMutation, useLazyLogoutQuery, useLazyVerifyEmailTokenQuery } = authAPI
