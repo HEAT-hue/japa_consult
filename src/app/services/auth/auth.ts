@@ -3,7 +3,9 @@ import { emptySplitApi } from "../api";
 import {
     AuthLoginResponse, AuthUserRegisterRequest,
     AuthUserRegisterResponse, AuthSendEmailToken,
-    AuthLogoutResponse, AuthVerifyEmailTokenRequest, AuthVerifyEmailTokenResponse
+    AuthLogoutResponse, AuthVerifyEmailTokenRequest,
+    AuthVerifyEmailTokenResponse, AuthChangePasswordRequest,
+    AuthChangePasswordResponse
 } from "../../../data/global/auth";
 
 export const authAPI = emptySplitApi.injectEndpoints({
@@ -35,12 +37,21 @@ export const authAPI = emptySplitApi.injectEndpoints({
             }),
         }),
 
-        // Send Email token
+        // Verify Email token
         verifyEmailToken: builder.query<AuthVerifyEmailTokenResponse, AuthVerifyEmailTokenRequest>({
             query: (params) => ({
                 url: 'auth/verifyEmail',
                 method: 'GET',
                 params
+            }),
+        }),
+
+        // Change Password
+        changePassword: builder.mutation<AuthChangePasswordResponse, AuthChangePasswordRequest>({
+            query: (credentials) => ({
+                url: 'auth/changePassword',
+                method: 'PATCH',
+                body: credentials,
             }),
         }),
 
@@ -51,4 +62,4 @@ export const authAPI = emptySplitApi.injectEndpoints({
     })
 })
 
-export const { useLoginMutation, useSignupMutation, useSendEmailTokenMutation, useLazyLogoutQuery, useLazyVerifyEmailTokenQuery } = authAPI
+export const { useLoginMutation, useSignupMutation, useSendEmailTokenMutation, useLazyLogoutQuery, useLazyVerifyEmailTokenQuery, useChangePasswordMutation } = authAPI

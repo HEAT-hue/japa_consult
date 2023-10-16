@@ -1,6 +1,7 @@
 import AuthImg from "@/assets/auth/auth_img.png";
-import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "@/utils/global";
 import { Modal } from "@/components/global";
 import { useAuthSendEmailTokenHook } from "@/hooks/global/auth";
@@ -19,14 +20,16 @@ const schema = z.object({
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
 
+// Timeout ID
+let timeoutId: any;
 
 export const PasswordResetRequestPage = () => {
 
     // GET navigator
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     // Define Error message
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     // Modal to display any error gotten from the User
     const [modalOpen, setModalOpen] = useState<boolean>(true);
@@ -35,23 +38,35 @@ export const PasswordResetRequestPage = () => {
     const { register, handleSubmit, formState: { errors, isValid: formValid } } = useForm<FormData>({ resolver: zodResolver(schema) });
 
     // Send Verification Link
-    const { authSendEmailToken, isLoading: isSendEmailTokenLoading, isError, isSuccess: isSendEmailTokenSuccess } = useAuthSendEmailTokenHook();
+    const { authSendEmailToken, isLoading: isSendEmailTokenLoading, isSuccess: isSendEmailTokenSuccess } = useAuthSendEmailTokenHook();
 
+    // Clear timeout upon component unmount
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutId);
+        }
+    }, [])
 
     // Submit from details to server and verify OTP
     async function RequestPasswordReset(userData: FormData) {
         try {
-            // Send OTP to user email
-            await authSendEmailToken(userData.email);
+            
+            // Send verification link to user email
+            const response = await authSendEmailToken(userData.email);
 
-            // Inform user of successful email verification link
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+
+            // Inform user of successful password verification link
             setModalOpen(true);
 
         } catch (error) {
-            // Enable Modal to display any possible error
-            setModalOpen(true);
             const errorData = getErrorMessage(error);
-            setErrorMessage(errorData)
+            setErrorMessage(errorData);
+            timeoutId = setTimeout(() => {
+                setErrorMessage(undefined);
+            }, 2000)
         }
     }
 
@@ -73,6 +88,12 @@ export const PasswordResetRequestPage = () => {
                         </section>
 
                         <div className="p-9 pt-12 w-full max-w-[550px] h-[645px] flex flex-col justify-center">
+
+                            {/*Brand Image Container */}
+                            <div className="fixed top-5 right-5">
+                                <img src={BrandLogo} alt="brand" />
+                            </div>
+
                             <h1 className="text-center lg:text-[40px] text-3xl font-CabinetGrotesk-Bold">
                                 Reset Password
                             </h1>
@@ -80,12 +101,6 @@ export const PasswordResetRequestPage = () => {
                             <p className="mt-4 text-[14px] lg:text-base text-center text-placeholder font-Manrope-Regular">
                                 Please provide your email address
                             </p>
-
-                            {
-                                isError && (
-                                    <p className="text-error text-sm">{errorMessage}</p>
-                                )
-                            }
 
                             <form className="w-full mt-12" onSubmit={handleSubmit(onSubmit)}>
 
@@ -99,6 +114,9 @@ export const PasswordResetRequestPage = () => {
                                             {errors?.email && (
                                                 <p className="text-sm text-red-700"> {errors?.email?.message}</p>
                                             )}
+                                            {
+                                                errorMessage && <span className="text-sm text-error">{errorMessage}</span>
+                                            }
                                         </div>
                                         <div className="h-[56px] lg:h-[60px]">
                                             <input
@@ -130,10 +148,15 @@ export const PasswordResetRequestPage = () => {
                 isSendEmailTokenSuccess && modalOpen && (
                     <Modal closeModal={() => {
                         setModalOpen(false)
+                        navigate("/login")
                     }}>
                         <Notification title="Export"
-                            desc={<p>A verification link has been sent to your email address. Click on the link to verify your email</p>}
-                            action={() => setModalOpen(false)} buttonTitle="Okay" />
+                            desc={<p>A password reset verification link has been sent to your email address. Click on the link to reset your password</p>}
+                            action={() => {
+                                setModalOpen(false);
+                                navigate("/login")
+                            }
+                            } buttonTitle="Okay" />
                     </Modal>
                 )
             }

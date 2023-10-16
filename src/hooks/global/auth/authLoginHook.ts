@@ -24,13 +24,9 @@ export const useAuthLoginHook = () => {
         try {
             const loginResponse = await login(formBody).unwrap();
             data = loginResponse;
-            console.log(loginResponse)
             success = true;
         } catch (error) {
-            console.log(error);
-            console.log(isError);
             message = (error as any)?.status == 404 ? "Invalid username or password" : getErrorMessage(error);
-            console.log(message);
         }
 
         return { success, message, data };

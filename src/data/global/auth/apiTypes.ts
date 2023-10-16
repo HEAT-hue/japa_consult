@@ -43,3 +43,12 @@ export type AuthVerifyEmailTokenResponse = {
 export type AuthLogoutResponse = {
     "msg": string
 }
+
+export type AuthChangePasswordRequest = {
+    "token": string,
+    "new_pwd": string
+}
+
+export type AuthChangePasswordResponse = {
+    detail: string
+}

@@ -119,6 +119,8 @@ export const LoginPage: React.FC = () => {
                             <h1 className="mb-1 text-left lg:text-[40px] text-3xl font-Sora-Bold">
                                 Sign In
                             </h1>
+
+                            {/* Welcome back */}
                             <p className="mb-1 text-[14px] lg:text-base text-left text-placeholder font-Inter-Regular">
                                 Welcome back
                             </p>
@@ -184,6 +186,7 @@ export const LoginPage: React.FC = () => {
                                     {signInloading ? "Signing in..." : "Sign In"}
                                 </button>
 
+                                {/* No account found! */}
                                 <div className="mt-3 flex justify-center text-[14px]">
                                     <p className="font-Inter-Light">
                                         Have an account?
@@ -202,7 +205,7 @@ export const LoginPage: React.FC = () => {
                     setVerificationModalOpen(false);
                 }}>
                     <Notification title="Info"
-                        desc={<p>A verification link has been sent to your email address, please cliclk on the link to verify your email.</p>}
+                        desc={<p>A verification link has been sent to your email address, please click on the link to verify your email.</p>}
                         action={() => {
                             setVerificationModalOpen(false);
                         }} buttonTitle="Close" />

@@ -21,6 +21,7 @@ const schema = z.object({
     phone: z.string().length(14).nonempty({ message: "Phone is required" }),
     email: z.string().nonempty({ message: "Email is required" }).email({ message: "Invalid email address" }),
     password: z.string().nonempty({ message: "Password is required" }),
+    confirmPassword: z.string().nonempty({ message: "Password is required" }),
 });
 
 // Extract inferred type from schema
@@ -33,11 +34,13 @@ export const RegisterPage: React.FC = () => {
     // Hide or View password
     const [passwordShown, setPasswordShown] = useState<boolean>(true);
 
+    // Error messages
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     /***************************** FORM VALIDATION ******************************/
     const { register, handleSubmit, formState: { errors, isValid: formValid } } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+    // Register user
     const { authRegister, isError, isLoading: signUploading, } = useAuthRegisterHook()
 
     // Register
