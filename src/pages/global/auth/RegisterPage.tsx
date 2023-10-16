@@ -20,9 +20,15 @@ const schema = z.object({
     lastname: z.string().nonempty({ message: "Last Name is required" }),
     phone: z.string().length(14).nonempty({ message: "Phone is required" }),
     email: z.string().nonempty({ message: "Email is required" }).email({ message: "Invalid email address" }),
-    password: z.string().nonempty({ message: "Password is required" }),
-    confirmPassword: z.string().nonempty({ message: "Password is required" }),
-});
+    password: z.string().nonempty({ message: "Password is required" })
+        .min(8, { message: "Password must be 8 or more characters long" })
+        .refine((value) => /[A-Z]/.test(value), 'String must contain at least one uppercase letter')
+        .refine((value) => /[a-z]/.test(value), 'String must contain at least one lower letter')
+        .refine((value) => /[0-9]/.test(value), 'String must contain at least a digit'),
+    confirmPassword: z.string().nonempty({ message: "Field cannot be empty" }),
+}).refine((data) => {
+    return data.password === data.confirmPassword
+}, { message: "Passwords do not match", path: ["confirmPassword"] });
 
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
@@ -33,6 +39,8 @@ export const RegisterPage: React.FC = () => {
 
     // Hide or View password
     const [passwordShown, setPasswordShown] = useState<boolean>(true);
+
+    const [confirmPasswordShown, setConfirmPasswordShown] = useState<boolean>(true);
 
     // Error messages
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
@@ -62,14 +70,14 @@ export const RegisterPage: React.FC = () => {
         <>
             <section className="flex items-center bg-gray-50">
                 <section className="flex-1 h-full max-h-full max-w-full mx-auto bg-white rounded-lg">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
+                    <div className="grid grwid-rows-1 grid-cols-1 lg:grid-cols-2 justify-items-center">
 
                         {/*Image Slider  */}
-                        <section className="w-full hidden lg:block relative max-h-screen overflow-hidden bg-brandColor">
+                        <section className="w-full hidden lg:block relative h-screen overflow-hidden bg-brandColor">
                             <img className="w-full h-screen min-h-[670px] max-w-full" src={RegisterAuthImg} alt="img" />
                         </section>
 
-                        <div className="p-9 pt-5 w-full max-w-[550px] h-[645px] relative">
+                        <div className="p-9 pt-5 w-full max-w-[550px] h-screen relative overflow-auto">
 
                             {/* Image Container */}
                             <div className="flex justify-end">
@@ -86,16 +94,20 @@ export const RegisterPage: React.FC = () => {
                                     Create an account in seconds
                                 </p>
 
+                                {/* Error creating accounts */}
                                 {isError && (
                                     <p className="text-error">{errorMessage}</p>
                                 )}
                             </div>
+
+
                             <form className="w-full mt-3" onSubmit={handleSubmit(onSubmit)}>
 
                                 {/* Form Container */}
                                 <div className="flex flex-col gap-y-3">
 
                                     <div className="grid grid-cols-2 gap-x-3">
+                                        
                                         {/* First Input */}
                                         <div className="flex flex-col gap-y-3">
                                             <div className="flex justify-between items-center text-base font-CabinetGrotesk-Medium">
@@ -185,6 +197,26 @@ export const RegisterPage: React.FC = () => {
                                             />
                                             <div className="absolute top-1/2 translate-y-[-50%] right-4 cursor-pointer" onClick={() => setPasswordShown(!passwordShown)}>
                                                 {passwordShown ? <img src={openEye} alt="password visible" /> : <img src={slashEye} alt="password visible" />}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Confirm password input */}
+                                    <div className="flex flex-col gap-y-3">
+                                        <div className="flex justify-between items-center">
+                                            {errors?.confirmPassword && (
+                                                <p className="text-sm text-red-700"> {errors?.confirmPassword?.message}</p>
+                                            )}
+                                        </div>
+                                        <div className="h-[56px] relative">
+                                            <input
+                                                {...register("confirmPassword")}
+                                                className="w-full h-full px-4 pr-6 py-1 bg-inputFieldBg rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-base font-Inter-Regular"
+                                                placeholder="Confirm Password"
+                                                type={confirmPasswordShown ? "text" : "password"}
+                                            />
+                                            <div className="absolute top-1/2 translate-y-[-50%] right-4 cursor-pointer" onClick={() => setConfirmPasswordShown(!confirmPasswordShown)}>
+                                                {confirmPasswordShown ? <img src={openEye} alt="password visible" /> : <img src={slashEye} alt="password visible" />}
                                             </div>
                                         </div>
                                     </div>

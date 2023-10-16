@@ -32,6 +32,8 @@ const schema = z.object({
     .refine((data) => {
         return data.password === data.confirmPassword
     }, { message: "Passwords do not match", path: ["confirmPassword"] });
+
+    
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
 
