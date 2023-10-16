@@ -31,13 +31,6 @@ export default function App() {
               <Route path="/notes" element={<p>This is the notes page</p>} />
               <Route path="/files" element={<FilesPage />} />
               <Route path="/invoice" element={<p>This is the invoice page</p>} />
-              {/* <Route path="/trades" element={<TradeHistoryPage />} />
-              <Route path="/trades/:id" element={<TradeHistoryPage />} />
-              <Route path="/transactions" element={<TransactionsPage />} />
-              <Route path="/account/*">
-                <Route index element={<AccountPage />} />
-                <Route path="report" element={<ReportPage />} />
-              </Route> */}
             </Route>
           </Route>
 

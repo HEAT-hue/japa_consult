@@ -24,7 +24,8 @@ export function UserLayout() {
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     return (
-        <>
+        <div className="grid grid-rows-1 h-screen">
+            
             {/******************** DESKTOP VIEW NAVIGATION *********************/}
             <header className="hidden sm:flex fixed top-0 inset-x-0 lg:left-[14rem] items-center pl-6 h-[60px] shadow-sm border-b-[1px] border-[#dcdcdc] bg-white z-[90]">
                 {/* Hamburger menu */}
@@ -32,6 +33,17 @@ export function UserLayout() {
                     onClick={() => setIsNavOpen(true)}
                 >
                     <HiBars3BottomLeft size={35} />
+                </div>
+
+                {/* Navigation title */}
+                <div className="font-bold text-[24px] font-CabinetGrotesk-Bold ml-9 lg:ml-0">
+                    {currentLocationPathname == "/files" && "Files"}
+                    {currentLocationPathname == "/giftcards" && "Sell Gift Card"}
+                    {currentLocationPathname == "/wallets" && "Wallet"}
+                    {currentLocationPathname == "/rate" && "Calculate Rate"}
+                    {currentLocationPathname == "/account" && "Accounts"}
+                    {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
+                    {currentLocationPathname == "/account/report" && "Report an Issue"}
                 </div>
 
                 {/* Navigation */}
@@ -89,9 +101,9 @@ export function UserLayout() {
             </div >
 
             {/* Render Outlet, Each page */}
-            <div className="px-7 lg:ml-[14rem] mt-[67px]" onClick={() => setIsNavOpen(false)} >
+            <div className="px-7 lg:ml-[14rem] mt-[60px] bg-[#F6F6F6]"  onClick={() => setIsNavOpen(false)} >
                 <Outlet />
             </div >
-        </>
+        </div>
     );
 }
