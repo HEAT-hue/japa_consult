@@ -1,14 +1,105 @@
 // jshint esversion:6
 import FolderAddIcon from "@/assets/global/folder-add.svg"
+import UploadFolderAddIcon from "@/assets/global/uploadfolder.svg"
+import CloseIcon from "@/assets/global/X.svg"
 import InfoIcon from "@/assets/global/info-circle.svg"
+import { useRef, ChangeEvent, useState } from "react"
+import { FOLDER_NAME } from "@/data/users/files"
 
-export const UserUploadFile: React.FC = () => {
+// Define accepted images format
+const imageMimeType = /image\/(png|jpg|jpeg)|text\/plain|^application\/(csv|pdf|msword|(vnd\.(ms-|openxmlformats-).*))/i;
+
+// MAx file upload
+const MAXFILEUPLOAD = 10;
+
+type UserUploadFileType = {
+    filesUploaded: File[],
+    setFilesUploaded: React.Dispatch<React.SetStateAction<File[]>>
+    action: (folderName: string) => void
+    loading: boolean
+}
+
+export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, setFilesUploaded, action, loading }) => {
+
+    // Folder name
+    const [folderName, setFolderName] = useState<FOLDER_NAME>(FOLDER_NAME.GENERAL);
+
+    // Ref for input element
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    // Change Handler
+    const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        // Alert users once if a wrong image type was selected
+        let fileError = false;
+
+        if (!e.target.files) return;
+
+        const imageFilesInput = e.target.files;
+
+        const imageFileArray: File[] = []
+
+        console.log(imageFileArray);
+
+        Array.from(imageFilesInput).forEach((file) => {
+            console.log(file);
+
+            console.log(file.type);
+
+            console.log(file.name)
+
+            if (!file.type.match(imageMimeType)) {
+                (!fileError && alert("A file of invalid mime type was selected and not uploaded!"));
+                fileError = true
+                return;
+            }
+
+            // File size
+            if (file.size > 5000000) {
+                (!fileError && alert("A file exceeding maxmimum size was selected and not uploaded!"));
+                fileError = true
+                return;
+            }
+
+            // Object.assign(file, { preview: URL.createObjectURL(file) })
+            imageFileArray.push(file)
+        })
+
+        // const file = e.target.files[0];
+        // Set the image files within the limit
+        setFilesUploaded((previousFiles: any[]) => [...previousFiles, ...imageFileArray.slice(0, (MAXFILEUPLOAD - previousFiles.length))]);
+    }
+
+    // Delete Image
+    function deleteImageHandler(index: number) {
+
+        // Delete File
+        const newFiles = filesUploaded.filter((_, fileIndex) => {
+            return fileIndex != index
+        })
+
+        // Update Files 
+        setFilesUploaded(newFiles);
+    }
+
+    // Image Picker
+    function selectImage() {
+        if (inputRef) {
+            inputRef.current?.click();
+        }
+        return;
+    }
+
     return (
         <>
             <h3 className="font-CabinetGrotesk-Bold">Upload File </h3>
+            {/* Input ref to upload file */}
+            <input ref={inputRef} className="hidden" id="inputImage" type="file" onChange={changeHandler} multiple />
 
             {/* Upload File */}
-            <div className="mt-3 flex items-center justify-center border-[1px] border-dashed border-[#DBDBDB] w-[300px] h-[200px] bg-[#F1F1F1] rounded">
+            <div
+                className="mt-3 flex items-center justify-center border-[1px] border-dashed border-[#DBDBDB] w-[300px] h-[200px] bg-[#F1F1F1] rounded cursor-pointer"
+                onClick={selectImage}
+            >
                 <div className="flex flex-col gap-y-2">
                     <img className="w-[50px] h-[50px] mx-auto" src={FolderAddIcon} alt="add File" />
                     <p className="text-sm text-center">Drag or drop your file or <span className="text-brandColor">click to Upload</span></p>
@@ -17,15 +108,43 @@ export const UserUploadFile: React.FC = () => {
             </div>
 
             <div className="mt-4 flex justify-between items-center">
-                <select name="folder" className="p-2 bg-white border-[1px] border-[#DBDBDB] rounded cursor-pointer">
-                    <option value="general">General</option>
-                    <option value="billing">Billing</option>
-                    <option value="academics">Academics</option>
-                    <option value="visa">Visa</option>
-                    <option value="Contract">Contract</option>
+                <select
+                    name="folder"
+                    className="p-2 bg-white border-[1px] border-[#DBDBDB] rounded cursor-pointer"
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                        setFolderName(e.target.value as FOLDER_NAME)
+                    }}
+                >
+                    <option value={FOLDER_NAME.GENERAL} selected>General</option>
+                    <option value={FOLDER_NAME.BILLING} >Billing</option>
+                    <option value={FOLDER_NAME.ACADMEMICS} >Academics</option>
+                    <option value={FOLDER_NAME.VISA} >Visa</option>
+                    <option value={FOLDER_NAME.CONTRACT} >Contract</option>
                 </select>
-                <p className="flex gap-x-2 justify-end text-sm"><img src={InfoIcon} alt="info" /> <span>Maximum size: 10MB</span></p>
+                <p className="flex gap-x-2 justify-end text-sm"><img src={InfoIcon} alt="info" /> <span>Maximum size: 5MB</span></p>
             </div>
+
+            <div className="flex flex-col gap-y-2 mt-3">
+                {
+                    filesUploaded.map((file: File, index) => {
+                        return (
+                            <div key={index} className="flex items-center p-2 bg-[#FBF4E4] rounded">
+                                <img className="mr-3" src={UploadFolderAddIcon} alt="file" />
+                                <span className="text-sm">{file.name}</span>
+                                <img src={CloseIcon} alt="close" onClick={() => deleteImageHandler(index)} className="ml-auto cursor-pointer" />
+                            </div>
+                        )
+                    })
+                }
+            </div>
+
+            {
+                filesUploaded.length > 0 && (
+                    <div className="flex justify-end mt-3">
+                        <button onClick={() => action(folderName)} className="font-Inter-Bold bg-brandColor text-white py-2 px-3 rounded">{loading ? "Loading" : "Upload"}</button>
+                    </div>
+                )
+            }
         </>
     )
 }
