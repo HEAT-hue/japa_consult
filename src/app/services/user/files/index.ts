@@ -1,1 +1,1 @@
-export { useUploadFileMutation } from "./fileAPI";
+export { useUploadFileMutation, useGetFileQuery } from "./fileAPI";

@@ -7,15 +7,32 @@ import React, { useState } from "react";
 import { Modal } from "@/components/global";
 import { Signout } from "@/components/global/SignOut";
 import { useAuthLogoutHook } from "@/hooks/global/auth";
+// import { useLocation } from "react-router-dom";
 
 /* Nav links Icons */
 import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png";
+import HomeIcon from "@/assets/global/home.svg";
+import HomeIconDark from "@/assets/global/homeDark.svg";
+import UsersIcon from "@/assets/global/people.svg";
+// import UsersIconDark from "@/assets/global/peopleDark.svg";
+import MessagesIcon from "@/assets/global/messages-3.svg"
+import MessagesIconDark from "@/assets/global/messagesDark.svg"
+import NotesIcon from "@/assets/global/edit.svg";
+import NotesIconDark from "@/assets/global/editDark.svg";
+import FileIcon from "@/assets/global/folderIcon.svg"
+import FileIconDark from "@/assets/global/nav-folder-add.svg"
+import InvoiceIcon from "@/assets/global/receipt-2.svg";
+// import InvoiceIconDark from "@/assets/global/document-textDark.svg";
+import LogoutIcon from "@/assets/global/logout.svg";
 
 type AsideNavigationProps = {
     closeNav: () => void
 }
 
 export function AsideNavigation({ closeNav }: AsideNavigationProps) {
+
+    // Get the location
+    // const location = useLocation();
 
     // GET a navigator
     const navigate = useNavigate();
@@ -35,6 +52,9 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
         // Invalidate token
         await authLogout();
 
+        // Reload doc
+        window.location.reload();
+
         // Navigate to login page
         navigate("/login");
     }
@@ -42,7 +62,7 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
     return (
         <>
             <aside
-                className={`w-full h-full bg-SideNav pt-[30px] relative font-CabinetGrotesk-Bold`}
+                className={`w-full h-full bg-white pt-[30px] relative font-CabinetGrotesk-Bold`}
                 aria-label="Sidebar"
             >
                 {/* Navigation Logo and Close Icon */}
@@ -67,17 +87,17 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                 </div>
 
                 {/* NavLinks */}
-                <ul className="font-medium transition duration-500 flex flex-col space-y-3 sm:space-y-2 mx-auto pt-5">
+                <ul className="font-medium transition duration-500 flex flex-col space-y-3 sm:space-y-2 mx-auto pt-5 px-5">
 
                     {/* Dashboard home page */}
-                    <li className={`ease-in-out transition duration-500 hover:bg-[#a3fdc7]`}>
+                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/"
                             onClick={closeNav}
                         >
                             {({ isActive }) => (
-                                <div className={`flex py-[18px] pl-[14%] sm:justify-start text-brandColor ease-in-out transition duration-500 ${isActive && "bg-[#C3F99F] border-l-[6px] border-brandColor "}`}>
-                                    {/* <img src={isActive ? DashboardIconDark : DashboardIcon} alt="home page" /> */}
+                                <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
+                                    <img src={isActive ? HomeIconDark : HomeIcon} alt="home page" />
                                     <span className="pl-3">Home</span>
                                 </div>
                             )}
@@ -85,16 +105,14 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                     </li>
 
                     {/* Users page */}
-                    <li className={`ease-in-out transition duration-500 hover:bg-[#a3fdc7]`}>
+                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/users"
-                            onClick={() => {
-                                closeNav();
-                            }}
+                            onClick={closeNav}
                         >
                             {({ isActive }) => (
-                                <div className={`flex py-[18px] pl-[14%] sm:justify-start text-brandColor ease-in-out transition duration-500 ${isActive && "bg-[#C3F99F] border-l-[6px] border-brandColor "}`}>
-                                    {/* <img src={isActive ? SellGiftCardsIconDark : SellGiftCardsIcon} alt="Sell gift card page" /> */}
+                                <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
+                                    <img src={isActive ? UsersIcon : UsersIcon} alt="user page" />
                                     <span className="pl-3">Users</span>
                                 </div>
                             )}
@@ -102,79 +120,72 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                     </li>
 
                     {/* Messages */}
-                    <li className={`ease-in-out transition duration-500 hover:bg-[#a3fdc7]`}>
+                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/messages"
                             onClick={closeNav}
                         >
-
                             {({ isActive }) => (
-                                <div className={`flex py-[18px] pl-[14%] sm:justify-start text-brandColor ease-in-out transition duration-500 ${isActive && "bg-[#C3F99F] border-l-[6px] border-brandColor "}`}>
-                                    {/* <img src={isActive ? TradeHistoryIconDark : TradeHistoryIcon} alt="Trade Histroy" /> */}
+                                <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
+                                    <img src={isActive ? MessagesIconDark : MessagesIcon} alt="msg page" />
                                     <span className="pl-3">Messages</span>
                                 </div>
                             )}
-
                         </NavLink>
                     </li>
 
                     {/* Notes */}
-                    <li className={`ease-in-out transition duration-500 hover:bg-[#a3fdc7]`}>
+                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/notes"
                             onClick={closeNav}
                         >
                             {({ isActive }) => (
-                                <div className={`flex py-[18px] pl-[14%] sm:justify-start text-brandColor ease-in-out transition duration-500 ${isActive && "bg-[#C3F99F] border-l-[6px] border-brandColor "}`}>
-                                    {/* <img src={isActive ? TransactionsIconDark : TransactionsIcon} alt="Wallet" /> */}
+                                <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
+                                    <img src={isActive ? NotesIconDark : NotesIcon} alt="msg page" />
                                     <span className="pl-3">Notes</span>
                                 </div>
                             )}
-
                         </NavLink>
                     </li>
 
                     {/* Files */}
-                    <li className={`ease-in-out transition duration-500 hover:bg-[#a3fdc7]`}>
+                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/files"
                             onClick={closeNav}
                         >
-
                             {({ isActive }) => (
-                                <div className={`flex py-[18px] pl-[14%] sm:justify-start text-brandColor ease-in-out transition duration-500 ${isActive && "bg-[#C3F99F] border-l-[6px] border-brandColor "}`}>
-                                    {/* <img src={isActive ? CalculateRateIconDark : CalculateRateIcon} alt="Calculate rate" /> */}
+                                <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
+                                    <img src={isActive ? FileIcon : FileIconDark} alt="msg page" />
                                     <span className="pl-3">Files</span>
                                 </div>
                             )}
-
                         </NavLink>
                     </li>
 
                     {/* Invoice */}
-                    <li className={`ease-in-out transition duration-500 hover:bg-[#a3fdc7]`}>
+                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/invoice"
                             onClick={closeNav}
                         >
-
                             {({ isActive }) => (
-                                <div className={`flex py-[18px] pl-[14%] sm:justify-start text-brandColor ease-in-out transition duration-500 ${isActive && "bg-[#C3F99F] border-l-[6px] border-brandColor "}`}>
-                                    {/* <img src={isActive ? CalculateRateIconDark : CalculateRateIcon} alt="Calculate rate" /> */}
+                                <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
+                                    <img src={isActive ? InvoiceIcon : InvoiceIcon} alt="msg page" />
                                     <span className="pl-3">Invoice</span>
                                 </div>
                             )}
-
                         </NavLink>
                     </li>
 
                     {/* Logout */}
                     <li
-                        className={`relative top-7 flex py-[18px] pl-[15%] cursor-pointer`}
+                        className={`relative top-5 flex py-[18px] pl-[15%] cursor-pointer`}
                         onClick={() => { closeNav(); setIsLogoutModalOpen(true) }}
                     >
-                        {/* <img src={LogoutIcon} alt="Log out" /> */}
-                        <p className="flex whitespace-nowrap pl-3 text-[#C93636]  font-[600]">Sign Out</p>
+                        <img src={LogoutIcon} className="w-[20px] h-[20px]" alt="Log out" />
+                        <p className="flex whitespace-nowrap pl-3 text-[#C93636]  font-[600]">Log Out</p>
                     </li>
 
                 </ul>

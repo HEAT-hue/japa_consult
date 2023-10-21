@@ -38,7 +38,7 @@ export function UserLayout() {
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold ml-9 lg:ml-0">
                     {currentLocationPathname == "/files" && "Files"}
-                    {currentLocationPathname == "/giftcards" && "Sell Gift Card"}
+                    {currentLocationPathname == "/notes" && "Notes"}
                     {currentLocationPathname == "/wallets" && "Wallet"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}
@@ -69,7 +69,7 @@ export function UserLayout() {
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold absolute left-[50%] translate-x-[-50%]">
                     {currentLocationPathname == "/files" && "Files"}
-                    {currentLocationPathname == "/giftcards" && "Sell Gift Card"}
+                    {currentLocationPathname == "/notes" && "Notes"}
                     {currentLocationPathname == "/wallets" && "Wallet"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}
@@ -101,7 +101,7 @@ export function UserLayout() {
             </div >
 
             {/* Render Outlet, Each page */}
-            <div className="px-7 lg:ml-[14rem] mt-[60px] bg-[#F6F6F6]"  onClick={() => setIsNavOpen(false)} >
+            <div className="px-7 lg:ml-[14rem] mt-[60px] overflow-scroll bg-[#F6F6F6]"  onClick={() => setIsNavOpen(false)} >
                 <Outlet />
             </div >
         </div>

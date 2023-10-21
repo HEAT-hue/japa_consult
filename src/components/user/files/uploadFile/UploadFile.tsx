@@ -38,14 +38,7 @@ export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, se
 
         const imageFileArray: File[] = []
 
-        console.log(imageFileArray);
-
         Array.from(imageFilesInput).forEach((file) => {
-            console.log(file);
-
-            console.log(file.type);
-
-            console.log(file.name)
 
             if (!file.type.match(imageMimeType)) {
                 (!fileError && alert("A file of invalid mime type was selected and not uploaded!"));
@@ -54,7 +47,7 @@ export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, se
             }
 
             // File size
-            if (file.size > 5000000) {
+            if (file.size > 3000000) {
                 (!fileError && alert("A file exceeding maxmimum size was selected and not uploaded!"));
                 fileError = true
                 return;

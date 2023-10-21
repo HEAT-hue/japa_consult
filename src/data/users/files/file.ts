@@ -5,3 +5,10 @@ export enum FOLDER_NAME {
     VISA = 'visa',
     CONTRACT = 'contract'
 }
+
+export type FileResponseType = {
+    "file_id": string,
+    "name": string,
+    "file_url": string,
+    "folder": string
+}

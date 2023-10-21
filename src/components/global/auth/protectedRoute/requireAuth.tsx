@@ -15,14 +15,10 @@ export const RequireAuth: React.FC = () => {
     // Check the store for any existing user? Return children routes : Direct them to login page
     const { token } = useAppSelector((state) => state.auth)
 
-    console.log(token);
-
     // Get user profile
     const { trigger: getUserProfile, result: getUserProfileResult } = useGetUserProfileHook()
 
     useEffect(() => {
-
-        console.log(token);
 
         if (!token) {
             return;
@@ -38,8 +34,6 @@ export const RequireAuth: React.FC = () => {
         console.log(token);
         return <Navigate to="/login" state={{ from: location }} replace />
     }
-
-    console.log(getUserProfileResult);
 
     // Display loader
     if (getUserProfileResult.isFetching) {

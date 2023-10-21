@@ -1,6 +1,6 @@
 // jshint esversion:6
 import { emptySplitApi } from "../../api";
-import { UploadUserFileRequest, UploadUserFileResponse } from "@/data/users/files";
+import { UploadUserFileRequest, UploadUserFileResponse, GetFilesRequest, GetFilesResponse } from "@/data/users/files";
 
 export const fileAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -14,7 +14,14 @@ export const fileAPI = emptySplitApi.injectEndpoints({
             }),
         }),
 
+        // Get USER FILE
+        getFile: builder.query<GetFilesResponse, GetFilesRequest>({
+            query: (params) => ({
+                url: `documents/myfiles`,
+                params,
+            }),
+        }),
     })
 })
 
-export const { useUploadFileMutation } = fileAPI
+export const { useUploadFileMutation, useGetFileQuery } = fileAPI
