@@ -13,7 +13,7 @@ import { useAuthLogoutHook } from "@/hooks/global/auth";
 import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png";
 import HomeIcon from "@/assets/global/home.svg";
 import HomeIconDark from "@/assets/global/homeDark.svg";
-import UsersIcon from "@/assets/global/people.svg";
+// import UsersIcon from "@/assets/global/people.svg";
 // import UsersIconDark from "@/assets/global/peopleDark.svg";
 import MessagesIcon from "@/assets/global/messages-3.svg"
 import MessagesIconDark from "@/assets/global/messagesDark.svg"
@@ -105,7 +105,7 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                     </li>
 
                     {/* Users page */}
-                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
+                    {/* <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/users"
                             onClick={closeNav}
@@ -117,7 +117,7 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                                 </div>
                             )}
                         </NavLink>
-                    </li>
+                    </li> */}
 
                     {/* Messages */}
                     <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>

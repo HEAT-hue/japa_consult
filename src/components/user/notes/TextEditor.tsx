@@ -1,9 +1,11 @@
 // jshint esversion:6
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import 'quill/dist/quill.snow.css';
 import "./style.css";
 import ReactQuill from 'react-quill'
 import { NoteDataType } from "@/pages/user/notes/CreateNotePage";
+import { Notification } from "@/components/global";
+import { Modal } from "@/components/global";
 
 // Build the Customized module:
 let modules = {
@@ -45,6 +47,8 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
 
     const { isNoteSaveLoading } = NoteAPIProps
 
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
     const handleProcedureContentChange = (content: string) => {
         setNoteData((prev) => ({ ...prev, content }))
     };
@@ -57,10 +61,10 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
         <>
             <div className="flex justify-end gap-x-3 my-[0.6rem]">
                 {/* Save Document */}
-                <button onClick={saveNote} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving" : "Save"}</button>
+                <button onClick={saveNote} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving..." : "Save"}</button>
 
                 {/* Submit document */}
-                <button className="bg-brandColor text-white text-sm px-4 py-2 rounded">Submit</button>
+                <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setModalOpen(true)}>Submit</button>
             </div>
 
             {/* Note Editor */}
@@ -84,6 +88,12 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
                 />
 
             </div>
+
+            {modalOpen && (
+                <Modal closeModal={() => setModalOpen(false)}>
+                    <Notification title="Info" action={() => setModalOpen(false)} buttonTitle="Close" desc={<p>This feature is currently under development.</p>} />
+                </Modal>
+            )}
         </>
     )
 }

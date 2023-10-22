@@ -8,12 +8,14 @@ import { AsideNavigation } from "@/components/user";
 import ProfileImage from "@/assets/global/defaultAvatar.png";
 // import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export function UserLayout() {
 
     // Get Location
     const location = useLocation();
     const currentLocationPathname = location.pathname;
+    console.log(currentLocationPathname.substring(0,11))
 
     // profile image selector from the state
     // const { userProfile } = useAppSelector((state) => state.auth);
@@ -37,8 +39,18 @@ export function UserLayout() {
 
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold ml-9 lg:ml-0">
+                    {currentLocationPathname == "/" && "Home"}
+                    {currentLocationPathname == "/messages" && "Messages"}
                     {currentLocationPathname == "/files" && "Files"}
+                    {currentLocationPathname.substring(0, 11) == '/files/file' && (
+                        <div className="flex gap-x-3">
+                            <Link to="/files">File</Link>
+                            <span>&gt;</span>
+                            <span className="capitalize">{currentLocationPathname.substring(12).toLowerCase()}</span>
+                        </div>
+                    )}
                     {currentLocationPathname == "/notes" && "Notes"}
+                    {currentLocationPathname == "/notes/create" && "Notes"}
                     {currentLocationPathname == "/wallets" && "Wallet"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}
@@ -68,8 +80,19 @@ export function UserLayout() {
 
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold absolute left-[50%] translate-x-[-50%]">
+                    {currentLocationPathname == "/" && "Home"}
+                    {currentLocationPathname == "/messages" && "Messages"}
                     {currentLocationPathname == "/files" && "Files"}
+                    {currentLocationPathname == "/files/file" && "Files"}
+                    {currentLocationPathname.substring(0, 11) == '/files/file' && (
+                        <div className="flex gap-x-3">
+                            <Link to="/files">File</Link>
+                            <span>&gt;</span>
+                            <span className="capitalize">{currentLocationPathname.substring(12).toLowerCase()}</span>
+                        </div>
+                    )}
                     {currentLocationPathname == "/notes" && "Notes"}
+                    {currentLocationPathname == "/notes/create" && "Notes"}
                     {currentLocationPathname == "/wallets" && "Wallet"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}

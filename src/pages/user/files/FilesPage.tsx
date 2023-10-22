@@ -5,8 +5,16 @@ import { useState } from "react";
 import { Modal } from "@/components/global";
 import { useUploadFileHook } from "@/hooks/user";
 import { Notification } from "@/components/global";
+import { useGetFilesHook } from "@/hooks/user/files";
 
 export const FilesPage: React.FC = () => {
+
+    // Fetch all folders
+    // Get files hook
+    const { data: generalFolder, } = useGetFilesHook({ folderName: "general" })
+    const { data: billingFolder, } = useGetFilesHook({ folderName: "billing" })
+    const { data: visaFolder, } = useGetFilesHook({ folderName: "visa" })
+    const { data: contractFolder, } = useGetFilesHook({ folderName: "contract" })
 
     // Upload success
     const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
@@ -42,14 +50,14 @@ export const FilesPage: React.FC = () => {
     return (
         <div className="pt-3">
 
-            <div className="flex flex-col-reverse md:flex-row justify-between gap-5 ">   
+            <div className="flex flex-col-reverse md:flex-row justify-between gap-5 ">
                 {/* Folder container */}
                 <div className="flex flex-wrap gap-5">
-                    <UserFolder name="General" url="file/general" numberOfItems={30} />
-                    <UserFolder name="Billing" url="file/billing" numberOfItems={12} />
+                    <UserFolder name="General" url="file/general" numberOfItems={generalFolder?.length ?? 0} />
+                    <UserFolder name="Billing" url="file/billing" numberOfItems={billingFolder?.length ?? 0} />
                     {/* <UserFolder name="Academics" url="file/:academics" numberOfItems={8} /> */}
-                    <UserFolder name="Visa" url="file/visa" numberOfItems={16} />
-                    <UserFolder name="Contract" url="file/contract" numberOfItems={25} />
+                    <UserFolder name="Visa" url="file/visa" numberOfItems={visaFolder?.length ?? 0} />
+                    <UserFolder name="Contract" url="file/contract" numberOfItems={contractFolder?.length ?? 0} />
                 </div>
 
                 {/* Upload Button */}
@@ -79,7 +87,7 @@ export const FilesPage: React.FC = () => {
                     setUploadSuccess(false);
                     setFileUploadModal(false)
                 }}>
-                    <Notification title="Successs" desc={<p className="text-sm">You have successfuly uploaded your file(s)</p>} action={() => {
+                    <Notification title="Successs" desc={<p className="text-sm">You have successfuly uploaded your file</p>} action={() => {
                         setUploadSuccess(false)
                         setFileUploadModal(false)
                     }} buttonTitle="Close" />

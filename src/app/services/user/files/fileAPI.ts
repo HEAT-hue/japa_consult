@@ -12,6 +12,8 @@ export const fileAPI = emptySplitApi.injectEndpoints({
                 params: credentials.params,
                 body: credentials.body,
             }),
+            invalidatesTags: ['GET_FILES']
+
         }),
 
         // Get USER FILE
@@ -20,6 +22,7 @@ export const fileAPI = emptySplitApi.injectEndpoints({
                 url: `documents/myfiles`,
                 params,
             }),
+            providesTags: ['GET_FILES']
         }),
     })
 })

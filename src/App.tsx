@@ -3,7 +3,10 @@ import { BrowserRouter } from "react-router-dom"
 import { Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux"
 import { store } from "./app/store"
-import { LoginPage, RegisterPage, VerifyUserEmailPage, PasswordResetPage, PasswordResetRequestPage } from "@/pages/global"
+import {
+  LoginPage, RegisterPage, VerifyUserEmailPage,
+  PasswordResetPage, PasswordResetRequestPage, ComingSoonPage
+} from "@/pages/global"
 import { FilesPage, FolderPage, NotePage, CreateNotePage } from "@/pages/user";
 import { RequireAuth } from "@/components/global/auth/protectedRoute";
 import { UserLayout } from "@/layouts/user";
@@ -25,14 +28,14 @@ export default function App() {
 
             {/* Only signed in users can access these routes */}
             <Route element={<UserLayout />}>
-              <Route path="/" element={<p>This is the home page</p>} />
-              <Route path="/users" element={<p>This is the users page</p>} />
-              <Route path="/messages" element={<p>This is the messages page</p>} />
+              <Route path="/" element={<ComingSoonPage />} />
+              <Route path="/users" element={<ComingSoonPage />} />
+              <Route path="/messages" element={<ComingSoonPage />} />
               <Route path="/notes" element={<NotePage />} />
               <Route path="/notes/create" element={<CreateNotePage />} />
               <Route path="/files" element={<FilesPage />} />
               <Route path="/files/file/:folderName" element={<FolderPage />} />
-              <Route path="/invoice" element={<p>This is the invoice page</p>} />
+              <Route path="/invoice" element={<ComingSoonPage />} />
             </Route>
           </Route>
 

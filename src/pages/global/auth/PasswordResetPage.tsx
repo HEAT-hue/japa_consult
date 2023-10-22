@@ -33,7 +33,7 @@ const schema = z.object({
         return data.password === data.confirmPassword
     }, { message: "Passwords do not match", path: ["confirmPassword"] });
 
-    
+
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
 
@@ -97,6 +97,7 @@ export const PasswordResetPage = () => {
             setModalOpen(true);
 
         } catch (error) {
+            console.log(error);
             const errorData = getErrorMessage(error);
             setErrorMessage(errorData)
             timeoutId = setTimeout(() => {

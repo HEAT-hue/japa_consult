@@ -2,7 +2,7 @@
 import { TextEditor } from "@/components/user/notes/TextEditor"
 import { useState, useRef, useEffect } from "react"
 import { useSaveUserNoteHook, useUpdateUserNoteHook } from "@/hooks/user/notes"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Toast } from "@/components/global"
 
 export type NoteDataType = {
@@ -14,6 +14,9 @@ export type NoteDataType = {
 let timeoutID: any;
 
 export const CreateNotePage: React.FC = () => {
+
+    // Get Navigator
+    const navigate = useNavigate();
 
     // Get State from Page
     const { state } = useLocation();
@@ -77,6 +80,7 @@ export const CreateNotePage: React.FC = () => {
 
         timeoutID = setTimeout(() => {
             setActionSuccess(undefined);
+            navigate("/notes");
         }, 2000)
     }
 

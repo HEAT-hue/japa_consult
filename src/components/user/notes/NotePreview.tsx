@@ -37,8 +37,6 @@ export const NotePreview: React.FC<NotePreviewProp> = ({ data }) => {
     async function handleDeleteNoteClick() {
         const response = await deleteUserNote({ d_id: data.draft_id })
 
-        console.log(response);
-
         if (!response.success) {
             setErrorMessage("Cannot delete note")
             timeoutID = setTimeout(() => {
@@ -53,7 +51,7 @@ export const NotePreview: React.FC<NotePreviewProp> = ({ data }) => {
 
     return (
         <>
-            <div>
+            <div className="w-[140px]">
                 <Link to={"create"} state={{
                     draft_id: data.draft_id,
                     title: data.title,
@@ -71,7 +69,7 @@ export const NotePreview: React.FC<NotePreviewProp> = ({ data }) => {
                     setModalOpen(true);
                 }}>
                     {/* Note title */}
-                    <p className="font-Inter-Medium text-xs mt-1">{data.title}</p>
+                    <p className="font-Inter-Medium text-xs mt-1 truncate">{data.title}</p>
 
                     <div className="flex justify-between items-center mt-">
 

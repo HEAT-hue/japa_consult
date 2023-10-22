@@ -86,7 +86,7 @@ export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, se
         <>
             <h3 className="font-CabinetGrotesk-Bold">Upload File </h3>
             {/* Input ref to upload file */}
-            <input ref={inputRef} className="hidden" id="inputImage" type="file" onChange={changeHandler} multiple />
+            <input ref={inputRef} className="hidden" id="inputImage" type="file" onChange={changeHandler} />
 
             {/* Upload File */}
             <div
@@ -123,7 +123,7 @@ export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, se
                         return (
                             <div key={index} className="flex items-center p-2 bg-[#FBF4E4] rounded">
                                 <img className="mr-3" src={UploadFolderAddIcon} alt="file" />
-                                <span className="text-sm">{file.name}</span>
+                                <p className="text-sm w-[220px] truncate">{file.name}</p>
                                 <img src={CloseIcon} alt="close" onClick={() => deleteImageHandler(index)} className="ml-auto cursor-pointer" />
                             </div>
                         )
@@ -134,7 +134,7 @@ export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, se
             {
                 filesUploaded.length > 0 && (
                     <div className="flex justify-end mt-3">
-                        <button onClick={() => action(folderName)} className="font-Inter-Bold bg-brandColor text-white py-2 px-3 rounded">{loading ? "Loading" : "Upload"}</button>
+                        <button onClick={() => action(folderName)} className="font-Inter-Bold bg-brandColor text-white py-2 px-3 rounded">{loading ? "Uploading" : "Upload"}</button>
                     </div>
                 )
             }

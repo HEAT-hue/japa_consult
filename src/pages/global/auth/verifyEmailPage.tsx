@@ -54,8 +54,14 @@ export const VerifyUserEmailPage: React.FC = () => {
     return (
         <>
             {isLoading &&
-                <LineLoader />
-            }
+                (
+                    <>
+                        <LineLoader />
+                        <div className="fixed bg-white rounded top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ">
+                            <p className="p-9">We are verifing your email...</p>
+                        </div>
+                    </>
+                )}
 
             {modalOpen && (
                 <Modal closeModal={() => {
