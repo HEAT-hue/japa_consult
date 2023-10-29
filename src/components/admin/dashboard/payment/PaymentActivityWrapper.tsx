@@ -7,28 +7,28 @@ const data: PaymentActivityType[] = [
     {
         name: "Paul Idenyi",
         invoiceID: "INV-0234",
-        amount: "34654644",
+        amount: "34654650",
         status: PAYMENT_STATUS.CANCELED,
         date: "12/34/2003"
     },
     {
         name: "Paul Idenyi",
         invoiceID: "INV-0234",
-        amount: "345454",
+        amount: "345500",
         status: PAYMENT_STATUS.COMPLETED,
         date: "12/34/2003"
     },
     {
         name: "Paul Idenyi",
         invoiceID: "INV-0234",
-        amount: "3444554",
+        amount: "3444500",
         status: PAYMENT_STATUS.PENDING,
         date: "12/34/2003"
     },
     {
         name: "Paul Idenyi",
         invoiceID: "INV-0234",
-        amount: "34",
+        amount: "100000",
         status: PAYMENT_STATUS.CANCELED,
         date: "12/34/2003"
     },

@@ -21,10 +21,12 @@ export const AdminDashboardPage: React.FC = () => {
 
             {/* Chart */}
             {/* Device Traffic */}
-            <div className="w-full overflow-x-auto">
-                <div className="w-max  mt-5">
-                    <h1 className="font-Inter-Bold text-xl mb-3">Revenue Analytics</h1>
-                    <LineChartWrapper />
+            <div className="w-full   mt-5">
+                <h1 className="font-Inter-Bold text-xl mb-3">Revenue Analytics</h1>
+                <div className="w-full overflow-x-auto">
+                    <div className="w-max">
+                        <LineChartWrapper />
+                    </div>
                 </div>
             </div>
 
