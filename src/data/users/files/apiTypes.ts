@@ -17,3 +17,9 @@ export type GetFilesRequest = {
 }
 
 export type GetFilesResponse = FileResponseType[]
+
+export type GetRecentFilesUploadedRequest = {
+    folderName?: string;
+}
+
+export type GetRecentFilesUploadedResponse = FileResponseType[]

@@ -1,0 +1,1 @@
+export { useGetPaidInvoiceQuery } from "./invoiceAPI";

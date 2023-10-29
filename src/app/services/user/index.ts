@@ -1,1 +1,1 @@
-export { useLazyGetUserProfileQuery } from "./userAPI";
+export { useLazyGetUserProfileQuery, useUpdateProfilePictureMutation } from "./userAPI";

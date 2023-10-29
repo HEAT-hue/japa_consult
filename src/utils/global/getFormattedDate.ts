@@ -1,8 +1,6 @@
 // jshint esversion:6
 
 export function getFormattedDate(date: Date = new Date()) {
-    // const date = new Date();
-
     const time = date.toLocaleTimeString(["en-US"], { hour: "2-digit", minute: "2-digit" });
 
     const year = date.getFullYear();

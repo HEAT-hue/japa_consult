@@ -6,6 +6,8 @@ import { Modal } from "@/components/global";
 import { useUploadFileHook } from "@/hooks/user";
 import { Notification } from "@/components/global";
 import { useGetFilesHook } from "@/hooks/user/files";
+import { RecentFileUploadWrapper } from "@/components/user/files/recentFileUpload";
+
 
 export const FilesPage: React.FC = () => {
 
@@ -65,6 +67,11 @@ export const FilesPage: React.FC = () => {
                     <img src={UploadIcon} alt="icon" />
                     <span className="font-Inter-Regular text-sm">Upload File</span>
                 </button>
+            </div>
+
+            {/* Recent file uploads */}
+            <div className="mt-7">
+                <RecentFileUploadWrapper />
             </div>
 
             {/* Modals */}

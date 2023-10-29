@@ -13,7 +13,8 @@ export type AuthLoginResponse = {
 }
 
 export type AuthUserRegisterRequest = {
-    "name": string,
+    "first_name": string,
+    "last_name": string,
     "email": string,
     "password": string,
     "phone_num": string,

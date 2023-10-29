@@ -1,0 +1,1 @@
+export { useGetAllUsersQuery } from "./usersAPI";

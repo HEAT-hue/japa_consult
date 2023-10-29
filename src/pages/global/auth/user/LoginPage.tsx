@@ -93,10 +93,11 @@ export const LoginPage: React.FC = () => {
             navigate("/")
         }
 
-        else {
-            alert("Admin Page coming soon!");
+        // Get USER Roles
+        if (userInfo.role == USERROLES.ADMIN) {
+            // Direct User to Dashboard
+            navigate("/admin")
         }
-
     };
 
     return (
@@ -131,7 +132,7 @@ export const LoginPage: React.FC = () => {
 
                                     {/* Email Form Input */}
                                     <div className="flex flex-col gap-y-3">
-                                        <div className="flex justify-between items-center text-base font-CabinetGrotesk-Medium">
+                                        <div className="flex justify-between gap-x-2 items-center text-base font-CabinetGrotesk-Medium">
                                             <label className="block">Email</label>
                                             {isError || tokenError ? (
                                                 <p className="text-error">{errorMessage}</p>

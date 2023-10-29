@@ -1,14 +1,17 @@
 // ProtectedRoute.js
 import { useAppSelector } from '@/hooks/typedHooks'
-import { Outlet, Navigate } from 'react-router-dom'
+import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import { useGetUserProfileHook } from '@/hooks/user'
 import { useLocation } from 'react-router-dom'
 import { LineLoader } from '../../loader'
 import { Modal } from '../..'
 import { Notification } from '../..'
 import { useEffect } from 'react'
+import { USERROLES } from '@/data/global/auth'
 
 export const RequireAuth: React.FC = () => {
+    const navigate = useNavigate();
+
     // Get User previous location history
     const location = useLocation();
 
@@ -24,14 +27,19 @@ export const RequireAuth: React.FC = () => {
             return;
         }
 
-        // Fetch User Profile
-        // getUserProfile();
+        (async function () {
+            // Fetch User Profile
+            const response = await getUserProfile();
+
+            if (response.data?.role != USERROLES.USER) {
+                navigate("/login");
+            }
+        })()
 
     }, [token])
 
     // Check if any token exists
     if (token == null) {
-        console.log(token);
         return <Navigate to="/login" state={{ from: location }} replace />
     }
 

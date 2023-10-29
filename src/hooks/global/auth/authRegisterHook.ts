@@ -27,7 +27,7 @@ export const useAuthRegisterHook = () => {
         let success = false;
 
         // Build Form Body
-        const formBody = { name: `${firstname} ${lastname}`, email, password, "phone_num": phone, role }
+        const formBody = { first_name: firstname, last_name: lastname, email, password, "phone_num": phone, role }
 
         // make request
         try {

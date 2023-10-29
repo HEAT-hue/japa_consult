@@ -35,6 +35,7 @@ export const useUploadFileHook = () => {
             success = true;
             console.log(uploadResponse);
         } catch (error) {
+            
             message = getErrorMessage(error);
         }
 

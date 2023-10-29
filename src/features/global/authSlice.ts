@@ -1,18 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { authAPI } from "@/app/services/auth"
+import { USERROLES } from "@/data/global/auth"
+import { userAPI } from "@/app/services/user/userAPI"
 
 // Define the type for the AuthState
 type AuthStateType = {
     token?: string | null
     admin: {} | null
-    user: {} | null
+    user: {
+        sub: number,
+        name: string,
+        email: string,
+        role: USERROLES,
+        img: string | null,
+        is_verified: boolean,
+        iat: number,
+        exp: number
+    } | null
+    userProfile: {
+        user_id: number
+        name: string
+        email: string
+        phone_num: string
+        role: USERROLES
+        is_verified: boolean
+        profile_pic: null | string
+    } | null
 }
 
 // Define the initial state
 const initialState: AuthStateType = {
     token: null,
     admin: null,
-    user: null
+    user: null,
+    userProfile: null
 }
 
 // Create the Auth Slice
@@ -27,10 +48,17 @@ const AuthSlice = createSlice({
             state.token = null
         }
     },
-    extraReducers: (builder) => { 
+    extraReducers: (builder) => {
         // LOAD USER AUTH STATE
         builder.addMatcher(authAPI.endpoints.login.matchFulfilled, (state, { payload }) => {
             state.token = payload.access_token
+            console.log(payload);
+        })
+
+        // LOAD USER PROFILE
+        builder.addMatcher(userAPI.endpoints.getUserProfile.matchFulfilled, (state, { payload }) => {
+            state.userProfile = payload
+            console.log(payload);
         })
 
         // LOAD USER AUTH STATE
