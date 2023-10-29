@@ -8,16 +8,16 @@ import { TotalNotesCreatedOverviewBox } from "@/components/global/overviewBox"
 export const DashboardPage: React.FC = () => {
     return (
         <div className="py-5">
-            <div className="flex items-start flex-wrap overflow-auto gap-3 gap-y-5">
+            <div className="no-scroll flex items-start flex-wrap overflow-auto gap-3 gap-y-5">
 
                 {/* Overview boxes */}
                 <div className="flex flex-col sm:flex-row items-start gap-3">
-                    <div className="flex gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
+                    <div className="no-scroll flex gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
                         <TotalRevenueOverviewBox />
                         <TotalNotesCreatedOverviewBox />
                     </div>
 
-                    <div className="flex items-start gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
+                    <div className="no-scroll flex items-start gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
                         <TotalNotesReceivedOverviewBox />
 
                         {/* Document Pie chart */}
