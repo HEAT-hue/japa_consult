@@ -9,6 +9,15 @@ export type UserNoteResponse = {
     last_updated: Date | null
 }
 
+export type ReceivedNoteResponse = {
+    "title": string,
+    "content": string,
+    "sent_by": string,
+    "sent_time": Date
+}
+
+export type GetReceivedNotesResponse = ReceivedNoteResponse[]
+
 export type GetUserNotesResponse = UserNoteResponse[]
 
 export type SaveUserNotesRequest = {

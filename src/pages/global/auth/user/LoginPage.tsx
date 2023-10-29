@@ -61,6 +61,8 @@ export const LoginPage: React.FC = () => {
         // Login user
         const response = await authLogin(data.email, data.password);
 
+        console.log(response);
+
         // Error logging in user
         if (!response.success) {
             setErrorMessage(response.message ?? "Could not login!")
@@ -73,7 +75,6 @@ export const LoginPage: React.FC = () => {
         // Decode the Access token
         try {
             userInfo = jwt_decode(accessToken ?? "");
-            console.log(userInfo);
 
         } catch (error) {
             setTokenError(true);

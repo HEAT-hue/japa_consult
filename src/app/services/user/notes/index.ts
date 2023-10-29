@@ -1,4 +1,5 @@
 export {
     useGetUserNotesQuery, useSaveUserNoteMutation,
-    useUpdateUserNoteMutation, useDeleteUserNoteMutation
+    useUpdateUserNoteMutation, useDeleteUserNoteMutation,
+    useGetReceivedNotesQuery
 } from "./notesAPI";

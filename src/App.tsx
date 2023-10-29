@@ -11,6 +11,7 @@ import {
 } from "@/pages/global"
 
 import {
+  DashboardPage,
   FilesPage, FolderPage, NotePage,
   CreateNotePage, InvoicePage, CreateInvoicePage
 } from "@/pages/user";
@@ -39,7 +40,7 @@ export default function App() {
           <Route element={<RequireAuth />}>
             {/* Only signed in users can access these routes */}
             <Route element={<UserLayout />}>
-              <Route path="/" element={<ComingSoonPage />} />
+              <Route path="/" element={<DashboardPage />} />
               <Route path="/users" element={<ComingSoonPage />} />
               <Route path="/messages" element={<ComingSoonPage />} />
               <Route path="/notes" element={<NotePage />} />

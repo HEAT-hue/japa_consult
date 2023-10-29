@@ -13,7 +13,7 @@ export type UploadUserFileResponse = {
 }
 
 export type GetFilesRequest = {
-    folderName: string
+    folderName?: string
 }
 
 export type GetFilesResponse = FileResponseType[]

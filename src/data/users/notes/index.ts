@@ -2,5 +2,5 @@ export type {
     GetUserNotesResponse, SaveUserNotesRequest,
     SaveUserNotesResponse, UpdateUserNoteRequest
     , UpdateUserNoteResponse, DeleteUserNoteRequest
-    , DeleteUserNoteResponse
+    , DeleteUserNoteResponse, GetReceivedNotesResponse
 } from "./apiTypes";

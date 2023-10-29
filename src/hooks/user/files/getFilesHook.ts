@@ -3,7 +3,7 @@ import { useGetFileQuery } from "@/app/services/user/files";
 
 // Specify the page you want to view
 type UseGetTradeDetailProps = {
-    folderName: string
+    folderName?: string
 }
 
 // GET the User Files

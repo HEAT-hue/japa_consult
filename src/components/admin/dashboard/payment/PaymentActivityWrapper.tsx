@@ -39,7 +39,7 @@ export const PaymentActivityWrapper: React.FC = () => {
     return (
         <div>
             {/* Table Header */}
-            <div className="flex justify-between font-CabinetGrotesk-Bold text-lg">
+            <div className="flex justify-between font-CabinetGrotesk-Bold text-lg mb-3">
                 <h4>Payment Activity</h4>
                 {/* <Link to={""} className="py-0 border-b-[2px] border-black">See All</Link> */}
             </div>

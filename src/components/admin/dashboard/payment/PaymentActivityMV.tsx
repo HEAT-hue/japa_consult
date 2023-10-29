@@ -17,7 +17,7 @@ export const PaymentActivityMV: React.FC<PaymentActivityMVProp> = ({ data }) => 
                     const { day, monthShort, year } = getFormattedDate(new Date())
 
                     return (
-                        <div key={index} className="bg-white p-3 px-5 rounded flex justify-between">
+                        <div key={index} className="bg-white p-4 px-5 rounded flex justify-between">
                             <div className="flex flex-col gap-y-1">
                                 <p className="text-placeholder text-sm">{activity.invoiceID}</p>
                                 <p className="font-Inter-Bold text-lg">{activity.name}</p>

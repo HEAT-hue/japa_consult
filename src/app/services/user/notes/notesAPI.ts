@@ -3,7 +3,7 @@ import { emptySplitApi } from "../../api";
 import {
     GetUserNotesResponse, SaveUserNotesRequest,
     SaveUserNotesResponse, UpdateUserNoteRequest, UpdateUserNoteResponse,
-    DeleteUserNoteRequest, DeleteUserNoteResponse
+    DeleteUserNoteRequest, DeleteUserNoteResponse, GetReceivedNotesResponse
 } from "@/data/users/notes";
 
 export const noteAPI = emptySplitApi.injectEndpoints({
@@ -46,7 +46,17 @@ export const noteAPI = emptySplitApi.injectEndpoints({
             invalidatesTags: ['GET_NOTES']
         }),
 
+        // Get user profile
+        getReceivedNotes: builder.query<GetReceivedNotesResponse, void>({
+            query: () => ({
+                url: `notes/receivedNotes`,
+            }),
+        }),
     })
 })
 
-export const { useGetUserNotesQuery, useSaveUserNoteMutation, useUpdateUserNoteMutation, useDeleteUserNoteMutation } = noteAPI
+export const {
+    useGetUserNotesQuery, useSaveUserNoteMutation,
+    useUpdateUserNoteMutation, useDeleteUserNoteMutation,
+    useGetReceivedNotesQuery
+} = noteAPI
