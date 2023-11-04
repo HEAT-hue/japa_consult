@@ -12,7 +12,6 @@ import { Toast } from "@/components/global"
 import { Notification } from "@/components/global"
 import { useNavigate } from "react-router-dom"
 
-
 type SelectInvoiceProp = {
     invoiceType: INVOICE_TYPE | undefined
     amount?: string | undefined
@@ -20,7 +19,6 @@ type SelectInvoiceProp = {
     next: () => void
     prev: () => void
 }
-
 
 type ErrorState = {
     amount: boolean,
@@ -89,22 +87,16 @@ export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, 
         // Set the amount
         setAmount(enteredAmount);
 
-        // console.log(date);
-        console.log(date);
-
-        // const formattedDate = `${date.getFullYear()},${date.getMonth() + 1},${date.getDate()}`
-        // console.log(formattedDate);
+        const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${('0' + date.getDate()).slice(-2)}`
 
         // Call next form
         const response = await createUserInvoice({
             title: (invoiceType as string),
             desc,
-            due_date: date,
+            due_date: formattedDate,
             price: Number(amount ?? 0),
             to_email: selectedUser.email
         });
-
-        // console.log(response)
 
         if (!response.success) {
             // fail
