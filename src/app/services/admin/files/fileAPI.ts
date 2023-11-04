@@ -1,6 +1,9 @@
 // jshint esversion:6
 import { emptySplitApi } from "../../api";
-import { GetAllFilesUploadedResponse, GetUserFilesRequest, GetUserFilesResponse } from "@/data/admin/files";
+import {
+    GetAllFilesUploadedResponse, GetUserFilesRequest,
+    GetUserFilesResponse, DeleteUserFileRequest, DeleteUserFileResponse
+} from "@/data/admin/files";
 
 export const fileAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -21,15 +24,19 @@ export const fileAPI = emptySplitApi.injectEndpoints({
             providesTags: ['GET_USER_FILES']
         }),
 
-        // Get Recent File Uploads
-        // getUserRecentFileUploads: builder.query<GetRecentFilesUploadedResponse, GetRecentFilesUploadedRequest>({
-        //     query: (params) => ({
-        //         url: `documents/recentFiles`,
-        //         params,
-        //     }),
-        //     providesTags: ['GET_FILES']
-        // }),
+        // delete user file
+        adminDeleteUserFile: builder.mutation<DeleteUserFileResponse, DeleteUserFileRequest>({
+            query: (params) => ({
+                url: `documents/removeUserFile`,
+                method: "DELETE",
+                params
+            }),
+            invalidatesTags: ['GET_USER_FILES']
+        }),
     })
 })
 
-export const { useGetAllFilesUploadedQuery, useGetUserFileQuery, useLazyGetUserFileQuery } = fileAPI
+export const {
+    useGetAllFilesUploadedQuery, useGetUserFileQuery,
+    useLazyGetUserFileQuery, useAdminDeleteUserFileMutation
+} = fileAPI

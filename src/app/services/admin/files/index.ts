@@ -1,1 +1,4 @@
-export { useGetAllFilesUploadedQuery, useGetUserFileQuery, useLazyGetUserFileQuery } from "./fileAPI";
+export {
+    useGetAllFilesUploadedQuery, useGetUserFileQuery,
+    useLazyGetUserFileQuery, useAdminDeleteUserFileMutation
+} from "./fileAPI";

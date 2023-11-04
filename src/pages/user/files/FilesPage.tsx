@@ -48,6 +48,9 @@ export const FilesPage: React.FC = () => {
 
         // success
         setUploadSuccess(true);
+
+        // Reset files
+        setFilesUploaded([]);
     }
 
     return (

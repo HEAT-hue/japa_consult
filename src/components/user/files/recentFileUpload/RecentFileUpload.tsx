@@ -7,6 +7,7 @@ type RecentFileUploadProp = {
 }
 
 export const RecentFileUpload: React.FC<RecentFileUploadProp> = ({ data }) => {
+
     return (
         <>
             {/* Table */}

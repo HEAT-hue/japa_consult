@@ -14,3 +14,13 @@ export type GetUserFilesRequest = {
 }
 
 export type GetUserFilesResponse = FileResponseType[]
+
+export type DeleteUserFileRequest = {
+    fileId: string
+}
+
+export type DeleteUserFileResponse = {
+    msg: string,
+    file_id: string,
+    file_name: string
+}

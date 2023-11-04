@@ -1,4 +1,4 @@
 export type {
     GetAllFilesUploadedResponse, GetUserFilesRequest,
-    GetUserFilesResponse
+    GetUserFilesResponse, DeleteUserFileRequest, DeleteUserFileResponse
 } from "./apiTypes";

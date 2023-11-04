@@ -8,6 +8,7 @@ import { getErrorMessage } from "@/utils/global"
 import { UsersTable, UsersTableMV } from "@/components/admin/users"
 import { Toast } from "@/components/global"
 import { BeatLoader } from "react-spinners"
+import { NoUserSVG } from "@/components/global/svg"
 
 let timeoutID: any;
 
@@ -119,22 +120,22 @@ export const AdminUsersPage: React.FC = () => {
             <div className="w-full flex [&>*]:shrink-0 flex-nowrap gap-x-3 overflow-x-auto">
 
                 {/* All Admins */}
-                <div onClick={() => setSelectedUser(USERROLES.ADMIN)}>
+                <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.ADMIN)}>
                     <AllAdminsOverviewBox active={selectedUser == USERROLES.ADMIN} />
                 </div>
 
                 {/* All Managers */}
-                <div onClick={() => setSelectedUser(USERROLES.MANAGER)}>
+                <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.MANAGER)}>
                     <AllManagersOverviewBox active={selectedUser == USERROLES.MANAGER} />
                 </div>
 
                 {/* All Staffs */}
-                <div onClick={() => setSelectedUser(USERROLES.STAFF)}>
+                <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.STAFF)}>
                     <AllStaffsOverviewBox active={selectedUser == USERROLES.STAFF} />
                 </div>
 
                 {/* All Users */}
-                <div onClick={() => setSelectedUser(USERROLES.USER)}>
+                <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.USER)}>
                     <AllUsersOverviewBox active={selectedUser == USERROLES.USER} />
                 </div>
             </div>
@@ -157,8 +158,11 @@ export const AdminUsersPage: React.FC = () => {
 
                 <div className="mt-5">
                     {usersList.length == 0 ? (
-                        <div>
-                            No User Data found
+                        <div className="mt-[5rem] flex flex-col gap-y-3 justify-center items-center">
+                            <p className="text-placeholder">
+                                <NoUserSVG width={100} height={100} />
+                            </p>
+                            <p className="text-xl text-placeholder font-Inter-Bold">No User Found</p>
                         </div>
                     ) : (
                         <div>

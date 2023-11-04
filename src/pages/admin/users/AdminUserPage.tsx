@@ -7,10 +7,10 @@ import { UserType } from "@/data/admin/dashboard/dashboard";
 import { useGetUserFileQuery } from "@/app/services/admin/files";
 import { AdminUserFolder } from "@/components/admin/users";
 import { FOLDER_NAME } from "@/data/users/files";
-import { RecentFileUpload } from "@/components/user/files/recentFileUpload/RecentFileUpload";
-import { RecentFileUploadMV } from "@/components/user/files/recentFileUpload/RecentFileUploadMV";
 import { FileResponseType } from "@/data/users/files/file";
 import { BeatLoader } from "react-spinners";
+import { UserFiles } from "@/components/admin/users";
+import { UserFilesMV } from "@/components/admin/users";
 
 const override: CSSProperties = {
     display: "inline-block",
@@ -151,10 +151,10 @@ export const AdminUserPage: React.FC = () => {
                             <h1 className="font-Inter-Regular">Files in folder: <span className="font-Inter-Bold capitalize">{selectedFolder}</span></h1>
                             <div className="mt-2">
                                 <div className="hidden sm:block">
-                                    <RecentFileUpload data={fileList} />
+                                    <UserFiles data={fileList} />
                                 </div>
                                 <div className="sm:hidden">
-                                    <RecentFileUploadMV data={fileList} />
+                                    <UserFilesMV data={fileList} />
                                 </div>
                             </div>
                         </div>
