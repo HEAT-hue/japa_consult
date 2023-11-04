@@ -107,6 +107,10 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
             }
         })()
 
+        return () => {
+            clearTimeout(timeoutID);
+        }
+
     }, [selectedUser])
 
     async function SendNoteToUser() {

@@ -1,13 +1,13 @@
 // jshint esversion:6
 import { Link } from "react-router-dom"
 import PlusIcon from "@/assets/global/Plus.svg";
-import { useGetAllInvoiceQuery } from "@/app/services/admin/invoice";
-import { useGetPendingInvoiceQuery } from "@/app/services/admin/invoice";
-import { useGetPaidInvoiceQuery } from "@/app/services/admin/invoice";
-import { CSSProperties, useState } from "react";
+// import { useGetAllInvoiceQuery } from "@/app/services/admin/invoice";
+// import { useGetPendingInvoiceQuery } from "@/app/services/admin/invoice";
+// import { useGetPaidInvoiceQuery } from "@/app/services/admin/invoice";
+// import { CSSProperties, useState } from "react";
 // import { BeatLoader } from "react-spinners";
-import { INVOICE_NAVIGATION } from "@/data/global";
-import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
+// import { INVOICE_NAVIGATION } from "@/data/global";
+// import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
 
 // const override: CSSProperties = {
 //     display: "inline-block",
@@ -18,44 +18,44 @@ import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
 
 export const AdminInvoicePage: React.FC = () => {
 
-    const { data: AllInvoiceData, isLoading: isAllInvoiceLoading } = useGetAllInvoiceQuery()
-    const { data: PendingInvoiceData, isLoading: isPendingInvoiceLoading } = useGetPendingInvoiceQuery()
-    const { data: PaidInvoiceData, isLoading: isPaidInvoiceLoading } = useGetPaidInvoiceQuery()
+    // const { data: AllInvoiceData, isLoading: isAllInvoiceLoading } = useGetAllInvoiceQuery()
+    // const { data: PendingInvoiceData, isLoading: isPendingInvoiceLoading } = useGetPendingInvoiceQuery()
+    // const { data: PaidInvoiceData, isLoading: isPaidInvoiceLoading } = useGetPaidInvoiceQuery()
 
-    const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
-    const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
+    // const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
+    // const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
 
-    function handleNavigationClick(navigation: INVOICE_NAVIGATION) {
-        switch (navigation) {
-            case INVOICE_NAVIGATION.ALL: {
-                if (AllInvoiceData) {
-                    setInvoiceData(AllInvoiceData)
-                }
-                setInvoiceType(INVOICE_NAVIGATION.ALL)
-                break;
-            }
-            case INVOICE_NAVIGATION.PENDING: {
-                if (PendingInvoiceData) {
-                    setInvoiceData(PendingInvoiceData)
-                }
-                setInvoiceType(INVOICE_NAVIGATION.PENDING)
-                break;
-            }
-            case INVOICE_NAVIGATION.PAID: {
-                if (PaidInvoiceData) {
-                    setInvoiceData(PaidInvoiceData)
-                }
-                setInvoiceType(INVOICE_NAVIGATION.PAID)
-                break;
-            }
-            default:
-                if (AllInvoiceData) {
-                    setInvoiceData(AllInvoiceData)
-                }
-                setInvoiceType(INVOICE_NAVIGATION.ALL)
-                break;
-        }
-    }
+    // function handleNavigationClick(navigation: INVOICE_NAVIGATION) {
+    //     switch (navigation) {
+    //         case INVOICE_NAVIGATION.ALL: {
+    //             if (AllInvoiceData) {
+    //                 setInvoiceData(AllInvoiceData)
+    //             }
+    //             setInvoiceType(INVOICE_NAVIGATION.ALL)
+    //             break;
+    //         }
+    //         case INVOICE_NAVIGATION.PENDING: {
+    //             if (PendingInvoiceData) {
+    //                 setInvoiceData(PendingInvoiceData)
+    //             }
+    //             setInvoiceType(INVOICE_NAVIGATION.PENDING)
+    //             break;
+    //         }
+    //         case INVOICE_NAVIGATION.PAID: {
+    //             if (PaidInvoiceData) {
+    //                 setInvoiceData(PaidInvoiceData)
+    //             }
+    //             setInvoiceType(INVOICE_NAVIGATION.PAID)
+    //             break;
+    //         }
+    //         default:
+    //             if (AllInvoiceData) {
+    //                 setInvoiceData(AllInvoiceData)
+    //             }
+    //             setInvoiceType(INVOICE_NAVIGATION.ALL)
+    //             break;
+    //     }
+    // }
 
     return (
         <div className="py-5">

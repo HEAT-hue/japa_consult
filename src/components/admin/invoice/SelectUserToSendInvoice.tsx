@@ -8,9 +8,9 @@ import { BeatLoader } from "react-spinners";
 import { CSSProperties } from "react"
 import { getFormattedDate } from "@/utils/global"
 import checkBoxIcon from "@/assets/admin/checkbox.png";
-import { MutationResultType } from "@/data/global"
+// import { MutationResultType } from "@/data/global"
 import { Toast } from "@/components/global"
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 
 type SelectUserToSubmitNoteProp = {
     setUser: (user: UserType) => void
