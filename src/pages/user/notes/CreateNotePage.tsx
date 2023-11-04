@@ -106,8 +106,6 @@ export const CreateNotePage: React.FC = () => {
             noteIDRef.current = (response.data as SaveUserNotesResponse).draft_id
         }
 
-        console.log(noteIDRef.current);
-
         // Submit Note
         return await sendNoteToUser({ draftId: noteIDRef.current, toId });
     }

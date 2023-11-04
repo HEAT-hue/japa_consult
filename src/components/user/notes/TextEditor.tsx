@@ -56,7 +56,7 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
 
     // const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-    const [submitNoteModalOpen, setSubmitNoteModalOpen] = useState<boolean>(true);
+    const [submitNoteModalOpen, setSubmitNoteModalOpen] = useState<boolean>(false);
 
     const handleProcedureContentChange = (content: string) => {
         setNoteData((prev) => ({ ...prev, content }))

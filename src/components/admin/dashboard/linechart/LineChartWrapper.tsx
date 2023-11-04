@@ -28,7 +28,6 @@ export const LineChartWrapper: React.FC = () => {
                 currentRevenue.push(revenueByMonth[month as keyof typeof revenueByMonth] ?? 0);
                 return
             }
-
             currentRevenue.push(0);
         })
     }
