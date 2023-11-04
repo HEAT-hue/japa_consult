@@ -13,10 +13,13 @@ import {
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
-  CreateNotePage, InvoicePage, CreateInvoicePage
+  CreateNotePage, InvoicePage
 } from "@/pages/user";
 
-import { AdminDashboardPage } from "./pages/admin";
+import {
+  AdminDashboardPage, AdminInvoicePage, CreateInvoicePage,
+  AdminUsersPage, AdminUserPage
+} from "./pages/admin";
 
 import { RequireAuth, AdminRequireAuth } from "@/components/global/auth/protectedRoute";
 
@@ -56,11 +59,16 @@ export default function App() {
           <Route element={<AdminRequireAuth />}>
             <Route path="/admin/*" element={<AdminLayout />}>
               <Route index element={<AdminDashboardPage />} />
-              <Route path="users" element={<ComingSoonPage />} />
+              <Route path="users" element={<AdminUsersPage />} />
+              <Route path="users/user/:userId" element={<AdminUserPage />} />
               <Route path="messages" element={<ComingSoonPage />} />
-              <Route path="notes" element={<ComingSoonPage />} />
-              <Route path="files" element={<ComingSoonPage />} />
-              <Route path="invoice" element={<ComingSoonPage />} />
+              <Route path="notes" element={<NotePage />} />
+              <Route path="notes/create" element={<CreateNotePage />} />
+              <Route path="files" element={<FilesPage />} />
+              <Route path="files/file/:folderName" element={<FolderPage />} />
+              {/* <Route path="files" element={<ComingSoonPage />} /> */}
+              <Route path="invoice" element={<AdminInvoicePage />} />
+              <Route path="invoice/create" element={<CreateInvoicePage />} />
             </Route>
           </Route>
 

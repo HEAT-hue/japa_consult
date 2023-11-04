@@ -3,10 +3,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../store'
 
 // Define your tags here for user section
-const userTags: string[] = ['GET_NOTES', 'GET_FILES', 'GET_PROFILE']
+const userTags: string[] = ['GET_NOTES', 'GET_FILES', 'GET_PROFILE', 'INVOICE']
 
 // Define your tags here for admin section
-const adminTags: string[] = ['GET_ALL_FILES', 'GET_ALL_USERS']
+const adminTags: string[] = ['GET_ALL_FILES', 'GET_ALL_USERS', 'GET_ALL_ADMINS', 'GET_ALL_STAFFS', 'GET_ALL_MANAGERS', 'GET_USER_FILES']
 
 // Define your base query function
 const baseQuery = fetchBaseQuery({

@@ -1,1 +1,1 @@
-export { useGetAllUsersQuery } from "./usersAPI";
+export { useGetAllUsersQuery, useGetAllAdminsQuery, useGetAllManagersQuery, useGetAllStaffsQuery, useLazyGetAllAdminsQuery, useLazyGetAllManagersQuery, useLazyGetAllStaffsQuery, useLazyGetAllUsersQuery } from "./usersAPI";

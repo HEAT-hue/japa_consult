@@ -11,18 +11,11 @@ export const DashboardPage: React.FC = () => {
             <div className="no-scroll flex items-start flex-wrap overflow-auto gap-3 gap-y-5">
 
                 {/* Overview boxes */}
-                <div className="flex flex-col sm:flex-row items-start gap-3">
-                    <div className="no-scroll flex gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
-                        <TotalRevenueOverviewBox />
-                        <TotalNotesCreatedOverviewBox />
-                    </div>
-
-                    <div className="no-scroll flex items-start gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
-                        <TotalNotesReceivedOverviewBox />
-
-                        {/* Document Pie chart */}
-                        <UserDocumentUploadDoughnutChart />
-                    </div>
+                <div className="flex flex-wrap items-start gap-3">
+                    <TotalRevenueOverviewBox />
+                    <TotalNotesCreatedOverviewBox />
+                    <TotalNotesReceivedOverviewBox />
+                    <UserDocumentUploadDoughnutChart />
                 </div>
             </div>
 

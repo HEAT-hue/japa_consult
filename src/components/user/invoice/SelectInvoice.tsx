@@ -58,7 +58,7 @@ export const SelectInvoice: React.FC<SelectInvoiceProp> = ({ invoiceType, setInv
                     </select>
 
                     {/* Next Form */}
-                    <button type="button" onClick={submit} className="font-Inter-Bold bg-brandColor text-white p-3 text-sm rounded w-max">Pay Now</button>
+                    <button type="button" onClick={submit} className="font-Inter-Bold bg-brandColor text-white p-3 text-sm rounded w-max">Create Now</button>
                 </div>
             </div>
         </>

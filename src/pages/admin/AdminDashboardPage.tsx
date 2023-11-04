@@ -10,23 +10,15 @@ export const AdminDashboardPage: React.FC = () => {
             <div className="no-scroll flex items-start flex-wrap overflow-auto gap-3 gap-y-5">
 
                 {/* Overview boxes */}
-                <div className="flex flex-col sm:flex-row items-start gap-3">
-                    <div className="no-scroll flex gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
+                <div className="flex flex-wrap items-start gap-3">
                         <TotalRevenueOverviewBox />
                         <TotalUsersOverviewBox />
-                    </div>
-
-                    <div className="no-scroll flex items-start gap-x-3 flex-nowrap overflow-x-scroll [&>*]:shrink-0">
                         <ActiveUsersOverviewBox />
-
-                        {/* Document Pie chart */}
                         <DocumentUploadDoughnutChart />
-                    </div>
                 </div>
             </div>
 
             {/* Chart */}
-            {/* Device Traffic */}
             <div className="w-full   mt-5">
                 <h1 className="font-Inter-Bold text-xl mb-3">Revenue Analytics</h1>
                 <div className="no-scroll w-full overflow-x-auto">

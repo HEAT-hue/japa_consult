@@ -3,6 +3,7 @@ import { useState } from "react"
 import { INVOICE_TYPE } from "@/data/users/invoice"
 
 export const useCreateInvoiceHook = () => {
+    
     // Index of current rendered form
     const [currentIndex, setCurrentIndex] = useState(0);
 

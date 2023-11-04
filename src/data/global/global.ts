@@ -3,3 +3,9 @@ export type MutationResultType = {
     message: string,
     data?: unknown
 }
+
+export enum INVOICE_NAVIGATION {
+    ALL = 'ALL',
+    PENDING = 'PENDING',
+    PAID = 'PAID'
+}

@@ -36,7 +36,7 @@ export const RecentFileUploadWrapper: React.FC<RecentFileUploadProp> = ({ folder
         )
     }
 
-    if (!data) {
+    if (!data || data.length == 0) {
         return (
             <div className="w-full flex items-center justify-center">
                 <div className="mt-[5rem] mx-auto">

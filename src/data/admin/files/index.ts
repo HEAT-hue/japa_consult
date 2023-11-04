@@ -1,1 +1,4 @@
-export type { GetAllFilesUploadedResponse } from "./apiTypes";
+export type {
+    GetAllFilesUploadedResponse, GetUserFilesRequest,
+    GetUserFilesResponse
+} from "./apiTypes";

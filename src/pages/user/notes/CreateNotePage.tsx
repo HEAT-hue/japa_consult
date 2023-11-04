@@ -1,9 +1,11 @@
 // jshint esversion:6
 import { TextEditor } from "@/components/user/notes/TextEditor"
 import { useState, useRef, useEffect } from "react"
-import { useSaveUserNoteHook, useUpdateUserNoteHook } from "@/hooks/user/notes"
+import { useSaveUserNoteHook, useUpdateUserNoteHook, useSendNoteHook } from "@/hooks/user/notes"
 import { useLocation, useNavigate } from "react-router-dom"
 import { Toast } from "@/components/global"
+import { SaveUserNotesResponse } from "@/data/users/notes"
+import { MutationResultType } from "@/data/global"
 
 export type NoteDataType = {
     title: string,
@@ -40,7 +42,11 @@ export const CreateNotePage: React.FC = () => {
     // Save note feature
     const { saveUserNote, isLoading: isNoteSaveLoading, isError: isNoteSaveError, } = useSaveUserNoteHook();
 
+    // Update note feature
     const { updateUserNote, isLoading: isNoteUpdateLoading, isError: isNoteUpdateError, } = useUpdateUserNoteHook();
+
+    // Submit note feature
+    const { sendNoteToUser, isLoading: isSendNoteLoading } = useSendNoteHook()
 
     useEffect(() => {
         return () => {
@@ -48,7 +54,7 @@ export const CreateNotePage: React.FC = () => {
         }
     }, [])
 
-    const NoteAPIProps = { isNoteSaveLoading: isNoteSaveLoading || isNoteUpdateLoading, isNoteSaveError: isNoteSaveError || isNoteUpdateError }
+    const NoteAPIProps = { isNoteSaveLoading: isNoteSaveLoading || isNoteUpdateLoading, isNoteSaveError: isNoteSaveError || isNoteUpdateError, submitNote, isSendNoteLoading: isSendNoteLoading || isNoteSaveLoading || isNoteUpdateLoading }
 
     async function saveNote() {
         let response;
@@ -82,6 +88,28 @@ export const CreateNotePage: React.FC = () => {
             setActionSuccess(undefined);
             navigate("/notes");
         }, 2000)
+    }
+
+    async function submitNote(toId: number): Promise<MutationResultType> {
+        let response;
+
+        // Save note first before submitting
+        if (noteIDRef.current == null) {
+            response = await saveUserNote({ ...noteData, date_created: noteData.date_created });
+
+            // If not success
+            if (!response?.success) {
+                return response;
+            }
+
+            // Set the draft ID
+            noteIDRef.current = (response.data as SaveUserNotesResponse).draft_id
+        }
+
+        console.log(noteIDRef.current);
+
+        // Submit Note
+        return await sendNoteToUser({ draftId: noteIDRef.current, toId });
     }
 
     return (

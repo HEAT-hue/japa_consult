@@ -13,10 +13,11 @@ export const FilesPage: React.FC = () => {
 
     // Fetch all folders
     // Get files hook
+    const { data: academicFolder, } = useGetFilesHook({ folderName: "academics" })
     const { data: generalFolder, } = useGetFilesHook({ folderName: "general" })
     const { data: billingFolder, } = useGetFilesHook({ folderName: "billing" })
     const { data: visaFolder, } = useGetFilesHook({ folderName: "visa" })
-    const { data: contractFolder, } = useGetFilesHook({ folderName: "contract" })
+    const { data: contractFolder, } = useGetFilesHook({ folderName: "contracts" })
 
     // Upload success
     const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
@@ -57,7 +58,7 @@ export const FilesPage: React.FC = () => {
                 <div className="flex flex-wrap gap-5">
                     <UserFolder name="General" url="file/general" numberOfItems={generalFolder?.length ?? 0} />
                     <UserFolder name="Billing" url="file/billing" numberOfItems={billingFolder?.length ?? 0} />
-                    {/* <UserFolder name="Academics" url="file/:academics" numberOfItems={8} /> */}
+                    <UserFolder name="Academics" url="file/academics" numberOfItems={academicFolder?.length ?? 0} />
                     <UserFolder name="Visa" url="file/visa" numberOfItems={visaFolder?.length ?? 0} />
                     <UserFolder name="Contract" url="file/contract" numberOfItems={contractFolder?.length ?? 0} />
                 </div>

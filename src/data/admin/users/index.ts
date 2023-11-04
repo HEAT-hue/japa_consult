@@ -1,1 +1,1 @@
-export type { GetAllUsersResponse } from "./apiTypes";
+export type { GetAllUsersResponse, GetAllAdminsResponse, GetAllManagersResponse, GetAllStaffsResponse } from "./apiTypes";

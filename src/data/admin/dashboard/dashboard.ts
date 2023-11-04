@@ -8,7 +8,7 @@ export enum PAYMENT_STATUS {
 
 export type UserType = {
     "user_id": number,
-    "name": number,
+    "name": string,
     "email": string,
     "phone_num": string,
     "role": USERROLES,

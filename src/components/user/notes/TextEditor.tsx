@@ -4,8 +4,11 @@ import 'quill/dist/quill.snow.css';
 import "./style.css";
 import ReactQuill from 'react-quill'
 import { NoteDataType } from "@/pages/user/notes/CreateNotePage";
-import { Notification } from "@/components/global";
+// import { Notification } from "@/components/global";
 import { Modal } from "@/components/global";
+import { SelectUserToSubmitNote } from "@/components/global/notes"
+import { useAppSelector } from "@/hooks/typedHooks";
+import { MutationResultType } from "@/data/global";
 
 // Build the Customized module:
 let modules = {
@@ -39,15 +42,21 @@ type TextEditorProp = {
     NoteAPIProps: {
         isNoteSaveLoading: boolean;
         isNoteSaveError: boolean;
+        submitNote(toId: number): Promise<MutationResultType>
+        isSendNoteLoading: boolean
     },
     saveNote(): Promise<void>
 }
 
 export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, NoteAPIProps, saveNote }) => {
 
-    const { isNoteSaveLoading } = NoteAPIProps
+    const { userProfile } = useAppSelector((state) => state.auth)
 
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const { isNoteSaveLoading, submitNote, isSendNoteLoading } = NoteAPIProps
+
+    // const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const [submitNoteModalOpen, setSubmitNoteModalOpen] = useState<boolean>(true);
 
     const handleProcedureContentChange = (content: string) => {
         setNoteData((prev) => ({ ...prev, content }))
@@ -64,7 +73,7 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
                 <button onClick={saveNote} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving..." : "Save"}</button>
 
                 {/* Submit document */}
-                <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setModalOpen(true)}>Submit</button>
+                <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setSubmitNoteModalOpen(true)}>Submit</button>
             </div>
 
             {/* Note Editor */}
@@ -89,9 +98,10 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
 
             </div>
 
-            {modalOpen && (
-                <Modal closeModal={() => setModalOpen(false)}>
-                    <Notification title="Info" action={() => setModalOpen(false)} buttonTitle="Close" desc={<p>This feature is currently under development.</p>} />
+
+            {submitNoteModalOpen && userProfile && (
+                <Modal bare closeModal={() => setSubmitNoteModalOpen(false)}>
+                    <SelectUserToSubmitNote role={userProfile?.role} submitNote={submitNote} isSendNoteLoading={isSendNoteLoading} />
                 </Modal>
             )}
         </>

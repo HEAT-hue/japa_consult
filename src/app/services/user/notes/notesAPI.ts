@@ -3,7 +3,8 @@ import { emptySplitApi } from "../../api";
 import {
     GetUserNotesResponse, SaveUserNotesRequest,
     SaveUserNotesResponse, UpdateUserNoteRequest, UpdateUserNoteResponse,
-    DeleteUserNoteRequest, DeleteUserNoteResponse, GetReceivedNotesResponse
+    DeleteUserNoteRequest, DeleteUserNoteResponse, GetReceivedNotesResponse,
+    SendNoteRequest, SendNoteResponse
 } from "@/data/users/notes";
 
 export const noteAPI = emptySplitApi.injectEndpoints({
@@ -52,11 +53,22 @@ export const noteAPI = emptySplitApi.injectEndpoints({
                 url: `notes/receivedNotes`,
             }),
         }),
+
+        // Send notes
+        sendNote: builder.mutation<SendNoteResponse, SendNoteRequest>({
+            query: (credentials) => ({
+                url: `notes/sendNotes`,
+                method: "POST",
+                body: credentials
+            }),
+            invalidatesTags: ['GET_NOTES']
+        }),
+
     })
 })
 
 export const {
     useGetUserNotesQuery, useSaveUserNoteMutation,
     useUpdateUserNoteMutation, useDeleteUserNoteMutation,
-    useGetReceivedNotesQuery
+    useGetReceivedNotesQuery, useSendNoteMutation
 } = noteAPI

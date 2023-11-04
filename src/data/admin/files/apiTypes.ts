@@ -7,3 +7,10 @@ export type GetAllFilesUploadedResponse = {
     "general": FileResponseType[],
     "visa": FileResponseType[]
 }
+
+export type GetUserFilesRequest = {
+    user_id: number,
+    folderName: string
+}
+
+export type GetUserFilesResponse = FileResponseType[]

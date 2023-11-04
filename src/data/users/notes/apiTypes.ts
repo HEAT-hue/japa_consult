@@ -29,6 +29,7 @@ export type SaveUserNotesRequest = {
 export type SaveUserNotesResponse = {
     msg?: string,
     details?: string
+    draft_id: number
 }
 
 export type UpdateUserNoteRequest = {
@@ -52,4 +53,14 @@ export type DeleteUserNoteResponse = {
     msg?: string,
     detail?: string
     details?: string
+}
+
+export type SendNoteRequest = {
+    "draftId": number,
+    "toId": number
+}
+
+export type SendNoteResponse = {
+    msg: string,
+    draft_id: number
 }

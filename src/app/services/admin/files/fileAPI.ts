@@ -1,6 +1,6 @@
 // jshint esversion:6
 import { emptySplitApi } from "../../api";
-import { GetAllFilesUploadedResponse } from "@/data/admin/files";
+import { GetAllFilesUploadedResponse, GetUserFilesRequest, GetUserFilesResponse } from "@/data/admin/files";
 
 export const fileAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -12,26 +12,14 @@ export const fileAPI = emptySplitApi.injectEndpoints({
             providesTags: ['GET_ALL_FILES']
         }),
 
-        // Get user profile
-        // uploadFile: builder.mutation<UploadUserFileResponse, UploadUserFileRequest>({
-        //     query: (credentials) => ({
-        //         url: `documents/upload`,
-        //         method: 'POST',
-        //         params: credentials.params,
-        //         body: credentials.body,
-        //     }),
-        //     invalidatesTags: ['GET_FILES']
-
-        // }),
-
         // Get USER FILE
-        // getFile: builder.query<GetFilesResponse, GetFilesRequest>({
-        //     query: (params) => ({
-        //         url: `documents/myfiles`,
-        //         params,
-        //     }),
-        //     providesTags: ['GET_FILES']
-        // }),
+        getUserFile: builder.query<GetUserFilesResponse, GetUserFilesRequest>({
+            query: (params) => ({
+                url: `documents/userfiles`,
+                params,
+            }),
+            providesTags: ['GET_USER_FILES']
+        }),
 
         // Get Recent File Uploads
         // getUserRecentFileUploads: builder.query<GetRecentFilesUploadedResponse, GetRecentFilesUploadedRequest>({
@@ -44,4 +32,4 @@ export const fileAPI = emptySplitApi.injectEndpoints({
     })
 })
 
-export const { useGetAllFilesUploadedQuery } = fileAPI
+export const { useGetAllFilesUploadedQuery, useGetUserFileQuery, useLazyGetUserFileQuery } = fileAPI
