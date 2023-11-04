@@ -13,7 +13,8 @@ import {
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
-  CreateNotePage, InvoicePage
+  CreateNotePage,
+  // CreateNotePage, InvoicePage
 } from "@/pages/user";
 
 import {
@@ -50,7 +51,7 @@ export default function App() {
               <Route path="/notes/create" element={<CreateNotePage />} />
               <Route path="/files" element={<FilesPage />} />
               <Route path="/files/file/:folderName" element={<FolderPage />} />
-              <Route path="/invoice" element={<InvoicePage />} />
+              <Route path="/invoice" element={<ComingSoonPage />} />
               <Route path="/invoice/create" element={<CreateInvoicePage />} />
             </Route>
           </Route>

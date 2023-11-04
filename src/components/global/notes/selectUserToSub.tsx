@@ -121,6 +121,8 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
         // Send note to user
         let response = await submitNote(selectedUserId);
 
+        console.log(response);
+
         if (!response.success) {
             // An error occurred
             setErrorMessage(response.message);
