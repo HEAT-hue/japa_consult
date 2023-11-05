@@ -108,7 +108,9 @@ export const InvoicePage: React.FC = () => {
         <div>
 
             {/* Invoive Navigation */}
-            <div className="flex gap-x-3 mt-5">
+            <div className="flex flex-col gap-y-5 items-center mt-5">
+                <h1 className="font-Inter-Bold text-2xl">Invoice Payment</h1>
+
                 <select
                     name="folder"
                     className="p-2 bg-white border text-brandColor border-brandColor rounded cursor-pointer mx-auto"
@@ -121,9 +123,11 @@ export const InvoicePage: React.FC = () => {
                     <option value={INVOICE_NAVIGATION.PENDING} >Paid Invoices</option>
                 </select>
 
-                {/* <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.ALL)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.ALL && "border-b-[2px] border-brandColor"}`}>All Invoices</h3>
-                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PAID)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PAID && "border-b-[2px] border-brandColor"}`}>Paid Invoices</h3>
-                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PENDING)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PENDING && "border-b-[2px] border-brandColor"}`}>Pending Invoices</h3> */}
+                {/* <div className="hidden sm:block"> */}
+                {/* <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.ALL)} className={`hidden sm:block cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.ALL && "border-b-[2px] border-brandColor"}`}>All Invoices</h3>
+                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PAID)} className={`hidden sm:block cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PAID && "border-b-[2px] border-brandColor"}`}>Paid Invoices</h3>
+                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PENDING)} className={`hidden sm:block cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PENDING && "border-b-[2px] border-brandColor"}`}>Pending Invoices</h3> */}
+                {/* </div> */}
             </div>
 
             {/* Invoice Data Wrapper */}
@@ -170,7 +174,6 @@ export const InvoicePage: React.FC = () => {
                     <AdminInvoiceInfo invoice={invoiceInfo.data} />
                 </Modal>
             )}
-
         </div>
     )
 }
