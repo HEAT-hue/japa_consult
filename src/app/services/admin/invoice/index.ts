@@ -1,5 +1,5 @@
 export {
     useGetPaidInvoiceQuery, useGetTotalRevenueQuery,
     useGetAllInvoiceQuery, useGetPendingInvoiceQuery,
-    useCreateInvoiceMutation
+    useCreateInvoiceMutation, useUpdateInvoiceStatusMutation
 } from "./invoiceAPI";

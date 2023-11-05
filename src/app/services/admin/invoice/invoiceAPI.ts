@@ -3,7 +3,8 @@ import { emptySplitApi } from "../../api";
 import {
     GetPaidInvoiceResponse, GetTotalRevenueResponse,
     GetAllInvoiceResponse, GetPendingInvoiceResponse,
-    CreateInvoiceRequest, CreateInvoiceResponse
+    CreateInvoiceRequest, CreateInvoiceResponse, UpdateInvoiceStatusRequest,
+    UpdateInvoiceStatusResponse
 } from "@/data/admin";
 
 export const invoiceAPI = emptySplitApi.injectEndpoints({
@@ -31,11 +32,21 @@ export const invoiceAPI = emptySplitApi.injectEndpoints({
             providesTags: ['INVOICE']
         }),
 
+        // Create Invoice
         createInvoice: builder.mutation<CreateInvoiceResponse, CreateInvoiceRequest>({
             query: (credentials) => ({
                 url: `invoice/create`,
                 method: "POST",
                 body: credentials,
+            }),
+            invalidatesTags: ['INVOICE']
+        }),
+
+        updateInvoiceStatus: builder.mutation<UpdateInvoiceStatusResponse, UpdateInvoiceStatusRequest>({
+            query: (params) => ({
+                url: `invoice/manualUpdate`,
+                method: "PATCH",
+                params,
             }),
             invalidatesTags: ['INVOICE']
         }),
@@ -45,5 +56,5 @@ export const invoiceAPI = emptySplitApi.injectEndpoints({
 export const {
     useGetPaidInvoiceQuery, useGetTotalRevenueQuery,
     useGetAllInvoiceQuery, useGetPendingInvoiceQuery,
-    useCreateInvoiceMutation
+    useCreateInvoiceMutation, useUpdateInvoiceStatusMutation
 } = invoiceAPI

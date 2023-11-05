@@ -36,3 +36,13 @@ export type CreateInvoiceResponse = {
     detail?: string
     details?: string
 }
+
+export type UpdateInvoiceStatusRequest = {
+    invoiceId: string
+}
+
+export type UpdateInvoiceStatusResponse = {
+    msg?: string
+    detail?: string
+    details?: string
+}

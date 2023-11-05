@@ -3,6 +3,10 @@ import { PaidInvoiceType } from "@/data/admin/invoice/invoice"
 import InvoiceIcon from "@/assets/admin/Invoice.svg"
 import PaidInvoiceIcon from "@/assets/admin/Done.svg"
 import { getFormattedDate } from "@/utils/global"
+import { FaRegEdit } from "react-icons/fa"
+import { useState } from "react"
+import { UpdateInvoiceStatus } from "."
+import { Modal } from "@/components/global"
 
 type AdminInvoiceInfoProp = {
     invoice: PaidInvoiceType
@@ -10,7 +14,9 @@ type AdminInvoiceInfoProp = {
 
 export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) => {
 
-    console.log(invoice);
+    const [updateStatus, setUpdateStatus] = useState<boolean>(false);
+
+
 
     // Due date
     const { day: dayCreated, monthShort: monthShortCreated, year: yearCreated } = getFormattedDate(new Date(invoice.created_at))
@@ -31,7 +37,14 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
             <p
                 className={`${invoice.paid ? 'text-green-700' : 'text-brandColor'} self-end`}
             >
-                {invoice.paid ? "Paid" : "Pending"}
+                {invoice.paid ? "Paid" : (
+                    <div className="flex gap-x-3 items-center">
+                        <span>Paid</span>
+                        <span onClick={() => setUpdateStatus(true)} className="text-placeholder cursor-pointer">
+                            <FaRegEdit />
+                        </span>
+                    </div>
+                )}
             </p>
 
             {/* Invoice details */}
@@ -78,6 +91,13 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
                 </div>
 
             </div>
+
+            {/* Update Invoice Sttaus */}
+            {updateStatus && (
+                <Modal bare closeModal={() => setUpdateStatus(false)}>
+                    <UpdateInvoiceStatus invoice={invoice} closeModal={() => setUpdateStatus(false)} />
+                </Modal>
+            )}
         </div>
     )
 }
