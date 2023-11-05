@@ -1,0 +1,1 @@
+export { ReceiptSVG } from "./ReceiptSVG";

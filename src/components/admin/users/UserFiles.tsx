@@ -51,8 +51,6 @@ export const UserFiles: React.FC<RecentFileUploadProp> = ({ data }) => {
 
         const response = await adminDeleteUserFile({ fileId: file.file_id });
 
-        console.log(response);
-
         if (!response.success) {
             setErrorMessage(response.message);
             timeoutID = setTimeout(() => {

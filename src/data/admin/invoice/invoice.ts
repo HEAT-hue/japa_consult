@@ -15,9 +15,9 @@ export type PaidInvoiceType = {
     "price": number,
     "to_email": string,
     "created_at": Date,
-    "created_by": Date,
-    "updated_at": Date,
-    "updated_by": string,
+    "created_by": string,
+    "updated_at": Date | null,
+    "updated_by": string | null,
     "due_date": Date,
     "paid": boolean,
     "paid_at": Date

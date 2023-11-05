@@ -80,7 +80,7 @@ export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, 
         if (!enteredAmount || !selectedUser || !desc) {
             !enteredAmount && setErrorState((prev) => ({ ...prev, amount: true }));
             !selectedUser && setErrorState((prev) => ({ ...prev, user: true }));
-            !desc && setErrorState((prev) => ({ ...prev, user: true }));
+            !desc && setErrorState((prev) => ({ ...prev, desc: true }));
             return;
         }
 
@@ -194,7 +194,7 @@ export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, 
                         <textarea
                             value={desc}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDesc(e.target.value)}
-                            className={`w-full sm:w-[280px] leading-tight h-[100px] resize-none border ${errorState.amount && "border-error"} outline-none focus:border-brandColor rounded p-2 text-[#666666]`}
+                            className={`w-full sm:w-[280px] leading-tight h-[100px] resize-none border ${errorState.desc && "border-error"} outline-none focus:border-brandColor rounded p-2 text-[#666666]`}
                         />
                     </div>
 
