@@ -1,5 +1,5 @@
 // jshint esversion:6
-import { CSSProperties } from "react";
+import { CSSProperties, ChangeEvent } from "react";
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
 import { useGetAllInvoiceQuery } from "@/app/services/admin/invoice";
 import { useGetPendingInvoiceQuery } from "@/app/services/admin/invoice";
@@ -109,9 +109,21 @@ export const InvoicePage: React.FC = () => {
 
             {/* Invoive Navigation */}
             <div className="flex gap-x-3 mt-5">
-                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.ALL)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.ALL && "border-b-[2px] border-brandColor"}`}>All Invoices</h3>
+                <select
+                    name="folder"
+                    className="p-2 bg-white border text-brandColor border-brandColor rounded cursor-pointer mx-auto"
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                        handleNavigationClick(e.target.value as INVOICE_NAVIGATION)
+                    }}
+                >
+                    <option value={INVOICE_NAVIGATION.ALL} >All Invoices</option>
+                    <option value={INVOICE_NAVIGATION.PAID} >Pending Invoices</option>
+                    <option value={INVOICE_NAVIGATION.PENDING} >Paid Invoices</option>
+                </select>
+
+                {/* <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.ALL)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.ALL && "border-b-[2px] border-brandColor"}`}>All Invoices</h3>
                 <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PAID)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PAID && "border-b-[2px] border-brandColor"}`}>Paid Invoices</h3>
-                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PENDING)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PENDING && "border-b-[2px] border-brandColor"}`}>Pending Invoices</h3>
+                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PENDING)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PENDING && "border-b-[2px] border-brandColor"}`}>Pending Invoices</h3> */}
             </div>
 
             {/* Invoice Data Wrapper */}
