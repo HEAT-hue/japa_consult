@@ -12,7 +12,7 @@ export const noteAPI = emptySplitApi.injectEndpoints({
         // Get user profile
         getUserNotes: builder.query<GetUserNotesResponse, void>({
             query: () => ({
-                url: `notes`,
+                url: `notes/`,
             }),
             providesTags: ['GET_NOTES']
         }),

@@ -42,6 +42,7 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
                 {invoice.paid ? "Paid" : (
                     <div className="flex gap-x-3 items-center">
                         <span>Pending</span>
+                        
                         {(userProfile?.role !== USERROLES.USER) && (
                             <span onClick={() => setUpdateStatus(true)} className="text-placeholder cursor-pointer">
                                 <FaRegEdit />
