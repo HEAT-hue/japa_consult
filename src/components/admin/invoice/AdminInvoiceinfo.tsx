@@ -7,6 +7,8 @@ import { FaRegEdit } from "react-icons/fa"
 import { useState } from "react"
 import { UpdateInvoiceStatus } from "."
 import { Modal } from "@/components/global"
+import { useAppSelector } from "@/hooks/typedHooks"
+import { USERROLES } from "@/data/global/auth"
 
 type AdminInvoiceInfoProp = {
     invoice: PaidInvoiceType
@@ -15,6 +17,8 @@ type AdminInvoiceInfoProp = {
 export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) => {
 
     const [updateStatus, setUpdateStatus] = useState<boolean>(false);
+
+    const { userProfile } = useAppSelector((state) => state.auth)
 
     // Due date
     const { day: dayCreated, monthShort: monthShortCreated, year: yearCreated } = getFormattedDate(new Date(invoice.created_at))
@@ -38,9 +42,11 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
                 {invoice.paid ? "Paid" : (
                     <div className="flex gap-x-3 items-center">
                         <span>Pending</span>
-                        <span onClick={() => setUpdateStatus(true)} className="text-placeholder cursor-pointer">
-                            <FaRegEdit />
-                        </span>
+                        {(userProfile?.role !== USERROLES.USER) && (
+                            <span onClick={() => setUpdateStatus(true)} className="text-placeholder cursor-pointer">
+                                <FaRegEdit />
+                            </span>
+                        )}
                     </div>
                 )}
             </p>
