@@ -111,7 +111,7 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
             clearTimeout(timeoutID);
         }
 
-    }, [selectedUser])
+    }, [selectedUser, getAllAdmins, getAllManagers, getAllStaffs, getAllUsers])
 
     async function SendNoteToUser() {
         if (!selectedUserId) {
@@ -120,8 +120,6 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
 
         // Send note to user
         let response = await submitNote(selectedUserId);
-
-        console.log(response);
 
         if (!response.success) {
             // An error occurred
@@ -221,7 +219,6 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
             {errorMessage && (
                 <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
             )}
-
         </div>
     )
 }

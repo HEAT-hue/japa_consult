@@ -11,7 +11,7 @@ export const DashboardPage: React.FC = () => {
             <div className="no-scroll flex items-start flex-wrap overflow-auto gap-3 gap-y-5">
 
                 {/* Overview boxes */}
-                <div className="flex flex-wrap items-start gap-3">
+                <div className="flex flex-wrap justify-center items-start gap-3">
                     <TotalRevenueOverviewBox />
                     <TotalNotesCreatedOverviewBox />
                     <TotalNotesReceivedOverviewBox />

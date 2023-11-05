@@ -10,7 +10,7 @@ export const AdminDashboardPage: React.FC = () => {
             <div className="no-scroll flex items-start flex-wrap overflow-auto gap-3 gap-y-5">
 
                 {/* Overview boxes */}
-                <div className="flex flex-wrap items-start gap-3">
+                <div className="flex flex-wrap items-start justify-center gap-3">
                         <TotalRevenueOverviewBox />
                         <TotalUsersOverviewBox />
                         <ActiveUsersOverviewBox />

@@ -8,9 +8,12 @@ import { CSSProperties, useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { INVOICE_NAVIGATION } from "@/data/global";
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
-import { AdminInvoiceView } from "@/components/admin/invoice";
+import { AdminInvoiceView, AdminInvoiceViewMV } from "@/components/admin/invoice";
 import { useEffect } from "react";
 import { ReceiptSVG } from "@/components/global/svg/invoice";
+import { Modal } from "@/components/global";
+import { AdminInvoiceInfo } from "@/components/admin/invoice";
+
 
 const override: CSSProperties = {
     display: "inline-block",
@@ -18,12 +21,20 @@ const override: CSSProperties = {
     borderColor: "red",
 };
 
+export type InvoiceInfotype = {
+    status: boolean,
+    data: PaidInvoiceType | undefined
+}
 
 export const AdminInvoicePage: React.FC = () => {
 
     const { data: AllInvoiceData, isLoading: isAllInvoiceLoading } = useGetAllInvoiceQuery()
     const { data: PendingInvoiceData, isLoading: isPendingInvoiceLoading } = useGetPendingInvoiceQuery()
     const { data: PaidInvoiceData, isLoading: isPaidInvoiceLoading } = useGetPaidInvoiceQuery()
+
+    const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfotype>({ status: false, data: undefined });
+
+    console.log(AllInvoiceData);
 
     const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
     const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
@@ -57,6 +68,10 @@ export const AdminInvoicePage: React.FC = () => {
         })()
 
     }, [invoiceType, AllInvoiceData, PendingInvoiceData, PaidInvoiceData])
+
+    function handleInvoiceClick(data: InvoiceInfotype) {
+        setInvoiceInfo((prev) => ({ ...prev, ...data }))
+    }
 
     // Handle navigation click
     function handleNavigationClick(navigation: INVOICE_NAVIGATION) {
@@ -95,12 +110,12 @@ export const AdminInvoicePage: React.FC = () => {
         <div className="py-5">
 
             {/* Create Invoice */}
-            <Link to={"create"}>
-                <div className="w-[100px] h-[100px] bg-white flex items-center justify-center rounded-md border border-gray-200">
+            <div className="w-[100px] h-[100px] bg-white flex items-center justify-center rounded-md border border-gray-200">
+                <Link to={"create"} className="w-full h-full flex items-center justify-center">
                     <img src={PlusIcon} alt="Add note" />
-                </div>
-                <p className="font-Inter-Regular text-sm mt-2">Create Invoice</p>
-            </Link>
+                </Link>
+            </div>
+            <p className="font-Inter-Regular text-sm mt-2">Create Invoice</p>
 
 
             {/* Invoive Navigation */}
@@ -137,9 +152,22 @@ export const AdminInvoicePage: React.FC = () => {
                         <p className="flex items-center justify-center gap-x-2 text-placeholder text-xl">No Invoice Found</p>
                     </div>
                 ) : (
-
-                    <AdminInvoiceView invoiceData={invoiceData} />
+                    <div>
+                        <div className="sm:hidden">
+                            <AdminInvoiceViewMV invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} />
+                        </div>
+                        <div className="hidden sm:block">
+                            <AdminInvoiceView invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} />
+                        </div>
+                    </div>
                 )
+            )}
+
+            {/* More Info about Invoice */}
+            {invoiceInfo.status && invoiceInfo.data && (
+                <Modal bare closeModal={() => setInvoiceInfo({ status: false, data: undefined })}>
+                    <AdminInvoiceInfo invoice={invoiceInfo.data} />
+                </Modal>
             )}
 
         </div>

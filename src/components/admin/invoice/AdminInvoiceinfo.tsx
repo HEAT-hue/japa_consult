@@ -16,8 +16,6 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
 
     const [updateStatus, setUpdateStatus] = useState<boolean>(false);
 
-
-
     // Due date
     const { day: dayCreated, monthShort: monthShortCreated, year: yearCreated } = getFormattedDate(new Date(invoice.created_at))
     const { day: dayUpdated, monthShort: monthShortUpdated, year: yearUpdated } = getFormattedDate(new Date(invoice.updated_at ?? new Date()))
@@ -39,7 +37,7 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
             >
                 {invoice.paid ? "Paid" : (
                     <div className="flex gap-x-3 items-center">
-                        <span>Paid</span>
+                        <span>Pending</span>
                         <span onClick={() => setUpdateStatus(true)} className="text-placeholder cursor-pointer">
                             <FaRegEdit />
                         </span>

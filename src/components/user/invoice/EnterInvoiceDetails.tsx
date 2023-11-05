@@ -28,7 +28,7 @@ type ErrorState = {
 
 let timeoutID: any;
 
-export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, amount, setAmount, prev }) => {
+export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, amount, prev }) => {
 
     const navigate = useNavigate()
 
@@ -84,8 +84,7 @@ export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, 
             return;
         }
 
-        // Set the amount
-        setAmount(enteredAmount);
+        // setAmount(enteredAmount);
 
         const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${('0' + date.getDate()).slice(-2)}`
 
@@ -94,10 +93,11 @@ export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, 
             title: (invoiceType as string),
             desc,
             due_date: formattedDate,
-            price: Number(amount ?? 0),
+            price: Number(enteredAmount ?? 0),
             to_email: selectedUser.email
         });
 
+        // Not successful
         if (!response.success) {
             // fail
             setErrorMessage("An error occurred!");

@@ -12,6 +12,8 @@ export const NotePage: React.FC = () => {
     // Note API
     const { data: notesData, isFetching: isNotesFetching, isError, error } = useGetUserNotesHook();
 
+    console.log(notesData);
+
     const override: CSSProperties = {
         display: "inline-block",
         margin: "0 auto",
