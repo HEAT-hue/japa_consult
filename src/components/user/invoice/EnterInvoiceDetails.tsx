@@ -84,8 +84,6 @@ export const EnterInvoiceDetails: React.FC<SelectInvoiceProp> = ({ invoiceType, 
             return;
         }
 
-        // setAmount(enteredAmount);
-
         const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${('0' + date.getDate()).slice(-2)}`
 
         // Call next form
