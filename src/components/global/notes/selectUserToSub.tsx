@@ -153,8 +153,8 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
                     }}
                 >
                     <option value={undefined} selected disabled>Select User</option>
-                    <option value={USERROLES.ADMIN}>Admin</option>
-                    <option value={USERROLES.MANAGER}>Manager</option>
+                    {/* <option value={USERROLES.ADMIN}>Admin</option> */}
+                    {/* <option value={USERROLES.MANAGER}>Manager</option> */}
                     <option value={USERROLES.STAFF}>Staff</option>
                     <option value={USERROLES.USER}>User</option>
                 </select>

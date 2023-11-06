@@ -23,9 +23,9 @@ export const NotePage: React.FC = () => {
                     <p className="font-Inter-Regular text-sm mt-2">Create new note</p>
                 </Link>
 
-                <div className="flex gap-x-2 mt-5">
-                    <h3 onClick={() => setNoteType(NOTE_NAVIGATION.RECENT)} className={`hidden sm:block cursor-pointer w-max py-1 ${noteType == NOTE_NAVIGATION.RECENT && "border-b-[2px] border-brandColor"}`}>Recent Notes</h3>
-                    <h3 onClick={() => setNoteType(NOTE_NAVIGATION.RECEIVED)} className={`hidden sm:block cursor-pointer w-max py-1 ${noteType == NOTE_NAVIGATION.RECEIVED && "border-b-[2px] border-brandColor"}`}>Received Notes</h3>
+                <div className="flex gap-x-5 mt-5">
+                    <h3 onClick={() => setNoteType(NOTE_NAVIGATION.RECENT)} className={`cursor-pointer w-max py-1 ${noteType == NOTE_NAVIGATION.RECENT && "border-b-[2px] border-brandColor"}`}>Recent Notes</h3>
+                    <h3 onClick={() => setNoteType(NOTE_NAVIGATION.RECEIVED)} className={`cursor-pointer w-max py-1 ${noteType == NOTE_NAVIGATION.RECEIVED && "border-b-[2px] border-brandColor"}`}>Received Notes</h3>
                 </div>
 
                 {noteType == NOTE_NAVIGATION.RECENT && (
