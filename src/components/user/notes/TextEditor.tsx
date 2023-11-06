@@ -4,11 +4,11 @@ import 'quill/dist/quill.snow.css';
 import "./style.css";
 import ReactQuill from 'react-quill'
 import { NoteDataType } from "@/pages/user/notes/CreateNotePage";
-// import { Notification } from "@/components/global";
 import { Modal } from "@/components/global";
 import { SelectUserToSubmitNote } from "@/components/global/notes"
 import { useAppSelector } from "@/hooks/typedHooks";
 import { MutationResultType } from "@/data/global";
+import { NOTE_NAVIGATION } from "@/data/global";
 
 // Build the Customized module:
 let modules = {
@@ -46,15 +46,14 @@ type TextEditorProp = {
         isSendNoteLoading: boolean
     },
     saveNote(): Promise<void>
+    noteType: NOTE_NAVIGATION
 }
 
-export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, NoteAPIProps, saveNote }) => {
+export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, NoteAPIProps, saveNote, noteType }) => {
 
     const { userProfile } = useAppSelector((state) => state.auth)
 
     const { isNoteSaveLoading, submitNote, isSendNoteLoading } = NoteAPIProps
-
-    // const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const [submitNoteModalOpen, setSubmitNoteModalOpen] = useState<boolean>(false);
 
@@ -68,19 +67,21 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
 
     return (
         <>
-            <div className="flex justify-end gap-x-3 my-[0.6rem]">
-                {/* Save Document */}
-                <button onClick={saveNote} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving..." : "Save"}</button>
+            {noteType == NOTE_NAVIGATION.RECENT && (
+                <div className="flex justify-end gap-x-3 my-[0.6rem]">
+                    {/* Save Document */}
+                    <button onClick={saveNote} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving..." : "Save"}</button>
 
-                {/* Submit document */}
-                <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setSubmitNoteModalOpen(true)}>Submit</button>
-            </div>
+                    {/* Submit document */}
+                    <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setSubmitNoteModalOpen(true)}>Submit</button>
+                </div>
+            )}
 
             {/* Note Editor */}
             <div className="h-full bg-white rounded">
 
                 {/* Note title */}
-                <input className="font-Inter-Bold w-full py-3 px-4 text-lg focus:border focus:border-brandColor outline-none" type="text" value={noteData.title} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                <input disabled={noteType == NOTE_NAVIGATION.RECEIVED} className="font-Inter-Bold w-full py-3 px-4 text-lg focus:border focus:border-brandColor outline-none" type="text" value={noteData.title} onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     handleTitleChange(e.target.value);
                 }} />
 
@@ -93,6 +94,7 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
                     onChange={handleProcedureContentChange}
                     value={noteData.content}
                     bounds={'#root'}
+                    readOnly={noteType == NOTE_NAVIGATION.RECEIVED}
                     style={{ height: "81%", width: "100%", backgroundColor: "white" }}
                 />
 

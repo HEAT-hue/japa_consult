@@ -1,32 +1,31 @@
 // jshint esversion:6
-import { UserNoteResponse } from "@/data/users/notes/apiTypes";
+// import { UserNoteResponse } from "@/data/users/notes/apiTypes";
 import ReactHtmlParser from 'react-html-parser';
 import DotsOutline from "@/assets/global/DotsVerticalOutline.svg";
 import { getFormattedDate, getFileDate } from "@/utils/global";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "@/components/global";
-import { useDeleteUserNoteHook } from "@/hooks/user/notes";
-import { NOTE_NAVIGATION } from "@/data/global";
+// import { useDeleteUserNoteHook } from "@/hooks/user/notes";
+import { ReceivedNoteResponse } from "@/data/users/notes/apiTypes";
+import { NOTE_NAVIGATION } from '@/data/global';
 
 type NotePreviewProp = {
-    data: UserNoteResponse
+    data: ReceivedNoteResponse
 }
 
 let timeoutID: any;
 
-export const NotePreview: React.FC<NotePreviewProp> = ({ data }) => {
+export const ReceivedNotePreview: React.FC<NotePreviewProp> = ({ data }) => {
     // Error uploading files
-    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+    console.log(data)
+    // const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     // Get Time Info
-    const { year, monthShort, day, } = getFormattedDate(new Date(data.last_updated ?? new Date()));
+    const { year, monthShort, day, } = getFormattedDate(new Date(data.sent_time ?? new Date()));
 
     // Show more note info
     const [modalOpen, setModalOpen] = useState<boolean>(false);
-
-    // Delete note
-    const { deleteUserNote, isLoading } = useDeleteUserNoteHook();
 
     useEffect(() => {
         return () => {
@@ -35,29 +34,29 @@ export const NotePreview: React.FC<NotePreviewProp> = ({ data }) => {
     }, [])
 
 
-    async function handleDeleteNoteClick() {
-        const response = await deleteUserNote({ d_id: data.draft_id })
+    // async function handleDeleteNoteClick() {
+    //     const response = await deleteUserNote({ d_id: data.draft_id })
 
-        if (!response.success) {
-            setErrorMessage("Cannot delete note")
-            timeoutID = setTimeout(() => {
-                setErrorMessage(undefined);
-            }, 3000)
-            return;
-        }
+    //     if (!response.success) {
+    //         setErrorMessage("Cannot delete note")
+    //         timeoutID = setTimeout(() => {
+    //             setErrorMessage(undefined);
+    //         }, 3000)
+    //         return;
+    //     }
 
-        // Close modal
-        setModalOpen(false);
-    }
+    //     // Close modal
+    //     setModalOpen(false);
+    // }
 
     return (
         <>
             <div className="w-[140px]">
                 <Link to={"create"} state={{
-                    draft_id: data.draft_id,
+                    // draft_id: data.draft_id,
                     title: data.title,
                     content: data.content,
-                    noteType: NOTE_NAVIGATION.RECENT
+                    noteType: NOTE_NAVIGATION.RECEIVED
                 }}>
                     {/* Note Preview */}
                     <div className="w-[140px] h-[170px] p-3 bg-white overflow-hidden text-[7px] rounded border border-gray-200">
@@ -88,29 +87,18 @@ export const NotePreview: React.FC<NotePreviewProp> = ({ data }) => {
                 <Modal bare closeModal={() => setModalOpen(false)}>
                     <div className="rounded overflow-hidden">
                         <div className="p-4 font-Inter-Regular flex flex-col gap-y-2">
-                            <div className="flex items-center gap-x-2">
-                                <p className="text-placeholder">ID:</p>
-                                <p className="text-black text-sm">{data.draft_id}</p>
-                            </div>
                             <div className="flex gap-x-2">
                                 <p className="text-placeholder">Title:</p>
                                 <p className="text-black">{data.title}</p>
                             </div>
                             <div className="flex gap-x-2">
-                                <p className="text-placeholder">Date created:</p>
-                                <p className="text-black text-sm">{getFileDate(data.date_created ?? new Date())}</p>
+                                <p className="text-placeholder">Date received:</p>
+                                <p className="text-black text-sm">{getFileDate(data.sent_time ?? new Date())}</p>
                             </div>
                             <div className="flex gap-x-2">
-                                <p className="text-placeholder">Date modified:</p>
-                                <p className="text-black text-sm">{getFileDate(data.last_updated ?? new Date())}</p>
+                                <p className="text-placeholder">Sent by:</p>
+                                <p className="text-black">{data.sent_by}</p>
                             </div>
-                        </div>
-
-                        {errorMessage && (<p className="text-error text-sm text-center">{errorMessage ?? "An error occurred"}</p>)}
-
-                        {/* Delete note */}
-                        <div className="flex justify-end p-2 py-4">
-                            <button onClick={handleDeleteNoteClick} className="py-2 px-3 w-max bg-error text-white rounded-sm">{isLoading ? "Deleting..." : "Delete note"}</button>
                         </div>
                     </div>
                 </Modal>

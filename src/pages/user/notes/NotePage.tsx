@@ -1,85 +1,98 @@
 // jshint esversion:6
 import PlusIcon from "@/assets/global/Plus.svg";
 import { Link } from "react-router-dom";
-import { useGetUserNotesHook } from "@/hooks/user/notes";
-import { NotePreview } from "@/components/user/notes/NotePreview";
-import { LineLoader } from "@/components/global/loader";
-import { getErrorMessage } from "@/utils/global";
-import { BeatLoader } from "react-spinners";
-import { CSSProperties } from "react";
+// import { useGetUserNotesHook } from "@/hooks/user/notes";
+import { RecentNote } from "@/components/global/notes";
+// import { CSSProperties } from "react";
+// import { useGetReceivedNotesQuery } from "@/app/services/user/notes";
+import { useState, } from "react";
+// import { UserNoteResponse } from "@/data/users/notes/apiTypes";
+import { NOTE_NAVIGATION } from "@/data/global";
+// import { ReceivedNoteResponse } from "@/data/users/notes/apiTypes";
+import { RecievedNote } from "@/components/global/notes";
+
 
 export const NotePage: React.FC = () => {
-    // Note API
-    const { data: notesData, isFetching: isNotesFetching, isError, error } = useGetUserNotesHook();
 
-    console.log(notesData);
+    const [noteType, setNoteType] = useState<NOTE_NAVIGATION>(NOTE_NAVIGATION.RECENT)
 
-    const override: CSSProperties = {
-        display: "inline-block",
-        margin: "0 auto",
-        borderColor: "red",
-    };
+    // Fetch users 
+    // useEffect(() => {
+    //     if (!noteType) {
+    //         return;
+    //     }
+
+    //     (async function () {
+    //         switch (noteType) {
+
+    //             // Fetch All files in General
+    //             case NOTE_NAVIGATION.RECENT: {
+    //                 setNoteData(notesData ?? []);
+    //                 break;
+    //             }
+    //             case NOTE_NAVIGATION.RECEIVED: {
+    //                 setNoteData(receivedNotesData ?? []);
+    //                 break;
+    //             }
+
+    //             default:
+    //                 break;
+    //         }
+    //     })()
+
+    // }, [noteType, notesData, receivedNotesData])
+
+    // Handle navigation click
+    // function handleNavigationClick(navigation: NOTE_NAVIGATION) {
+    //     switch (navigation) {
+    //         case NOTE_NAVIGATION.RECENT: {
+    //             // if (notesData) {
+    //             //     setNoteData(notesData)
+    //             // }
+    //             setNoteType(NOTE_NAVIGATION.RECENT)
+    //             break;
+    //         }
+    //         case NOTE_NAVIGATION.RECEIVED: {
+    //             // if (notesData) {
+    //             //     setNoteData(notesData)
+    //             // }
+    //             setNoteType(NOTE_NAVIGATION.RECEIVED)
+    //             break;
+    //         }
+
+    //         default:
+    //             setNoteType(NOTE_NAVIGATION.RECENT)
+    //             break;
+    //     }
+    // }
 
     return (
         <>
             <div className="py-5">
 
                 {/* Create Note */}
-                <Link to={"create"}>
+                <Link to={"create"} state={{ noteType: NOTE_NAVIGATION.RECENT }}>
                     <div className="w-[140px] h-[140px] bg-white flex items-center justify-center rounded-md border border-gray-200">
                         <img src={PlusIcon} alt="Add note" />
                     </div>
                     <p className="font-Inter-Regular text-sm mt-2">Create new note</p>
                 </Link>
 
-                <h1 className="font-Inter-Bold text-lg mt-5">Recent notes</h1>
-
-                {/* Recent Notes */}
-                <div className="flex gap-5 flex-wrap pt-3">
-                    
-                    {/* Loader */}
-                    {isNotesFetching  && (
-                        <div className="w-full flex items-center justify-center">
-                            <div className="mt-[5rem] mx-auto">
-                                <BeatLoader
-                                    color={"#E1AE3C"}
-                                    loading={isNotesFetching}
-                                    cssOverride={override}
-                                    size={20}
-                                    aria-label="Loading Spinner"
-                                    data-testid="loader"
-                                />
-                            </div>
-                        </div>
-                    )}
-                    {isError ? (
-                        <p className="text-placeholder mt-9 text-sm">{getErrorMessage(error)}</p>
-                    ) : (
-                        notesData && notesData?.length < 1 ? (
-                            <div className="w-full flex flex-col gap-y-5 justify-center items-center mt-5">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" className="bi bi-journal-check" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
-                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
-                                </svg>
-                                <p className="text-lg font-Inter-Regular text-gray-500">No notes found</p>
-                            </div>
-                        ) : (
-
-                            notesData?.map((note, index: number) => {
-                                return (
-                                    <NotePreview key={index} data={note} />
-                                )
-                            })
-                        )
-                    )}
+                <div className="flex gap-x-2 mt-5">
+                    <h3 onClick={() => setNoteType(NOTE_NAVIGATION.RECENT)} className={`hidden sm:block cursor-pointer w-max py-1 ${noteType == NOTE_NAVIGATION.RECENT && "border-b-[2px] border-brandColor"}`}>Recent Notes</h3>
+                    <h3 onClick={() => setNoteType(NOTE_NAVIGATION.RECEIVED)} className={`hidden sm:block cursor-pointer w-max py-1 ${noteType == NOTE_NAVIGATION.RECEIVED && "border-b-[2px] border-brandColor"}`}>Received Notes</h3>
                 </div>
+
+                {noteType == NOTE_NAVIGATION.RECENT && (
+                    <RecentNote />
+                )}
+
+                {noteType == NOTE_NAVIGATION.RECEIVED && (
+                    <RecievedNote />
+                )}
             </div>
 
-            {/* Line Loader */}
-            {isNotesFetching && (
-                <LineLoader />
-            )}
+
         </>
     )
 }

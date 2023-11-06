@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { Toast } from "@/components/global"
 import { SaveUserNotesResponse } from "@/data/users/notes"
 import { MutationResultType } from "@/data/global"
+import { NOTE_NAVIGATION } from "@/data/global"
 
 export type NoteDataType = {
     title: string,
@@ -25,6 +26,8 @@ export const CreateNotePage: React.FC = () => {
 
     // Ref to hold note ID
     const noteIDRef = useRef<number | null>(null);
+
+    const noteType: NOTE_NAVIGATION = state.noteType;
 
     if (state != null) {
         console.log(state);
@@ -113,7 +116,7 @@ export const CreateNotePage: React.FC = () => {
     return (
         <>
             <div className="mt-7 h-5/6">
-                <TextEditor noteData={noteData} setNoteData={setNoteData} NoteAPIProps={NoteAPIProps} saveNote={saveNote} />
+                <TextEditor noteData={noteData} noteType={noteType} setNoteData={setNoteData} NoteAPIProps={NoteAPIProps} saveNote={saveNote} />
             </div>
 
             {actionSuccess && (

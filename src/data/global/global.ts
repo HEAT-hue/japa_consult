@@ -9,3 +9,8 @@ export enum INVOICE_NAVIGATION {
     PENDING = 'PENDING',
     PAID = 'PAID'
 }
+
+export enum NOTE_NAVIGATION {
+    RECENT = 'RECENT',
+    RECEIVED = 'RECEIVED'
+}
