@@ -2,6 +2,10 @@
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice"
 import { getFormattedDate } from "@/utils/global"
 import { InvoiceInfotype } from "@/pages/admin/invoices/AdminInvoicePage"
+import { useAppSelector } from "@/hooks/typedHooks"
+import { USERROLES } from "@/data/global/auth"
+import { useNavigate } from "react-router-dom"
+import checkBoxIcon from "@/assets/admin/checkbox.png";
 
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
@@ -9,6 +13,10 @@ type InvoiceView = {
 }
 
 export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick }) => {
+
+    const navigate = useNavigate();
+
+    const { userProfile } = useAppSelector((state) => state.auth);
 
     return (
         <>
@@ -33,6 +41,12 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
                             <th className="text-sm font-medium text-left w-[10%]">
                                 <span>Date due</span>
                             </th>
+                            {userProfile?.role == USERROLES.USER && (
+                                <th className="text-sm font-medium text-left w-[8%]">
+                                    <span>Action</span>
+                                </th>
+                            )}
+
                         </tr>
                     </thead>
 
@@ -68,6 +82,14 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
                                     <td className="w-full truncate text-[#AFAFAF]">
                                         <span>{`${dayDue} ${monthShortDue}, ${yearDue}`}</span>
                                     </td>
+                                    {userProfile?.role == USERROLES.USER &&
+                                        invoice.paid == false ? (
+                                        <td className="w-full truncate text-[#AFAFAF]">
+                                            <button onClick={() => navigate("pay", { state: { invoice } })} className="px-2 py-1 text-white bg-brandColor rounded">Pay now</button>
+                                        </td>
+                                    ) : (
+                                        <img className="w-[40px] h-[40px]" src={checkBoxIcon} alt="sel" />
+                                    )}
                                 </tr>
                             )
                         })}

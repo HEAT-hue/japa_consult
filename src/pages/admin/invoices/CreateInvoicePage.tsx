@@ -16,8 +16,8 @@ export const CreateInvoicePage: React.FC = () => {
 
     return (
         <>
-            <div className="pt-3">
-                <div className="sm:mm-5 bg-white p-7 px-5 sm:p-9 rounded-lg h-[85vh] overflow-scroll">
+            <div className="pt-9 sm:pt-3">
+                <div className="bg-white p-7 px-5 sm:p-9 rounded h-[85vh] overflow-scroll">
 
                     {/* Render multi form */}
                     {multiForms[currentIndex]}

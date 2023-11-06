@@ -73,7 +73,7 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
                     <button onClick={saveNote} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving..." : "Save"}</button>
 
                     {/* Submit document */}
-                    <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setSubmitNoteModalOpen(true)}>Submit</button>
+                    <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setSubmitNoteModalOpen(true)}>Send</button>
                 </div>
             )}
 

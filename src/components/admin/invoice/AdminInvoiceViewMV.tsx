@@ -2,6 +2,9 @@
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice"
 import { getFormattedDate } from "@/utils/global"
 import { InvoiceInfotype } from "@/pages/admin/invoices/AdminInvoicePage"
+import { useAppSelector } from "@/hooks/typedHooks"
+import { USERROLES } from "@/data/global/auth"
+import { useNavigate } from "react-router-dom"
 
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
@@ -9,6 +12,10 @@ type InvoiceView = {
 }
 
 export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick }) => {
+
+    const { userProfile } = useAppSelector((state) => state.auth);
+
+    const navigate = useNavigate();
 
     return (
         <>
@@ -44,10 +51,13 @@ export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleI
                                         <span>Amount:</span>
                                         <span className="">{Number(invoice.price).toLocaleString()}</span>
                                     </p>
+                                    {userProfile?.role == USERROLES.USER &&
+                                        invoice.paid == false && (
+                                            <div className="w-full text-right truncate text-[#AFAFAF]">
+                                                <button onClick={() => navigate("pay", { state: { invoice } })} className="px-2 py-1 text-white bg-brandColor rounded">Pay now</button>
+                                            </div>
+                                        )}
                                 </div>
-                                {/* <div className="text-sm flex flex-col gap-y-2">
-
-                                </div> */}
                             </div>
 
                         </div>

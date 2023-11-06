@@ -53,6 +53,7 @@ export function UserLayout() {
                     {currentLocationPathname == "/notes" && "Notes"}
                     {currentLocationPathname == "/notes/create" && "Notes"}
                     {currentLocationPathname == "/invoice" && "Invoice"}
+                    {currentLocationPathname == "/invoice/pay" && "Invoice"}
                     {currentLocationPathname == "/wallets" && "Wallet"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}
@@ -90,6 +91,7 @@ export function UserLayout() {
                     {currentLocationPathname == "/notes" && "Notes"}
                     {currentLocationPathname == "/notes/create" && "Notes"}
                     {currentLocationPathname == "/invoice" && "Invoice"}
+                    {currentLocationPathname == "/invoice/pay" && "Invoice"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}
                     {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}

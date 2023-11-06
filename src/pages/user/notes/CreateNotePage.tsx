@@ -30,7 +30,6 @@ export const CreateNotePage: React.FC = () => {
     const noteType: NOTE_NAVIGATION = state.noteType;
 
     if (state != null) {
-        console.log(state);
         noteIDRef.current = state.draft_id
     }
 

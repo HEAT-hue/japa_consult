@@ -7,13 +7,13 @@ import { store } from "./app/store"
 import {
   LoginPage, RegisterPage, VerifyUserEmailPage,
   PasswordResetPage, PasswordResetRequestPage, ComingSoonPage,
-  AdminRegisterPage
+  AdminRegisterPage,
 } from "@/pages/global"
 
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
-  CreateNotePage, InvoicePage
+  CreateNotePage, InvoicePage, PayInvoicePage
 } from "@/pages/user";
 
 import {
@@ -51,7 +51,7 @@ export default function App() {
               <Route path="/files" element={<FilesPage />} />
               <Route path="/files/file/:folderName" element={<FolderPage />} />
               <Route path="/invoice" element={<InvoicePage />} />
-              {/* <Route path="/invoice/create" element={<CreateInvoicePage />} /> */}
+              <Route path="/invoice/pay" element={<PayInvoicePage />} />
             </Route>
           </Route>
 

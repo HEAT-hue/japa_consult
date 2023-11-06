@@ -144,7 +144,7 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
     return (
         <div className="p-5">
             <div className="flex justify-between gap-x-5 items-center">
-                <h3 className="font-Inter"><span className="text-brandColor font-Inter-Bold">Submit</span> note to:</h3>
+                <h3 className="font-Inter"><span className="text-brandColor font-Inter-Bold">Send</span> note to:</h3>
                 <select
                     className="p-2 bg-white border-[1px] border-brandColor rounded cursor-pointer"
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
