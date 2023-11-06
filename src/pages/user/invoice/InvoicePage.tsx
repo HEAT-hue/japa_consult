@@ -119,8 +119,8 @@ export const InvoicePage: React.FC = () => {
                     }}
                 >
                     <option value={INVOICE_NAVIGATION.ALL} >All Invoices</option>
-                    <option value={INVOICE_NAVIGATION.PAID} >Pending Invoices</option>
-                    <option value={INVOICE_NAVIGATION.PENDING} >Paid Invoices</option>
+                    <option value={INVOICE_NAVIGATION.PENDING} >Pending Invoices</option>
+                    <option value={INVOICE_NAVIGATION.PAID} >Paid Invoices</option>
                 </select>
 
                 {/* <div className="hidden sm:block"> */}
