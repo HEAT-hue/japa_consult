@@ -34,8 +34,6 @@ export const AdminInvoicePage: React.FC = () => {
 
     const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfotype>({ status: false, data: undefined });
 
-    console.log(AllInvoiceData);
-
     const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
     const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
 

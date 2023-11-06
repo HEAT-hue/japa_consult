@@ -82,14 +82,17 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
                                     <td className="w-full truncate text-[#AFAFAF]">
                                         <span>{`${dayDue} ${monthShortDue}, ${yearDue}`}</span>
                                     </td>
-                                    {userProfile?.role == USERROLES.USER &&
-                                        invoice.paid == false ? (
-                                        <td className="w-full truncate text-[#AFAFAF]">
-                                            <button onClick={() => navigate("pay", { state: { invoice } })} className="px-2 py-1 text-white bg-brandColor rounded">Pay now</button>
-                                        </td>
-                                    ) : (
-                                        <img className="w-[40px] h-[40px]" src={checkBoxIcon} alt="sel" />
-                                    )}
+                                    {(userProfile?.role == USERROLES.USER) &&
+                                        (
+                                            invoice.paid == false ? (
+                                                <td className="w-full truncate text-[#AFAFAF]">
+                                                    <button onClick={() => navigate("pay", { state: { invoice } })} className="px-2 py-1 text-white bg-brandColor rounded">Pay now</button>
+                                                </td>
+                                            ) : (
+                                                <img className="w-[40px] h-[40px]" src={checkBoxIcon} alt="sel" />
+                                            )
+                                        )
+                                    }
                                 </tr>
                             )
                         })}
