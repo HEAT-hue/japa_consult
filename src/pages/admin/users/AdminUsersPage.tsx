@@ -9,8 +9,10 @@ import { UsersTable, UsersTableMV } from "@/components/admin/users"
 import { Toast } from "@/components/global"
 import { BeatLoader } from "react-spinners"
 import { NoUserSVG } from "@/components/global/svg"
+import { useAppSelector } from "@/hooks/typedHooks"
 
 let timeoutID: any;
+
 
 const override: CSSProperties = {
     display: "inline-block",
@@ -19,6 +21,8 @@ const override: CSSProperties = {
 };
 
 export const AdminUsersPage: React.FC = () => {
+
+    const { userProfile } = useAppSelector((state) => state.auth);
 
     // Error message
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
@@ -30,7 +34,7 @@ export const AdminUsersPage: React.FC = () => {
     const [getAllUsers, { isLoading: isAllUsersLoading }] = useLazyGetAllUsersQuery()
 
     // Selected Users
-    const [selectedUser, setSelectedUser] = useState<USERROLES | undefined>(USERROLES.ADMIN);
+    const [selectedUser, setSelectedUser] = useState<USERROLES | undefined>(userProfile?.role);
 
     // List to hold selected users
     const [usersList, setUsersList] = useState<UserType[]>([]);
@@ -120,19 +124,27 @@ export const AdminUsersPage: React.FC = () => {
             <div className="w-full flex [&>*]:shrink-0 flex-nowrap gap-x-3 overflow-x-auto">
 
                 {/* All Admins */}
-                <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.ADMIN)}>
-                    <AllAdminsOverviewBox active={selectedUser == USERROLES.ADMIN} />
-                </div>
+                {userProfile?.role == USERROLES.ADMIN && (
+                    <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.ADMIN)}>
+                        <AllAdminsOverviewBox active={selectedUser == USERROLES.ADMIN} />
+                    </div>
+                )}
 
                 {/* All Managers */}
-                <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.MANAGER)}>
-                    <AllManagersOverviewBox active={selectedUser == USERROLES.MANAGER} />
-                </div>
+                {((userProfile?.role == USERROLES.ADMIN) || (userProfile?.role == USERROLES.MANAGER)) &&
+                    (
+                        <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.MANAGER)}>
+                            <AllManagersOverviewBox active={selectedUser == USERROLES.MANAGER} />
+                        </div>
+                    )
+                }
 
                 {/* All Staffs */}
                 <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.STAFF)}>
                     <AllStaffsOverviewBox active={selectedUser == USERROLES.STAFF} />
                 </div>
+                {/* {(userProfile?.role == USERROLES.ADMIN) || (userProfile?.role == USERROLES.MANAGER) || (userProfile?.role == USERROLES.STAFF) && (
+                )} */}
 
                 {/* All Users */}
                 <div className="cursor-pointer" onClick={() => setSelectedUser(USERROLES.USER)}>
