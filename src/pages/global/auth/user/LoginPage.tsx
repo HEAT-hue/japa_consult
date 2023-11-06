@@ -61,8 +61,6 @@ export const LoginPage: React.FC = () => {
         // Login user
         const response = await authLogin(data.email, data.password);
 
-        console.log(response);
-
         // Error logging in user
         if (!response.success) {
             setErrorMessage(response.message ?? "Could not login!")
@@ -95,7 +93,7 @@ export const LoginPage: React.FC = () => {
         }
 
         // Get USER Roles
-        if (userInfo.role == USERROLES.ADMIN) {
+        if (userInfo.role == USERROLES.ADMIN || userInfo.role == USERROLES.MANAGER || userInfo.role == USERROLES.STAFF) {
             // Direct User to Dashboard
             navigate("/admin")
         }
