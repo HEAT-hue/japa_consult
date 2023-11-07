@@ -70,7 +70,7 @@ export const RegisterPage: React.FC = () => {
         <>
             <section className="flex items-center bg-gray-50">
                 <section className="flex-1 h-full max-h-full max-w-full mx-auto bg-white rounded-lg">
-                    <div className="grid grwid-rows-1 grid-cols-1 lg:grid-cols-2 justify-items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
 
                         {/*Image Slider  */}
                         <section className="w-full hidden lg:block relative h-screen overflow-hidden bg-brandColor">

@@ -3,21 +3,41 @@ import { configureStore } from "@reduxjs/toolkit";
 import { emptySplitApi } from "./services/api";
 import { unauthenticatedMiddleware } from "./middleware";
 import { AuthSliceReducer } from "@/features/global/authSlice";
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from "@reduxjs/toolkit";
+
+// Combine all reducers here
+const rootReducer = combineReducers({
+    // Reducer for Auth Features
+    auth: AuthSliceReducer,
+
+    // Add the generated reducer as a specific top-level slice
+    [emptySplitApi.reducerPath]: emptySplitApi.reducer,
+})
+
+// Persist Configuration
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+// Create Persisted Reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 
 // Export reducers here
 export const store = configureStore({
-    reducer: {
-        // Reducer for Auth Features
-        auth: AuthSliceReducer,
-
-        // Add the generated reducer as a specific top-level slice
-        [emptySplitApi.reducerPath]: emptySplitApi.reducer,
-    },
+    // Persisted reducer here
+    reducer: persistedReducer,
 
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([unauthenticatedMiddleware, emptySplitApi.middleware,]),
 })
+
+// Export Persistor
+export const persistor = persistStore(store)
 
 // Infer the `RootState` and `AppDispatch` types from the store itself          
 export type RootState = ReturnType<typeof store.getState>
