@@ -18,7 +18,7 @@ import {
 } from "@/pages/user";
 import {
   AdminDashboardPage, AdminInvoicePage, CreateInvoicePage,
-  AdminUsersPage, AdminUserPage
+  AdminUsersPage, AdminUserPage, AdminPaymentPage
 } from "./pages/admin";
 import { RequireAuth, AdminRequireAuth } from "@/components/global/auth/protectedRoute";
 import { AdminLayout, UserLayout } from "./layouts";
@@ -68,6 +68,7 @@ export default function App() {
                 {/* <Route path="files" element={<ComingSoonPage />} /> */}
                 <Route path="invoice" element={<AdminInvoicePage />} />
                 <Route path="invoice/create" element={<CreateInvoicePage />} />
+                <Route path="payments" element={<AdminPaymentPage />} />
               </Route>
             </Route>
 

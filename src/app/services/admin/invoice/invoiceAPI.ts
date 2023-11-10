@@ -1,13 +1,15 @@
 // jshint esversion:6
 import { emptySplitApi } from "../../api";
+
 import {
     GetPaidInvoiceResponse, GetTotalRevenueResponse,
     GetAllInvoiceResponse, GetPendingInvoiceResponse,
     CreateInvoiceRequest, CreateInvoiceResponse, UpdateInvoiceStatusRequest,
-    UpdateInvoiceStatusResponse
+    UpdateInvoiceStatusResponse, AdminDeleteInvoiceRequest, AdminDeleteInvoiceResponse
 } from "@/data/admin";
 
 export const invoiceAPI = emptySplitApi.injectEndpoints({
+
     endpoints: (builder) => ({
         // Get USER FILE
         getPaidInvoice: builder.query<GetPaidInvoiceResponse, void>({
@@ -20,7 +22,7 @@ export const invoiceAPI = emptySplitApi.injectEndpoints({
             query: () => ({ url: "payments/totalRevenue" }),
         }),
 
-        // Get Total revenue
+        // Get All invoice
         getAllInvoice: builder.query<GetAllInvoiceResponse, void>({
             query: () => ({ url: "invoice/all" }),
             providesTags: ['INVOICE']
@@ -50,11 +52,20 @@ export const invoiceAPI = emptySplitApi.injectEndpoints({
             }),
             invalidatesTags: ['INVOICE']
         }),
+
+        deleteInvoice: builder.mutation<AdminDeleteInvoiceResponse, AdminDeleteInvoiceRequest>({
+            query: (params) => ({
+                url: `/invoice/thrashInvoice`,
+                method: "DELETE",
+                params,
+            }),
+            invalidatesTags: ['INVOICE']
+        }),
     })
 })
 
 export const {
     useGetPaidInvoiceQuery, useGetTotalRevenueQuery,
     useGetAllInvoiceQuery, useGetPendingInvoiceQuery,
-    useCreateInvoiceMutation, useUpdateInvoiceStatusMutation
+    useCreateInvoiceMutation, useUpdateInvoiceStatusMutation, useDeleteInvoiceMutation
 } = invoiceAPI

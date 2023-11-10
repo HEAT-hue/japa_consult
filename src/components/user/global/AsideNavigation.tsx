@@ -24,6 +24,7 @@ import FileIconDark from "@/assets/global/nav-folder-add.svg"
 import InvoiceIcon from "@/assets/global/receipt-2.svg";
 // import InvoiceIconDark from "@/assets/global/document-textDark.svg";
 import LogoutIcon from "@/assets/global/logout.svg";
+import { persistor } from "@/app/store";
 
 type AsideNavigationProps = {
     closeNav: () => void
@@ -48,6 +49,9 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
     async function logout() {
         // Clear all tokens in state
         dispatch(AuthSliceActions.logout());
+
+        // Purge local storage
+        persistor.purge();
 
         // Invalidate token
         await authLogout();

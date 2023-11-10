@@ -5,13 +5,15 @@ import { InvoiceInfotype } from "@/pages/admin/invoices/AdminInvoicePage"
 import { useAppSelector } from "@/hooks/typedHooks"
 import { USERROLES } from "@/data/global/auth"
 import { useNavigate } from "react-router-dom"
+import { TrashSVG } from "@/components/global/svg/trash"
 
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
     handleInvoiceClick: (data: InvoiceInfotype) => void
+    deleteInvoice(invoiceId: string): void
 }
 
-export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick }) => {
+export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick, deleteInvoice }) => {
 
     const { userProfile } = useAppSelector((state) => state.auth);
 
@@ -51,12 +53,26 @@ export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleI
                                         <span>Amount:</span>
                                         <span className="">{Number(invoice.price).toLocaleString()}</span>
                                     </p>
+
+                                    {/* Pay now */}
                                     {userProfile?.role == USERROLES.USER &&
                                         invoice.paid == false && (
                                             <div className="w-full text-right truncate text-[#AFAFAF]">
                                                 <button onClick={() => navigate("pay", { state: { invoice } })} className="px-2 py-1 text-white bg-brandColor rounded">Pay now</button>
                                             </div>
                                         )}
+
+                                    {/* Trash icon */}
+                                    {(userProfile?.role == USERROLES.ADMIN || userProfile?.role == USERROLES.MANAGER) && (
+                                        <div className="w-full truncate flex items-center gap-x-2 justify-ensd text-error mt-1" onClick={(e: any) => {
+                                            // Stop propagation
+                                            e.stopPropagation();
+                                            deleteInvoice(invoice.inv_id)
+                                        }}>
+                                            <TrashSVG />
+                                            <span>Delete</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 

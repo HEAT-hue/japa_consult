@@ -46,3 +46,13 @@ export type UpdateInvoiceStatusResponse = {
     detail?: string
     details?: string
 }
+
+export type AdminDeleteInvoiceRequest = {
+    invoiceId: string
+}
+
+export type AdminDeleteInvoiceResponse = {
+    msg?: string
+    detail?: string
+    details?: string
+}

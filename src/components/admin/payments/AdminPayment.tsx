@@ -8,9 +8,10 @@ import { PAYMENT_NAVIGATION } from "@/data/admin/payments"
 type PaymentActivityProp = {
     data: PaymentResponse[] | PendingPaymentResponse[]
     type: PAYMENT_NAVIGATION
+    handlePaymentClick(payment: PaymentResponse | PendingPaymentResponse): void
 }
 
-export const PaymentActivity: React.FC<PaymentActivityProp> = ({ data, type: PaymentType }) => {
+export const AdminPayment: React.FC<PaymentActivityProp> = ({ data, type: PaymentType, handlePaymentClick }) => {
 
     const { day, monthShort, year } = getFormattedDate(new Date())
 
@@ -19,11 +20,11 @@ export const PaymentActivity: React.FC<PaymentActivityProp> = ({ data, type: Pay
             <>
                 {/* Table */}
                 <div className="w-full h-full mt-3 relative">
-                    <table className="w-full border-spacing-1 table-fixed bg-white rounded-t-[20px] border-separate px-5 py-3">
+                    <table className="w-full border-spacing-1 table-fixed px-5 py-3">
 
                         {/* Table header */}
                         <thead>
-                            <tr className="font-Inter-Bold  bg-white [&>*]:p-2 [&>*]:py-4 pointer-events-none">
+                            <tr className="font-Inter-Bold [&>*]:p-2 [&>*]:py-4 pointer-events-none">
                                 <th className="text-sm font-medium text-left w-[12%]">
                                     <span>Name</span>
                                 </th>
@@ -47,16 +48,16 @@ export const PaymentActivity: React.FC<PaymentActivityProp> = ({ data, type: Pay
                             {data.map((paymentData: PaymentResponse | PendingPaymentResponse, index: number) => {
 
                                 return (
-                                    
+
                                     // Trade Item Data
                                     <tr
                                         key={index}
                                         className="font-Manrope-Regular text-[15px] [&>*]:p-2 [&>*]:py-3 cursor-pointer"
-                                    // onClick={() => handleTxnClick(TxnData)}
+                                        onClick={() => handlePaymentClick(paymentData)}
                                     >
                                         <td className={`w-full truncate capitalize`}>
-                                            {PaymentType == PAYMENT_NAVIGATION.ALL && (
-                                                <span>{`${(paymentData as PaymentResponse).paid_by.toLowerCase() ?? "<no name>"}`}</span>
+                                            {PaymentType == PAYMENT_NAVIGATION.ALL &&  (
+                                                <span>{`${(paymentData as PaymentResponse)?.paid_by.toLowerCase() ?? "<no name>"}`}</span>
                                             )}
                                             {PaymentType == PAYMENT_NAVIGATION.PENDING && (
                                                 // <span>{`${(paymentData as PendingPaymentResponse).paid_by.toLowerCase() ?? "<no name>"}`}</span>

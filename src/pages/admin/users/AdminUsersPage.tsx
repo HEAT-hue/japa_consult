@@ -13,7 +13,6 @@ import { useAppSelector } from "@/hooks/typedHooks"
 
 let timeoutID: any;
 
-
 const override: CSSProperties = {
     display: "inline-block",
     margin: "0 auto",
@@ -187,9 +186,7 @@ export const AdminUsersPage: React.FC = () => {
                         </div>
                     )}
                 </div>
-            )
-            }
-
+            )}
 
             {
                 errorMessage && (

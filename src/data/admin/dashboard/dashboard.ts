@@ -2,8 +2,9 @@ import { USERROLES } from "@/data/global/auth"
 
 export enum PAYMENT_STATUS {
     COMPLETED = "completed",
-    PENDING = "pending",
-    CANCELED = "canceled"
+    CANCELLED = 'cancelled',
+    PENDING = 'pending',
+    PAID = "paid"
 }
 
 export type UserType = {

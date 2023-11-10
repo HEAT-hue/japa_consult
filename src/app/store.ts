@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { emptySplitApi } from "./services/api";
 import { unauthenticatedMiddleware } from "./middleware";
 import { AuthSliceReducer } from "@/features/global/authSlice";
-import { persistReducer, persistStore } from 'redux-persist';
+import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from "@reduxjs/toolkit";
 
@@ -33,7 +33,13 @@ export const store = configureStore({
 
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([unauthenticatedMiddleware, emptySplitApi.middleware,]),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        
+        // Ignore action types dipatched by redux persist to prevent serializable issues
+        serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+    }).concat([unauthenticatedMiddleware, emptySplitApi.middleware,]),
 })
 
 // Export Persistor

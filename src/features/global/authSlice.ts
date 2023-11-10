@@ -49,16 +49,19 @@ const AuthSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        // Clear persisted state
+        // builder.addCase(PURGE, (state) => {
+        //     customEntityAdapter.removeAll(state);
+        // });
+
         // LOAD USER AUTH STATE
         builder.addMatcher(authAPI.endpoints.login.matchFulfilled, (state, { payload }) => {
             state.token = payload.access_token
-            console.log(payload);
         })
 
         // LOAD USER PROFILE
         builder.addMatcher(userAPI.endpoints.getUserProfile.matchFulfilled, (state, { payload }) => {
             state.userProfile = payload
-            console.log(payload);
         })
 
         // LOAD USER AUTH STATE

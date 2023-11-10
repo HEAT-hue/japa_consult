@@ -13,6 +13,9 @@ import { useEffect } from "react";
 import { ReceiptSVG } from "@/components/global/svg/invoice";
 import { Modal } from "@/components/global";
 import { AdminInvoiceInfo } from "@/components/admin/invoice";
+import { useDeleteInvoiceHook } from "@/hooks/admin/invoice";
+import { Toast } from "@/components/global";
+import { DeleteConfirmation } from "@/components/admin/users";
 
 
 const override: CSSProperties = {
@@ -26,11 +29,24 @@ export type InvoiceInfotype = {
     data: PaidInvoiceType | undefined
 }
 
+let timeoutID: any;
+
+let actionToExecute: () => void
+
 export const AdminInvoicePage: React.FC = () => {
+
+    // Error message
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+
+    // Consnt to delete file
+    const [actionConsent, setActionConsent] = useState<boolean>(false);
 
     const { data: AllInvoiceData, isLoading: isAllInvoiceLoading } = useGetAllInvoiceQuery()
     const { data: PendingInvoiceData, isLoading: isPendingInvoiceLoading } = useGetPendingInvoiceQuery()
     const { data: PaidInvoiceData, isLoading: isPaidInvoiceLoading } = useGetPaidInvoiceQuery()
+
+    // Delete Invoice
+    const { deleteUserInvoice, isLoading: isDeleteInvoiceLoading } = useDeleteInvoiceHook();
 
     const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfotype>({ status: false, data: undefined });
 
@@ -104,6 +120,29 @@ export const AdminInvoicePage: React.FC = () => {
         }
     }
 
+    async function handleInvoiceDeleteClick(invoiceId: string) {
+        const response = await deleteUserInvoice({ invoiceId });
+
+        if (!response.success) {
+            console.log(response);
+            setErrorMessage("Cannot perform operation!");
+            timeoutID = setTimeout(() => {
+                setErrorMessage(undefined);
+            }, 3000)
+
+            setActionConsent(false);
+            return;
+        }
+
+        // Close modal
+        setActionConsent(false);
+    }
+
+    function deleteInvoice(invoiceId: string) {
+        actionToExecute = () => handleInvoiceDeleteClick(invoiceId);
+        setActionConsent(true)
+    }
+
     return (
         <div className="py-5">
 
@@ -152,10 +191,10 @@ export const AdminInvoicePage: React.FC = () => {
                 ) : (
                     <div>
                         <div className="sm:hidden">
-                            <AdminInvoiceViewMV invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} />
+                            <AdminInvoiceViewMV invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} deleteInvoice={deleteInvoice} />
                         </div>
                         <div className="hidden sm:block">
-                            <AdminInvoiceView invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} />
+                            <AdminInvoiceView invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} deleteInvoice={deleteInvoice} />
                         </div>
                     </div>
                 )
@@ -168,6 +207,25 @@ export const AdminInvoicePage: React.FC = () => {
                 </Modal>
             )}
 
+            {/* Error message */}
+            {errorMessage && (
+                <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
+            )}
+
+            {actionConsent && (
+                <Modal closeModal={() => setActionConsent(false)}>
+                    <DeleteConfirmation
+                        title="Delete Invoice"
+                        desc="Are you sure you want to delete this invoice?"
+                        cancel={() => setActionConsent(false)}
+                        next={() => {
+                            actionToExecute()
+                        }}
+                        isLoading={isDeleteInvoiceLoading}
+                        loadingTitle="Deleting..."
+                    />
+                </Modal>
+            )}
         </div>
     )
 }

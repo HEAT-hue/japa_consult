@@ -9,20 +9,21 @@ import { PAYMENT_NAVIGATION } from "@/data/admin/payments"
 type PaymentActivityMVProp = {
     data: PaymentResponse[] | PendingPaymentResponse[]
     type: PAYMENT_NAVIGATION
+    handlePaymentClick(payment: PaymentResponse | PendingPaymentResponse): void
 }
 
-export const PaymentActivityMV: React.FC<PaymentActivityMVProp> = ({ data, type: PaymentType }) => {
+export const AdminPaymentMV: React.FC<PaymentActivityMVProp> = ({ data, type: PaymentType, handlePaymentClick }) => {
 
 
     return (
-        <div className="flex flex-col gap-y-2">
+        <div className="flex flex-col gap-y-2 divide-y divide-gray-300">
             {
                 data.map((paymentData: PaymentResponse | PendingPaymentResponse, index: number) => {
 
                     const { day, monthShort, year } = getFormattedDate(new Date())
 
                     return (
-                        <div key={index} className="bg-white p-4 px-5 rounded flex justify-between">
+                        <div key={index} className="p-4 px-5 flex justify-between" onClick={() => handlePaymentClick(paymentData)}>
                             <div className="flex flex-col gap-y-1">
 
                                 {/* Invoice number */}
@@ -42,7 +43,7 @@ export const PaymentActivityMV: React.FC<PaymentActivityMVProp> = ({ data, type:
                                 {/* Time */}
                                 <p className="text-placeholder text-sm">{`Date: ${day} ${monthShort}, ${year}`}</p>
                             </div>
-                            
+
                             <div className="flex flex-col gap-y-1 items-end">
 
                                 {/* Status */}
