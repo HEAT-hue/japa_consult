@@ -25,10 +25,9 @@ export const VerifyCardPaymentPage: React.FC = () => {
     const { state } = useLocation();
 
     // Verify Card details
-
     const invoice = (state?.invoice as PaidInvoiceType)
 
-    const paymentData = (state?.invoice as CardPaymentResponse)
+    const paymentData = (state?.paymentData as CardPaymentResponse)
 
     if (state == null || !invoice || !paymentData.ref_id || !paymentData.validationRequired) {
         return <Navigate to={"/invoice"} />
@@ -52,13 +51,12 @@ export const VerifyCardPaymentPage: React.FC = () => {
             timeoutId = setTimeout(() => {
                 setErrorMessage(undefined);
             }, 3000)
-
             return;
         }
 
         timeoutId = setTimeout(() => {
             naviagte("/invoice");
-        }, 2000)
+        }, 3000)
     }
 
     return (
@@ -75,11 +73,11 @@ export const VerifyCardPaymentPage: React.FC = () => {
                     <h1 className="text-lg text-center font-Inter-Bold mt-2">Enter OTP </h1>
 
                     {/* OTP */}
-                    <div>
+                    <div className="flex justify-center mt-5">
                         <input
                             placeholder="Enter your One Time Password OTP"
 
-                            className="w-full border border-grey-300 rounded p-2 outline-none focus:border-brandColor" type="text" required
+                            className="w-[350px] mx-auto border border-grey-300 rounded p-2 outline-none focus:border-brandColor" type="text" required
 
                             value={verifyDetail.otp}
 
@@ -95,7 +93,10 @@ export const VerifyCardPaymentPage: React.FC = () => {
                         />
                     </div>
 
-                    <button onClick={verifyTransfer} className="bg-brandColor font-Inter-Medium py-3 mt-3 text-white rounded">{isLoading ? "Verifying..." : "Pay"}</button>
+                    <div className="flex justify-center mt-5">
+                        <button disabled={isSuccess} onClick={verifyTransfer} className="w-[250px] bg-brandColor font-Inter-Medium p-3 mt-3 text-white rounded">{isLoading ? "Verifying..." : "Pay"}</button>
+                    </div>
+
 
                 </div>
             </div>

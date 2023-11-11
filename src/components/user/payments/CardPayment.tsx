@@ -53,7 +53,7 @@ export const CardTransferPay: React.FC<CardTransferPayProp> = ({ invoice }) => {
         console.log(response);
 
         // Successful payment, navigate to verify otp
-        navigate("verify", { state: { invoice, paymentData: response } });
+        navigate("verify", { state: { invoice, paymentData: response.data } });
 
     }
 
