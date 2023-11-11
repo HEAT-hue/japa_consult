@@ -18,6 +18,7 @@ import { LoginTokenDecodeType, USERROLES } from "@/data/global/auth/auth";
 
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { persistor } from "@/app/store";
 
 // Create user Schema for form data
 const schema = z.object({
@@ -85,6 +86,9 @@ export const LoginPage: React.FC = () => {
             setVerificationModalOpen(true);
             return;
         }
+
+        // Purge local storage
+        persistor.purge();
 
         // Get USER Roles
         if (userInfo.role == USERROLES.USER) {

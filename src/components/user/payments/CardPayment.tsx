@@ -23,6 +23,9 @@ export const CardTransferPay: React.FC<CardTransferPayProp> = ({ invoice }) => {
 
     const navigate = useNavigate();
 
+    // payment successful
+    // const [paymentSuccessful, setPaymentSuccessful] = 
+
     // Define Error message
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 

@@ -31,7 +31,7 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
                 <img src={InvoiceIcon} className="w-full h-full" alt="invoice" />
 
                 {invoice.paid && (
-                    <img src={PaidInvoiceIcon} className="absolute top-0 right-[-3px]" alt="paid" />
+                    <img src={PaidInvoiceIcon} className="absolute top-0 right-[-40px]" alt="paid" />
                 )}
             </div>
 

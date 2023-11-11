@@ -6,6 +6,8 @@ import { CardPaymentResponse } from "@/data/users/payments";
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
 import { useVerifyCardPaymentHook } from "@/hooks/user/payment/verifyCardPaymentHook";
 import { Toast } from "@/components/global";
+import { PaymentNotification } from "@/components/user/payments";
+import { Modal } from "@/components/global";
 
 type VerifyDetail = {
     ref_id: string,
@@ -19,7 +21,7 @@ export const VerifyCardPaymentPage: React.FC = () => {
     // Define Error message
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
-    const naviagte = useNavigate()
+    const navigate = useNavigate()
 
     // Get State from Page
     const { state } = useLocation();
@@ -55,8 +57,8 @@ export const VerifyCardPaymentPage: React.FC = () => {
         }
 
         timeoutId = setTimeout(() => {
-            naviagte("/invoice");
-        }, 3000)
+            navigate("/invoice");
+        }, 4000)
     }
 
     return (
@@ -89,7 +91,6 @@ export const VerifyCardPaymentPage: React.FC = () => {
                             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                                 e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/\s+/g, '');
                             }}
-
                         />
                     </div>
 
@@ -105,8 +106,22 @@ export const VerifyCardPaymentPage: React.FC = () => {
                 <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
             )}
 
+            {errorMessage && (
+                <>
+                    <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
+                    <Modal closeModal={() => setErrorMessage(undefined)}>
+                        <PaymentNotification error errorMessage={errorMessage} buttonTitle="Close" action={() => setErrorMessage(undefined)} />
+                    </Modal>
+                </>
+            )}
+
             {isSuccess && (
-                <Toast desc={"Payment successfully verified"} action={() => naviagte("/invoice")} />
+                <>
+                    <Toast desc={"Payment successfully verified"} action={() => navigate("/invoice")} />
+                    <Modal closeModal={() => navigate("/invoice")}>
+                        <PaymentNotification buttonTitle="Close" action={() => navigate("/invoice")} />
+                    </Modal>
+                </>
             )}
 
         </>

@@ -26,6 +26,8 @@ const override: CSSProperties = {
 
 let timeoutId: any;
 
+let copytimeout: any;
+
 export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
 
     const invoiceId = invoice.inv_id;
@@ -35,6 +37,9 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     const [bankDetails, setBankDetails] = useState<BankTransferPaymentResponse | undefined>(undefined);
+
+    // Copy message
+    const [copiedMessage, setCopiedMessage] = useState<null | boolean>(null)
 
     // Verfy Transfer
     const [verifyTransfer, { isLoading: isVerificationLoading, isSuccess: isVerifyTransferSuccess }] = useLazyVerifyTransferQuery()
@@ -102,6 +107,29 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
         }
     }
 
+    // Copt transaction ID to clip board
+    const handleCopyId = async () => {
+        // Clear any previous tiemout set
+        clearTimeout(copytimeout);
+
+        // Copy text to clipboard
+        navigator.clipboard
+            .writeText(bankDetails?.bank_account ?? "")
+            .then(() => {
+                // Success copy indication
+                setCopiedMessage(true);
+            })
+            .catch(() => {
+                // Success copy indication
+                setCopiedMessage(false);
+            }).finally(() => {
+                // Revert icon
+                copytimeout = setTimeout(() => {
+                    setCopiedMessage(null);
+                }, 2000);
+            });
+    };
+
     return (
         <>
             <div className="w-[350px] bg-[#F6F6F6] mx-auto p-6 flex flex-col gap-y-4 rounded-md">
@@ -113,7 +141,13 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
                     <h2 className="text-xs font-Inter-Regular">Account Number</h2>
                     <div className="flex justify-between">
                         <p className="font-Inter-Bold text-lg">{bankDetails?.bank_account ?? "No acct"}</p>
-                        <img className="cursor-pointer" src={copyIcon} alt="copy" />
+                        {
+                            copiedMessage ? (
+                                <span>Copied</span>
+                            ) : (
+                                <img className="cursor-pointer" onClick={handleCopyId} src={copyIcon} alt="copy" />
+                            )
+                        }
                     </div>
                 </div>
                 <div>
