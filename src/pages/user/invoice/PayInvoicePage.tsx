@@ -7,7 +7,7 @@ import cardIcon from "@/assets/payments/creditcard.svg";
 import cardIconDark from "@/assets/payments/creditcardDark.svg";
 import bankIcon from "@/assets/payments/bank.svg";
 import bankDarkIcon from "@/assets/payments/bankDark.svg";
-import { BankTransferPay } from "@/components/user/payments";
+import { BankTransferPay, CardTransferPay } from "@/components/user/payments";
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
 
 
@@ -21,9 +21,7 @@ export const PayInvoicePage: React.FC = () => {
         return <Navigate to={"/invoice"} />
     }
 
-    const [paymentMethod, setPaymentmethod] = useState<PAYMENT_METHOD>(PAYMENT_METHOD.BANK_TRANSFER)
-
-    console.log(invoice);
+    const [paymentMethod, setPaymentmethod] = useState<PAYMENT_METHOD>(PAYMENT_METHOD.CARD)
 
 
     return (
@@ -60,6 +58,12 @@ export const PayInvoicePage: React.FC = () => {
                     <section className="mt-5">
                         {paymentMethod == PAYMENT_METHOD.BANK_TRANSFER && (
                             <BankTransferPay invoice={invoice} />
+                        )}
+
+                        {paymentMethod == PAYMENT_METHOD.CARD && (
+                            <div className="pt-5">
+                                <CardTransferPay invoice={invoice} />
+                            </div>
                         )}
                     </section>
 

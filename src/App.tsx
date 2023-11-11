@@ -14,7 +14,7 @@ import {
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
-  CreateNotePage, InvoicePage, PayInvoicePage
+  CreateNotePage, InvoicePage, PayInvoicePage, VerifyCardPaymentPage
 } from "@/pages/user";
 import {
   AdminDashboardPage, AdminInvoicePage, CreateInvoicePage,
@@ -51,6 +51,7 @@ export default function App() {
                 <Route path="/files/file/:folderName" element={<FolderPage />} />
                 <Route path="/invoice" element={<InvoicePage />} />
                 <Route path="/invoice/pay" element={<PayInvoicePage />} />
+                <Route path="/invoice/pay/verify" element={<VerifyCardPaymentPage />} />
               </Route>
             </Route>
 

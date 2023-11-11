@@ -10,7 +10,7 @@ import { TrashSVG } from "@/components/global/svg/trash"
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
     handleInvoiceClick: (data: InvoiceInfotype) => void
-    deleteInvoice(invoiceId: string): void
+    deleteInvoice?: (invoiceId: string) => void
 }
 
 export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick, deleteInvoice }) => {
@@ -63,7 +63,7 @@ export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleI
                                         )}
 
                                     {/* Trash icon */}
-                                    {(userProfile?.role == USERROLES.ADMIN || userProfile?.role == USERROLES.MANAGER) && (
+                                    {(userProfile?.role == USERROLES.ADMIN || userProfile?.role == USERROLES.MANAGER) && deleteInvoice && (
                                         <div className="w-full truncate flex items-center gap-x-2 justify-ensd text-error mt-1" onClick={(e: any) => {
                                             // Stop propagation
                                             e.stopPropagation();

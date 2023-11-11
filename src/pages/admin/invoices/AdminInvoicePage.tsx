@@ -53,6 +53,12 @@ export const AdminInvoicePage: React.FC = () => {
     const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
     const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
 
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutID);
+        }
+    }, [])
+
     // Fetch users 
     useEffect(() => {
         if (!invoiceType) {

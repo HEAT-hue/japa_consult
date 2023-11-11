@@ -1,1 +1,4 @@
-export { useVerifyTransferQuery, useBankTransferPayMutation, useLazyVerifyTransferQuery } from "./paymentAPI";
+export {
+    useVerifyTransferQuery, useLazyBankTransferPayQuery,
+    useLazyVerifyTransferQuery, useCardPaymentMutation, useVerifyCardPaymentMutation
+} from "./paymentAPI";

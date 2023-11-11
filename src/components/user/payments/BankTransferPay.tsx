@@ -1,5 +1,5 @@
 // jshint esversin:6
-import { useBankTransferPayHook } from "@/hooks/user/payment/bankTransferPayHook"
+import { useLazyBankTransferPayQuery } from "@/app/services/user/payments";
 import { CSSProperties, useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { BankTransferPaymentResponse } from "@/data/users/payments";
@@ -39,19 +39,17 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
     // Verfy Transfer
     const [verifyTransfer, { isLoading: isVerificationLoading, isSuccess: isVerifyTransferSuccess }] = useLazyVerifyTransferQuery()
 
-    const { bankTransferPay, isLoading, isError } = useBankTransferPayHook();
+    const [bankTransferPay, { isLoading, isError }] = useLazyBankTransferPayQuery();
 
     useEffect(() => {
         (async function () {
-            const response = await bankTransferPay({ invoiceId })
-
-            if (!response.success) {
-                setErrorMessage(response.message)
-                return;
+            try {
+                const response = await bankTransferPay({ invoiceId });
+                // Success
+                setBankDetails(response.data as BankTransferPaymentResponse);
+            } catch (error) {
+                setErrorMessage(getErrorMessage(error));
             }
-
-            // Success
-            setBankDetails(response.data as BankTransferPaymentResponse);
         })()
 
         return () => {
@@ -93,8 +91,7 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
 
     async function verifyUserTransfer() {
         try {
-            const data = await verifyTransfer({ refId: bankDetails?.ref_id ?? "" }).unwrap();
-            console.log(data)
+            await verifyTransfer({ refId: bankDetails?.ref_id ?? "" }).unwrap();
         } catch (error) {
 
             setErrorMessage(getErrorMessage(error));

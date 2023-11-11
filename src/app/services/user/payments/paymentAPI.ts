@@ -1,19 +1,20 @@
 // jshint esversion:6
 import { emptySplitApi } from "../../api";
-import { BankTransferPaymentRequest, BankTransferPaymentResponse, VerifyBankPaymentRequest, VerifyBankPaymentResponse } from "@/data/users/payments";
+import {
+    BankTransferPaymentRequest, BankTransferPaymentResponse,
+    VerifyBankPaymentRequest, VerifyBankPaymentResponse,
+    CardPaymentRequest, CardPaymentResponse, VerifyCardPaymentRequest, VerifyCardPaymentResponse
+} from "@/data/users/payments";
 
 export const paymentsAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
 
         // Get user profile
-        bankTransferPay: builder.mutation<BankTransferPaymentResponse, BankTransferPaymentRequest>({
+        bankTransferPay: builder.query<BankTransferPaymentResponse, BankTransferPaymentRequest>({
             query: (params) => ({
                 url: `bankTransfer/pay`,
-                method: 'POST',
                 params
             }),
-            // invalidatesTags: ['GET_FILES']
-
         }),
 
         verifyTransfer: builder.query<VerifyBankPaymentResponse, VerifyBankPaymentRequest>({
@@ -23,8 +24,25 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             }),
         }),
 
+        cardPayment: builder.mutation<CardPaymentResponse, CardPaymentRequest>({
+            query: (credentials) => ({
+                url: "card/pay",
+                method: "POST",
+                params: credentials.params,
+                body: credentials.body
+            }),
+        }),
+
+        verifyCardPayment: builder.mutation<VerifyCardPaymentResponse, VerifyCardPaymentRequest>({
+            query: (credentials) => ({
+                url: "card/verify",
+                method: "POST",
+                body: credentials
+            }),
+        }),
+
 
     })
 })
 
-export const { useBankTransferPayMutation, useVerifyTransferQuery, useLazyVerifyTransferQuery } = paymentsAPI
+export const { useLazyBankTransferPayQuery, useVerifyTransferQuery, useLazyVerifyTransferQuery, useCardPaymentMutation, useVerifyCardPaymentMutation } = paymentsAPI

@@ -18,3 +18,35 @@ export type VerifyBankPaymentResponse = {
     "msg": string,
     "transactionComplete": boolean
 }
+
+export type CardPaymentRequest = {
+    params: {
+        invoiceId: string
+    },
+    body: {
+        "cardno": string,
+        "cvv": string,
+        "expirymonth": string,
+        "expiryyear": string,
+        "pin": string
+    }
+}
+
+export type CardPaymentResponse = {
+    "ref_id": string,
+    "validationRequired": boolean
+}
+
+export type VerifyCardPaymentRequest = {
+    otp: string,
+    "ref_id": string,
+}
+
+export type VerifyCardPaymentResponse = {
+    "transactionComplete": true,
+    "ref_id": "string",
+    "inv_id": "string",
+    "amount": 0,
+    "chargedamount": 0,
+    "currency": "string"
+}
