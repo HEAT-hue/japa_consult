@@ -21,7 +21,7 @@ export const AdminPaymentMV: React.FC<PaymentActivityMVProp> = ({ data, handlePa
                     const { day, monthShort, year } = getFormattedDate(new Date())
 
                     return (
-                        <div key={index} className="p-4 px-5 flex justify-between" onClick={() => handlePaymentClick(paymentData)}>
+                        <div key={index} className="py-4 flex justify-between" onClick={() => handlePaymentClick(paymentData)}>
                             <div className="flex flex-col gap-y-1">
 
                                 {/* Invoice number */}

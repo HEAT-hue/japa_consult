@@ -17,13 +17,13 @@ function getPaymentDate(date: Date) {
 export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData }) => {
 
     return (
-        <div className="w-[340px] p-5 bg-white flex flex-col items-center gap-y-5 rounded-lg">
+        <div className="w-[300px] sm:p-5 bg-white flex flex-col items-center gap-y-5 rounded-lg">
             <h1 className="font-Inter-Bold text-lg">{paymentData.title ?? "Payment"}</h1>
-            <div className="w-[70px] h-[60px] relative">
-                <img src={PaymentIcon} className="w-full h-full" alt="invoice" />
+            <div className="relative flex items-start">
+                <img src={PaymentIcon} className="w-[70px] h-[60px]" alt="invoice" />
 
                 {paymentData.status == PAYMENT_STATUS.PAID && (
-                    <img src={PaidInvoiceIcon} className="absolute top-0 right-[-3px]" alt="paid" />
+                    <img src={PaidInvoiceIcon} alt="paid" />
                 )}
             </div>
 
