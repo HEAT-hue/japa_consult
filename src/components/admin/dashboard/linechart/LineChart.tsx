@@ -9,7 +9,7 @@ type LineChartType = {
 export const LineChart: React.FC<LineChartType> = ({ monthlabel, withdrawalData }) => {
 
     const data = monthlabel?.map((month: string, index: number) => {
-       console.log(month)
+
         return (
             {
                 name: month,
@@ -17,11 +17,6 @@ export const LineChart: React.FC<LineChartType> = ({ monthlabel, withdrawalData 
             }
         )
     })
-
-    console.log(data)
-
-    console.log(monthlabel);
-    console.log(withdrawalData)
 
     return (
         <div>

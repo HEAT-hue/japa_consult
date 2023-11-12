@@ -15,8 +15,8 @@ import HomeIcon from "@/assets/global/home.svg";
 import HomeIconDark from "@/assets/global/homeDark.svg";
 import UsersIcon from "@/assets/global/people.svg";
 // import UsersIconDark from "@/assets/global/peopleDark.svg";
-import MessagesIcon from "@/assets/global/messages-3.svg"
-import MessagesIconDark from "@/assets/global/messagesDark.svg"
+// import MessagesIcon from "@/assets/global/messages-3.svg"
+// import MessagesIconDark from "@/assets/global/messagesDark.svg"
 import NotesIcon from "@/assets/global/edit.svg";
 import NotesIconDark from "@/assets/global/editDark.svg";
 import FileIcon from "@/assets/global/folderIcon.svg"
@@ -123,7 +123,7 @@ export function AdminAsideNavigation({ closeNav }: AdminAsideNavigationProps) {
                     </li>
 
                     {/* Messages */}
-                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
+                    {/* <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
                         <NavLink
                             to="/admin/messages"
                             onClick={closeNav}
@@ -135,7 +135,7 @@ export function AdminAsideNavigation({ closeNav }: AdminAsideNavigationProps) {
                                 </div>
                             )}
                         </NavLink>
-                    </li>
+                    </li> */}
 
                     {/* Notes */}
                     <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
