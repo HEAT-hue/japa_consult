@@ -50,3 +50,10 @@ export type VerifyCardPaymentResponse = {
     "chargedamount": 0,
     "currency": "string"
 }
+
+
+export type GetUserTotalSpendResponse = {
+    "name": string,
+    "email": string,
+    "total_spend": number
+}

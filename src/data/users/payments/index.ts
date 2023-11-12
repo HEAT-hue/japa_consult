@@ -2,5 +2,5 @@ export type { BankTransferPaymentRequest, VerifyBankPaymentRequest, VerifyBankPa
 export type {
     BankTransferPaymentResponse, CardPaymentRequest,
     CardPaymentResponse, VerifyCardPaymentRequest,
-    VerifyCardPaymentResponse
+    VerifyCardPaymentResponse, GetUserTotalSpendResponse
 } from "./apiTypes";

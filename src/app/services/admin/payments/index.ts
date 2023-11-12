@@ -1,4 +1,6 @@
 export {
     useGetAllPaymentsQuery, useLazyGetAllPaymentsQuery,
-    useGetPendingPaymentsQuery, useLazyGetPendingPaymentsQuery
+    useGetPendingPaymentsQuery, useLazyGetPendingPaymentsQuery,
+    useGetCancelledPaymentsQuery, useLazyGetCancelledPaymentsQuery,
+    useGetPaidPaymentsQuery, useLazyGetPaidPaymentsQuery
 } from "./paymentsAPI";

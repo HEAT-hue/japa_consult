@@ -1,6 +1,9 @@
 // jshint esversion:6
 import { emptySplitApi } from "../../api";
-import { GetAllPaymentsResponse, GetPendingPaymentsResponse } from "@/data/admin/payments";
+import {
+    GetAllPaymentsResponse, GetPendingPaymentsResponse,
+    GetCancelledPaymentsResponse, GetPaidPaymentsResponse
+} from "@/data/admin/payments";
 
 export const paymentsAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -20,17 +23,27 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             // providesTags: ['INVOICE']
         }),
 
-        // Create Invoice
-        // createInvoice: builder.mutation<CreateInvoiceResponse, CreateInvoiceRequest>({
-        //     query: (credentials) => ({
-        //         url: `invoice/create`,
-        //         method: "POST",
-        //         body: credentials,
-        //     }),
-        //     invalidatesTags: ['INVOICE']
-        // }),
+        // Get USER FILE
+        getCancelledPayments: builder.query<GetCancelledPaymentsResponse, void>({
+            query: () => ({
+                url: "payments/cancelledPayments"
+            }),
+            // providesTags: ['INVOICE']
+        }),
+
+        // Get USER FILE
+        getPaidPayments: builder.query<GetPaidPaymentsResponse, void>({
+            query: () => ({
+                url: "payments/paid"
+            }),
+            // providesTags: ['INVOICE']
+        }),
     })
 })
 
-export const { useGetAllPaymentsQuery, useLazyGetAllPaymentsQuery,
-    useGetPendingPaymentsQuery, useLazyGetPendingPaymentsQuery } = paymentsAPI
+export const {
+    useGetAllPaymentsQuery, useLazyGetAllPaymentsQuery,
+    useGetPendingPaymentsQuery, useLazyGetPendingPaymentsQuery,
+    useGetCancelledPaymentsQuery, useLazyGetCancelledPaymentsQuery,
+    useGetPaidPaymentsQuery, useLazyGetPaidPaymentsQuery
+} = paymentsAPI

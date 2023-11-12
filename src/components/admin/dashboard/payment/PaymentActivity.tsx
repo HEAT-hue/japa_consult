@@ -53,7 +53,7 @@ export const PaymentActivity: React.FC<PaymentActivityProp> = ({ data, handlePay
                                         onClick={() => handlePaymentClick(paymentData)}
                                     >
                                         <td className={`w-full truncate capitalize`}>
-                                            <span>{`${(paymentData as PaymentResponse).paid_by.toLowerCase() ?? "N / A"}`}</span>
+                                            <span>{`${((paymentData)?.paid_by ?? "N / A").toLowerCase() ?? "N / A"}`}</span>
                                         </td>
                                         <td className="w-full truncate capitalize">
                                             <span>{paymentData.invoice_id}</span>

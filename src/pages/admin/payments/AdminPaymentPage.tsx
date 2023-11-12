@@ -2,7 +2,7 @@
 import { PAYMENT_NAVIGATION } from "@/data/admin/payments"
 import { useState, ChangeEvent, useEffect, CSSProperties } from "react"
 import { PaymentResponse } from "@/data/admin/payments";
-import { useLazyGetAllPaymentsQuery, useLazyGetPendingPaymentsQuery } from "@/app/services/admin/payments";
+import { useLazyGetAllPaymentsQuery, useLazyGetPendingPaymentsQuery, useLazyGetCancelledPaymentsQuery, useLazyGetPaidPaymentsQuery } from "@/app/services/admin/payments";
 import { getErrorMessage } from "@/utils/global";
 import { Toast } from "@/components/global";
 import { ReceiptSVG } from "@/components/global/svg/invoice";
@@ -29,6 +29,8 @@ export const AdminPaymentPage: React.FC = () => {
     // Fetching list of users
     const [getAllPayments, { isLoading: isAllPaymentsLoading }] = useLazyGetAllPaymentsQuery()
     const [getPendingPayments, { isLoading: isPendingPaymentsLoading }] = useLazyGetPendingPaymentsQuery()
+    const [getPaidPayments, { isLoading: isPaidPaymentsLoading }] = useLazyGetPaidPaymentsQuery()
+    const [getCancelledPayments, { isLoading: isCancelledPaymentsLoading }] = useLazyGetCancelledPaymentsQuery()
 
     // List to hold selected users
     const [paymentList, setPaymentList] = useState<PaymentResponse[]>([]);
@@ -64,6 +66,36 @@ export const AdminPaymentPage: React.FC = () => {
                 case PAYMENT_NAVIGATION.PENDING: {
                     try {
                         const data = await getPendingPayments().unwrap();
+                        setPaymentList(data);
+                    } catch (error) {
+                        setPaymentList([]);
+                        setErrorMessage(getErrorMessage(error));
+                        timeoutID = setTimeout(() => {
+                            setErrorMessage(undefined);
+                        }, 2000)
+                    }
+                    break;
+                }
+
+                // Fetch pending payments
+                case PAYMENT_NAVIGATION.PAID: {
+                    try {
+                        const data = await getPaidPayments().unwrap();
+                        setPaymentList(data);
+                    } catch (error) {
+                        setPaymentList([]);
+                        setErrorMessage(getErrorMessage(error));
+                        timeoutID = setTimeout(() => {
+                            setErrorMessage(undefined);
+                        }, 2000)
+                    }
+                    break;
+                }
+
+                // Fetch pending payments
+                case PAYMENT_NAVIGATION.CANCELLED: {
+                    try {
+                        const data = await getCancelledPayments().unwrap();
                         console.log(data);
                         setPaymentList(data);
                     } catch (error) {
@@ -100,22 +132,24 @@ export const AdminPaymentPage: React.FC = () => {
             {/* Payment Navigation */}
             <div className="flex flex-col gap-y-5 items-center mt-5">
                 <h1 className="font-Inter-Bold text-2xl">View Payments</h1>
-
-                <select
-                    name="folder"
-                    className="p-2 bg-white border text-brandColor border-brandColor rounded cursor-pointer mx-auto outline-none"
-                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                        handleNavigationClick(e.target.value as PAYMENT_NAVIGATION)
-                    }}
-                >
-                    <option value={PAYMENT_NAVIGATION.ALL} >All Payments</option>
-                    <option value={PAYMENT_NAVIGATION.PENDING} >Pending Payments</option>
-                    {/* <option value={PAYMENT_NAVIGATION.PAID} >Paid Payments</option> */}
-                </select>
+                <div>
+                    <select
+                        name="folder"
+                        className="p-2 bg-white border border-brandColor rounded cursor-pointer mx-auto outline-none"
+                        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                            handleNavigationClick(e.target.value as PAYMENT_NAVIGATION)
+                        }}
+                    >
+                        <option value={PAYMENT_NAVIGATION.ALL} >All Payments</option>
+                        <option value={PAYMENT_NAVIGATION.PENDING} >Pending Payments</option>
+                        <option value={PAYMENT_NAVIGATION.PAID} >Paid Payments</option>
+                        <option value={PAYMENT_NAVIGATION.CANCELLED} >Cancelled Payments</option>
+                    </select>
+                </div>
             </div>
 
             {/* Users Wrapper */}
-            {(isAllPaymentsLoading || isPendingPaymentsLoading) ? (
+            {(isAllPaymentsLoading || isPendingPaymentsLoading || isCancelledPaymentsLoading || isPaidPaymentsLoading) ? (
                 <div className="w-full flex items-center justify-center">
                     <div className="my-[5rem] mx-auto">
                         <BeatLoader
@@ -140,7 +174,7 @@ export const AdminPaymentPage: React.FC = () => {
                             </div>
 
                             {/* No files found */}
-                            <p className="flex items-center justify-center gap-x-2 text-placeholder text-xl">No Payments Received</p>
+                            <p className="flex items-center justify-center gap-x-2 text-placeholder text-xl">No Payments Found</p>
                         </div>
                     ) : (
                         <div>

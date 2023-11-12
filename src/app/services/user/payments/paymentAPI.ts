@@ -2,12 +2,19 @@
 import { emptySplitApi } from "../../api";
 import {
     BankTransferPaymentRequest, BankTransferPaymentResponse,
-    VerifyBankPaymentRequest, VerifyBankPaymentResponse,
+    VerifyBankPaymentRequest, VerifyBankPaymentResponse, GetUserTotalSpendResponse,
     CardPaymentRequest, CardPaymentResponse, VerifyCardPaymentRequest, VerifyCardPaymentResponse
 } from "@/data/users/payments";
 
 export const paymentsAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
+
+        // Get user profile
+        userTotalSpend: builder.query<GetUserTotalSpendResponse, void>({
+            query: () => ({
+                url: `payments/totalSpend`,
+            }),
+        }),
 
         // Get user profile
         bankTransferPay: builder.query<BankTransferPaymentResponse, BankTransferPaymentRequest>({
@@ -45,4 +52,4 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
     })
 })
 
-export const { useLazyBankTransferPayQuery, useVerifyTransferQuery, useLazyVerifyTransferQuery, useCardPaymentMutation, useVerifyCardPaymentMutation } = paymentsAPI
+export const { useLazyBankTransferPayQuery, useVerifyTransferQuery, useLazyVerifyTransferQuery, useCardPaymentMutation, useVerifyCardPaymentMutation, useUserTotalSpendQuery } = paymentsAPI

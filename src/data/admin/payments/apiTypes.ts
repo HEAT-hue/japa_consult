@@ -6,9 +6,9 @@ export type PaymentResponse = {
     "invoice_id": string,
     "paid": boolean,
     "payer_email": string,
-    "paid_by": string,
-    "amount": number,
-    "paid_at": Date | null,
+    "paid_by"?: string,
+    "amount"?: number,
+    "paid_at"?: Date | null,
     "payment_type": string,
     "title": null | string,
     "status": PAYMENT_STATUS,
@@ -28,3 +28,5 @@ export type PendingPaymentResponse = {
 
 export type GetAllPaymentsResponse = PaymentResponse[]
 export type GetPendingPaymentsResponse = PaymentResponse[]
+export type GetPaidPaymentsResponse = PaymentResponse[]
+export type GetCancelledPaymentsResponse = PaymentResponse[]

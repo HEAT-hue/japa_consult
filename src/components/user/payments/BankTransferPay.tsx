@@ -49,9 +49,9 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
     useEffect(() => {
         (async function () {
             try {
-                const response = await bankTransferPay({ invoiceId });
+                const response = await bankTransferPay({ invoiceId }).unwrap();
                 // Success
-                setBankDetails(response.data as BankTransferPaymentResponse);
+                setBankDetails(response as BankTransferPaymentResponse);
             } catch (error) {
                 setErrorMessage(getErrorMessage(error));
             }
