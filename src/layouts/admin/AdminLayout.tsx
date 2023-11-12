@@ -59,6 +59,8 @@ export function AdminLayout() {
                     {currentLocationPathname == "/account" && "Accounts"}
                     {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
                     {currentLocationPathname == "/account/report" && "Report an Issue"}
+                    {currentLocationPathname == "/admin/invoice" && "Invoice"}
+                    {currentLocationPathname == "/admin/payments" && "Payments"}
                 </div>
 
                 {/* Navigation */}
@@ -95,6 +97,8 @@ export function AdminLayout() {
                     {currentLocationPathname == "/account" && "Accounts"}
                     {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
                     {currentLocationPathname == "/account/report" && "Report an Issue"}
+                    {currentLocationPathname == "/admin/invoice" && "Invoice"}
+                    {currentLocationPathname == "/admin/payments" && "Payments"}
                 </div>
 
                 {/* Navigation */}

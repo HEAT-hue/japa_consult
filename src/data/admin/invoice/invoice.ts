@@ -36,12 +36,32 @@ export const PaymentStatusColor: PaymentStatusInterface = {
         color: "#68EE76",
         backgroundColor: "#68EE764D",
     },
+    Completed: {
+        color: "#68EE76",
+        backgroundColor: "#68EE764D",
+    },
     pending: {
+        color: "#FFC727",
+        backgroundColor: "#FFC7274D",
+    },
+    Pending: {
         color: "#FFC727",
         backgroundColor: "#FFC7274D",
     },
     canceled: {
         color: "#FF4848",
         backgroundColor: "#FF48484D",
+    },
+    Canceled: {
+        color: "#FF4848",
+        backgroundColor: "#FF48484D",
+    },
+    paid: {
+        color: "#68EE76",
+        backgroundColor: "#68EE764D",
+    },
+    Paid: {
+        color: "#68EE76",
+        backgroundColor: "#68EE764D",
     },
 };

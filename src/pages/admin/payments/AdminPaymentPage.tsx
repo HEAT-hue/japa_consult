@@ -5,7 +5,6 @@ import { PaymentResponse } from "@/data/admin/payments";
 import { useLazyGetAllPaymentsQuery, useLazyGetPendingPaymentsQuery } from "@/app/services/admin/payments";
 import { getErrorMessage } from "@/utils/global";
 import { Toast } from "@/components/global";
-import { PendingPaymentResponse } from "@/data/admin/payments";
 import { ReceiptSVG } from "@/components/global/svg/invoice";
 import { BeatLoader } from "react-spinners";
 import { AdminPayment, AdminPaymentMV, AdminPaymentInfo } from "@/components/admin/payments";
@@ -32,12 +31,12 @@ export const AdminPaymentPage: React.FC = () => {
     const [getPendingPayments, { isLoading: isPendingPaymentsLoading }] = useLazyGetPendingPaymentsQuery()
 
     // List to hold selected users
-    const [paymentList, setPaymentList] = useState<PaymentResponse[] | PendingPaymentResponse[]>([]);
+    const [paymentList, setPaymentList] = useState<PaymentResponse[]>([]);
     // const [pendingPaymentList, setPendingPaymentList] = useState<PendingPaymentResponse[]>([]);
 
 
     // Payment Info data
-    const [paymentInfoData, setPaymentInfoData] = useState<PaymentResponse | PendingPaymentResponse | null>(null)
+    const [paymentInfoData, setPaymentInfoData] = useState<PaymentResponse | null>(null)
 
     // Fetch users 
     useEffect(() => {
@@ -91,7 +90,7 @@ export const AdminPaymentPage: React.FC = () => {
         setSelectedPayment(payment);
     }
 
-    function handlePaymentClick(payment: PaymentResponse | PendingPaymentResponse) {
+    function handlePaymentClick(payment: PaymentResponse) {
         setPaymentInfoData(payment);
     }
 
@@ -104,7 +103,7 @@ export const AdminPaymentPage: React.FC = () => {
 
                 <select
                     name="folder"
-                    className="p-2 bg-white border text-brandColor border-brandColor rounded cursor-pointer mx-auto"
+                    className="p-2 bg-white border text-brandColor border-brandColor rounded cursor-pointer mx-auto outline-none"
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         handleNavigationClick(e.target.value as PAYMENT_NAVIGATION)
                     }}

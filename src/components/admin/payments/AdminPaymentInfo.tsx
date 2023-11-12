@@ -3,11 +3,10 @@ import PaymentIcon from "@/assets/payments/payment.png"
 import PaidInvoiceIcon from "@/assets/admin/Done.svg"
 import { getFormattedDate } from "@/utils/global"
 import { PaymentResponse } from "@/data/admin/payments"
-import { PendingPaymentResponse } from "@/data/admin/payments"
 import { PAYMENT_STATUS } from "@/data/admin/dashboard"
 
 type AdminInvoiceInfoProp = {
-    paymentData: PaymentResponse | PendingPaymentResponse
+    paymentData: PaymentResponse
 }
 
 function getPaymentDate(date: Date) {
@@ -78,7 +77,11 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData }
                 {paymentData.status == PAYMENT_STATUS.PAID && (
                     <div className=" flex justify-between">
                         <p className="text-placeholder">Paid At:</p>
-                        <span className="text-black">{getPaymentDate((paymentData as PaymentResponse).paid_at)}</span>
+                        {paymentData.paid_at != null ? (
+                            <span className="text-black">{getPaymentDate((paymentData).paid_at)}</span>
+                        ) : (
+                            <span>N/A</span>
+                        )}
                     </div>
                 )}
 

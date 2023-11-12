@@ -2,27 +2,27 @@
 import { getFormattedDate } from "@/utils/global"
 import { PaymentStatusColor } from "@/data/admin/invoice"
 import { PaymentResponse } from "@/data/admin/payments"
-import { PendingPaymentResponse } from "@/data/admin/payments"
-import { PAYMENT_NAVIGATION } from "@/data/admin/payments"
-
 
 type PaymentActivityMVProp = {
-    data: PaymentResponse[] | PendingPaymentResponse[]
-    type: PAYMENT_NAVIGATION
+    data: PaymentResponse[]
+    handlePaymentClick(payment: PaymentResponse): void
 }
 
-export const PaymentActivityMV: React.FC<PaymentActivityMVProp> = ({ data, type: PaymentType }) => {
 
+export const PaymentActivityMV: React.FC<PaymentActivityMVProp> = ({ data, handlePaymentClick }) => {
 
     return (
         <div className="flex flex-col gap-y-2">
             {
-                data.map((paymentData: PaymentResponse | PendingPaymentResponse, index: number) => {
+                data.map((paymentData: PaymentResponse, index: number) => {
 
                     const { day, monthShort, year } = getFormattedDate(new Date())
 
                     return (
-                        <div key={index} className="bg-white p-4 px-5 rounded flex justify-between">
+                        <div key={index}
+                            className="bg-white p-4 px-5 rounded flex justify-between"
+                            onClick={() => handlePaymentClick(paymentData)}
+                        >
                             <div className="flex flex-col gap-y-1">
 
                                 {/* Invoice number */}
@@ -30,40 +30,27 @@ export const PaymentActivityMV: React.FC<PaymentActivityMVProp> = ({ data, type:
 
                                 {/* Payer Name */}
                                 <p className="font-Inter-Bold text-lg">
-                                    {PaymentType == PAYMENT_NAVIGATION.ALL && (
-                                        <span>{`${(paymentData as PaymentResponse).paid_by.toLowerCase() ?? "<no name>"}`}</span>
-                                    )}
-                                    {PaymentType == PAYMENT_NAVIGATION.PENDING && (
-                                        // <span>{`${(paymentData as PendingPaymentResponse).paid_by.toLowerCase() ?? "<no name>"}`}</span>
-                                        <span>{`John Doe`}</span>
-                                    )}
+                                    <span className="capitalize">{`${((paymentData)?.paid_by ?? "<no name>").toLowerCase()}`}</span>
                                 </p>
 
                                 {/* Time */}
                                 <p className="text-placeholder text-sm">{`Date: ${day} ${monthShort}, ${year}`}</p>
                             </div>
-                            
+
                             <div className="flex flex-col gap-y-1 items-end">
 
                                 {/* Status */}
                                 <p className="rounded flex justify-between items-center p-2 py-1 gap-x-3 text-sm" style={{
-                                    color: PaymentStatusColor[paymentData.paid ? "completed" : "pending"]?.color ?? "#333",
-                                    backgroundColor: PaymentStatusColor[paymentData.paid ? "completed" : "pending"]?.backgroundColor ?? "#fff"
+                                    color: PaymentStatusColor[paymentData.status]?.color ?? "#333",
+                                    backgroundColor: PaymentStatusColor[paymentData.status]?.backgroundColor ?? "#fff"
                                 }}>
-                                    <div className="w-[5px] h-[5px] rounded-full" style={{ backgroundColor: PaymentStatusColor[paymentData.paid ? "completed" : "pending"]?.color ?? "#333" }}></div>
-                                    {(paymentData.paid ? "completed" : "pending").toLocaleLowerCase()}
+                                    <div className="w-[5px] h-[5px] rounded-full" style={{ backgroundColor: PaymentStatusColor[paymentData.status]?.color ?? "#333" }}></div>
+                                    <div className="capitalize">{(paymentData.status).toLocaleLowerCase()}</div>
                                 </p>
 
                                 {/* Amount */}
                                 <p>
-                                    {/* <span>&#8358;</span>
-                                    <span>{`${Number(activity.amount).toLocaleString()}`}</span> */}
-                                    {PaymentType == PAYMENT_NAVIGATION.ALL && (
-                                        <span>{`${Number((paymentData as PaymentResponse).amount).toLocaleString() ?? "N / A"}`}</span>
-                                    )}
-                                    {PaymentType == PAYMENT_NAVIGATION.PENDING && (
-                                        <span>N / A</span>
-                                    )}
+                                    <span>{`${Number((paymentData).amount).toLocaleString() ?? "N / A"}`}</span>
                                 </p>
                             </div>
                         </div>

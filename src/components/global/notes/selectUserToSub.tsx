@@ -11,6 +11,7 @@ import checkBoxIcon from "@/assets/admin/checkbox.png";
 import { MutationResultType } from "@/data/global"
 import { Toast } from ".."
 import { useNavigate } from "react-router-dom"
+import { useAppSelector } from "@/hooks/typedHooks"
 
 type SelectUserToSubmitNoteProp = {
     role: USERROLES,
@@ -27,6 +28,8 @@ const override: CSSProperties = {
 let timeoutID: any;
 
 export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ submitNote, isSendNoteLoading }) => {
+
+    const { userProfile } = useAppSelector((state) => state.auth)
 
     const navigate = useNavigate()
 
@@ -142,7 +145,7 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
     }
 
     return (
-        <div className="p-5">
+        <div className="p-5 w-[300px]">
             <div className="flex justify-between gap-x-5 items-center">
                 <h3 className="font-Inter"><span className="text-brandColor font-Inter-Bold">Send</span> note to:</h3>
                 <select
@@ -153,15 +156,17 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
                     }}
                 >
                     <option value={undefined} selected disabled>Select User</option>
-                    {/* <option value={USERROLES.ADMIN}>Admin</option> */}
-                    {/* <option value={USERROLES.MANAGER}>Manager</option> */}
+                    {userProfile?.role !== USERROLES.USER && (
+                        <option value={USERROLES.USER}>User</option>
+                    )}
+                    <option value={USERROLES.ADMIN}>Admin</option>
+                    <option value={USERROLES.MANAGER}>Manager</option>
                     <option value={USERROLES.STAFF}>Staff</option>
-                    <option value={USERROLES.USER}>User</option>
                 </select>
             </div>
 
             {/* List of users */}
-            <div className="h-80vh max-h-[400px] overflow-scroll">
+            <div className="h-80vh max-h-[400px] overflow-hidden">
 
                 {/* Loader */}
                 {(isAllAdminsLoading || isAllManagersLoading || isAllStaffsLoading || isAllUsersLoading) && (

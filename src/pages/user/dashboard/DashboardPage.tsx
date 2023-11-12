@@ -1,5 +1,5 @@
 // jshint esversion:6
-import { TotalRevenueOverviewBox } from "@/components/global/overviewBox"
+import { TotalSpentOverviewBox } from "@/components/global/overviewBox"
 import { PaymentActivityWrapper } from "@/components/admin/dashboard/payment"
 import { UserDocumentUploadDoughnutChart } from "@/components/user/dashboard"
 import { TotalNotesReceivedOverviewBox } from "@/components/global/overviewBox"
@@ -12,7 +12,7 @@ export const DashboardPage: React.FC = () => {
 
                 {/* Overview boxes */}
                 <div className="flex flex-wrap justify-center items-start gap-3">
-                    <TotalRevenueOverviewBox />
+                    <TotalSpentOverviewBox />
                     <TotalNotesCreatedOverviewBox />
                     <TotalNotesReceivedOverviewBox />
                     <UserDocumentUploadDoughnutChart />
