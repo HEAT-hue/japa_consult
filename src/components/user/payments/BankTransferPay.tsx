@@ -132,7 +132,7 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
 
     return (
         <>
-            <div className="w-[350px] bg-[#F6F6F6] mx-auto p-6 flex flex-col gap-y-4 rounded-md">
+            <div className="w-[280px] sm:w-[350px] bg-[#F6F6F6] mx-auto p-6 flex flex-col gap-y-4 rounded-md">
                 <div>
                     <h2 className="text-xs font-Inter-Regular">Bank Name</h2>
                     <p className="font-Inter-Bold text-lg">{bankDetails?.bank_name ?? "No Bank name"}</p>

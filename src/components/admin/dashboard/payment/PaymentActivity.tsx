@@ -59,7 +59,10 @@ export const PaymentActivity: React.FC<PaymentActivityProp> = ({ data, handlePay
                                             <span>{paymentData.invoice_id}</span>
                                         </td>
                                         <td className="w-full truncate text-[#AFAFAF]">
-                                            <span>{`${Number(paymentData.amount).toLocaleString() ?? "N / A"}`}</span>
+                                            <div className="flex">
+                                                <span>&#8358;</span>
+                                                <span>{`${Number(paymentData.amount).toLocaleString() ?? "N / A"}`}</span>
+                                            </div>
                                         </td>
                                         <td className={`w-full truncate capitalize`}>
                                             <span

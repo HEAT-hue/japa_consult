@@ -166,7 +166,7 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
             </div>
 
             {/* List of users */}
-            <div className="h-80vh max-h-[400px] overflow-hidden">
+            <div className="h-80vh max-h-[400px] overflow-scroll no-scroll">
 
                 {/* Loader */}
                 {(isAllAdminsLoading || isAllManagersLoading || isAllStaffsLoading || isAllUsersLoading) && (
@@ -210,7 +210,7 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
                 <button
                     onClick={SendNoteToUser}
                     disabled={!selectedUserId}
-                    className={`mt-3 px-2 py-2 ${selectedUserId ? "bg-brandColor text-white" : "bg-formDisabledBg"}  font-Manrope-Regular rounded`}>{isSendNoteLoading ? "Submitting..." : "Submit Note"}</button>
+                    className={`mt-3 px-4 py-2 ${selectedUserId ? "bg-brandColor text-white" : "bg-formDisabledBg"}  font-Manrope-Regular rounded`}>{isSendNoteLoading ? "Sending..." : "Send"}</button>
             </div>
 
 

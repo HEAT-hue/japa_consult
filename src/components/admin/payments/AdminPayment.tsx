@@ -66,7 +66,10 @@ export const AdminPayment: React.FC<PaymentActivityProp> = ({ data, handlePaymen
 
                                         <td className="w-full truncate text-[#AFAFAF]">
                                             {paymentData.amount && (
-                                                <span>{`${Number((paymentData as PaymentResponse).amount).toLocaleString() ?? "N / A"}`}</span>
+                                                <div className="flex">
+                                                    <span>&#8358;</span>
+                                                    <span>{`${Number((paymentData as PaymentResponse).amount).toLocaleString() ?? "N / A"}`}</span>
+                                                </div>
                                             )}
                                         </td>
 

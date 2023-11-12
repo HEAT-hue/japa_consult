@@ -59,6 +59,7 @@ export function UserLayout() {
                     {currentLocationPathname == "/account" && "Accounts"}
                     {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
                     {currentLocationPathname == "/account/report" && "Report an Issue"}
+                    {currentLocationPathname == "/payments" && "Payments"}
                 </div>
 
                 {/* Navigation */}
@@ -96,6 +97,7 @@ export function UserLayout() {
                     {currentLocationPathname == "/account" && "Accounts"}
                     {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
                     {currentLocationPathname == "/account/report" && "Report an Issue"}
+                    {currentLocationPathname == "/payments" && "Payments"}
                 </div>
 
                 {/* Navigation */}

@@ -71,7 +71,7 @@ export const CardTransferPay: React.FC<CardTransferPayProp> = ({ invoice }) => {
     // }
 
     return (
-        <div className="w-[320px] mx-auto">
+        <div className="w-[300px] sm:w-[320px] mx-auto">
             <form className="flex flex-col gap-y-4" onSubmit={(e: FormEvent) => {
                 e.preventDefault();
                 payWithCard();

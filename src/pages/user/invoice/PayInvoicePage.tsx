@@ -27,11 +27,15 @@ export const PayInvoicePage: React.FC = () => {
     return (
         <>
             <div className="pt-9 sm:pt-3">
-                <div className="bg-white p-7 px-5 sm:p-9 rounded h-[85vh] overflow-scroll">
+                <div className="bg-white p-7 px-5 sm:p-9 mx-[-15px] rounded h-[85vh] overflow-scroll">
                     {/* Invoice details */}
                     <div className="flex flex-col gap-y-1">
                         <h1 className="text-xl font-Inter-Bold">{invoice.title}</h1>
-                        <p>{`$${Number(invoice.price).toLocaleString()}`}</p>
+
+                        <div className="flex">
+                            <span>&#8358;</span>
+                            <p>{`${Number(invoice.price).toLocaleString()}`}</p>
+                        </div>
                     </div>
 
                     <h1 className="text-lg text-center font-Inter-Bold mt-2">Select method of Payment</h1>

@@ -24,6 +24,8 @@ import FileIconDark from "@/assets/global/nav-folder-add.svg"
 import InvoiceIcon from "@/assets/global/receipt-2.svg";
 // import InvoiceIconDark from "@/assets/global/document-textDark.svg";
 import LogoutIcon from "@/assets/global/logout.svg";
+import Card from "@/assets/payments/card-pos.svg";
+import CardDark from "@/assets/payments/card-posDark.svg";
 import { persistor } from "@/app/store";
 
 type AsideNavigationProps = {
@@ -178,6 +180,22 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                                 <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
                                     <img src={isActive ? InvoiceIcon : InvoiceIcon} alt="msg page" />
                                     <span className="pl-3">Invoice</span>
+                                </div>
+                            )}
+                        </NavLink>
+                    </li>
+
+
+                    {/* Payments */}
+                    <li className={`ease-in-out transition duration-300 border-[1px] border-white hover:border-brandColor rounded-md`}>
+                        <NavLink
+                            to="/payments"
+                            onClick={closeNav}
+                        >
+                            {({ isActive }) => (
+                                <div className={`flex py-[12px] pl-[14%] sm:justify-start ease-in-out transition duration-100 ${isActive ? "bg-brandColor text-white" : "text-black"} rounded-md`}>
+                                    <img src={isActive ? Card : CardDark} alt="msg page" />
+                                    <span className="pl-3">Payments</span>
                                 </div>
                             )}
                         </NavLink>

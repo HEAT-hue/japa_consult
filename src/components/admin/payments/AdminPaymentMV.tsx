@@ -13,8 +13,6 @@ type PaymentActivityMVProp = {
 
 export const AdminPaymentMV: React.FC<PaymentActivityMVProp> = ({ data, handlePaymentClick }) => {
 
-    console.log()
-
     return (
         <div className="flex flex-col gap-y-2 divide-y divide-gray-300">
             {
@@ -58,7 +56,10 @@ export const AdminPaymentMV: React.FC<PaymentActivityMVProp> = ({ data, handlePa
                                 {/* Amount */}
                                 <p>
                                     {paymentData.amount && (
-                                        <span>{`${Number((paymentData).amount).toLocaleString() ?? "N / A"}`}</span>
+                                        <div className="flex">
+                                            <span>&#8358;</span>
+                                            <span>{`${Number((paymentData).amount).toLocaleString() ?? "N / A"}`}</span>
+                                        </div>
                                     )}
                                 </p>
                             </div>

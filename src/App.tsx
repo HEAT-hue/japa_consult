@@ -52,6 +52,7 @@ export default function App() {
                 <Route path="/invoice" element={<InvoicePage />} />
                 <Route path="/invoice/pay" element={<PayInvoicePage />} />
                 <Route path="/invoice/pay/verify" element={<VerifyCardPaymentPage />} />
+                <Route path="/payments" element={<AdminPaymentPage />} />
               </Route>
             </Route>
 
