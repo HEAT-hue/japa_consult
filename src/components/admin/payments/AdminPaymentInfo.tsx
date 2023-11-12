@@ -86,13 +86,10 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData }
                 )}
 
                 {/* Payment Type */}
-                {paymentData.status == PAYMENT_STATUS.PAID && (
-                    <div className=" flex justify-between">
-                        <p className="text-placeholder">Mode:</p>
-                        <span className="text-black">{(paymentData as PaymentResponse).payment_type}</span>
-                    </div>
-                )}
-
+                <div className=" flex justify-between">
+                    <p className="text-placeholder">Mode:</p>
+                    <span className="text-black capitalize">{(paymentData as PaymentResponse).payment_type}</span>
+                </div>
             </div>
         </div>
     )
