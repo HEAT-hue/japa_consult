@@ -47,7 +47,7 @@ export const PayInvoicePage: React.FC = () => {
                         <div onClick={() => setPaymentmethod(PAYMENT_METHOD.CARD)} className={`w-[160px] p-3 rounded-l border border-brandColor flex items-center gap-x-2 ${paymentMethod == PAYMENT_METHOD.CARD ? "text-white bg-brandColor" : "text-pry bg-white"}`}>
                             <img src={paymentMethod == PAYMENT_METHOD.CARD ? cardIcon : cardIconDark} alt="" />
 
-                            <p>Credit card</p>
+                            <p>Rave</p>
                         </div>
 
                         {/* Bank Transfer */}
@@ -65,7 +65,7 @@ export const PayInvoicePage: React.FC = () => {
                         )}
 
                         {paymentMethod == PAYMENT_METHOD.CARD && (
-                            <div className="pt-5">
+                            <div className="pt-3">
                                 <CardTransferPay invoice={invoice} />
                             </div>
                         )}

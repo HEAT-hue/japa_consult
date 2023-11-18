@@ -3,7 +3,9 @@ import { emptySplitApi } from "../../api";
 import {
     BankTransferPaymentRequest, BankTransferPaymentResponse,
     VerifyBankPaymentRequest, VerifyBankPaymentResponse, GetUserTotalSpendResponse,
-    CardPaymentRequest, CardPaymentResponse, VerifyCardPaymentRequest, VerifyCardPaymentResponse
+    CardPaymentRequest, CardPaymentResponse, VerifyCardPaymentRequest,
+    VerifyCardPaymentResponse, GetRaveCheckoutLinkRequest, GetRaveCheckoutResponse,
+    VerifyRaveCheckoutPayment
 } from "@/data/users/payments";
 
 export const paymentsAPI = emptySplitApi.injectEndpoints({
@@ -48,8 +50,26 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             }),
         }),
 
+        raveCheckoutPay: builder.query<GetRaveCheckoutResponse, GetRaveCheckoutLinkRequest>({
+            query: (params) => ({
+                url: `raveCheckout/pay`,
+                params
+            }),
+        }),
+
+        verifyCheckoutPay: builder.query<VerifyRaveCheckoutPayment, void>({
+            query: () => ({
+                url: `raveCheckout/verifyPayments`,
+            }),
+        }),
+
 
     })
 })
 
-export const { useLazyBankTransferPayQuery, useVerifyTransferQuery, useLazyVerifyTransferQuery, useCardPaymentMutation, useVerifyCardPaymentMutation, useUserTotalSpendQuery } = paymentsAPI
+export const {
+    useLazyBankTransferPayQuery, useVerifyTransferQuery,
+    useLazyVerifyTransferQuery, useCardPaymentMutation,
+    useVerifyCardPaymentMutation, useUserTotalSpendQuery,
+    useRaveCheckoutPayQuery, useLazyVerifyCheckoutPayQuery
+} = paymentsAPI

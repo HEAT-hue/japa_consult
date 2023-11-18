@@ -57,3 +57,18 @@ export type GetUserTotalSpendResponse = {
     "email": string,
     "total_spend": number
 }
+
+export type GetRaveCheckoutLinkRequest = {
+    invoiceId: string
+}
+
+export type GetRaveCheckoutResponse = {
+    "flw_txref": string,
+    "status": string,
+    "link": string,
+    "link_type": string
+}
+
+export type VerifyRaveCheckoutPayment = {
+    "msg": string,
+}
