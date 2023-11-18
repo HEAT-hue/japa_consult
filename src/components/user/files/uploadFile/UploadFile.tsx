@@ -13,16 +13,17 @@ const imageMimeType = /image\/(png|jpg|jpeg)|text\/plain|^application\/(csv|pdf|
 const MAXFILEUPLOAD = 10;
 
 type UserUploadFileType = {
+    setFolder?: FOLDER_NAME
     filesUploaded: File[],
     setFilesUploaded: React.Dispatch<React.SetStateAction<File[]>>
     action: (folderName: string) => void
     loading: boolean
 }
 
-export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, setFilesUploaded, action, loading }) => {
+export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, setFilesUploaded, action, loading, setFolder }) => {
 
     // Folder name
-    const [folderName, setFolderName] = useState<FOLDER_NAME>(FOLDER_NAME.GENERAL);
+    const [folderName, setFolderName] = useState<FOLDER_NAME>(setFolder ?? FOLDER_NAME.GENERAL);
 
     // Ref for input element
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -103,19 +104,25 @@ export const UserUploadFile: React.FC<UserUploadFileType> = ({ filesUploaded, se
             <div className="mt-4 flex justify-between items-center">
                 <select
                     name="folder"
-                    className="p-2 bg-white border-[1px] border-[#DBDBDB] rounded cursor-pointer"
+                    className="p-2 bg-white border-[1px] border-[#DBDBDB] rounded cursor-pointer capitalize"
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         setFolderName(e.target.value as FOLDER_NAME)
                     }}
                 >
-                    <option value={FOLDER_NAME.GENERAL} selected>General</option>
-                    <option value={FOLDER_NAME.BILLING} >Billing</option>
-                    <option value={FOLDER_NAME.ACADMEMICS} >Academics</option>
-                    <option value={FOLDER_NAME.VISA} >Visa</option>
-                    <option value={FOLDER_NAME.CONTRACT} >Contract</option>
+                    {setFolder ? (
+                        <option className="capitalize" selected disabled>{setFolder.toLowerCase()}</option>
+                    ) : (
+                        <>
+                            <option value={FOLDER_NAME.GENERAL} selected>General</option>
+                            <option value={FOLDER_NAME.BILLING} >Billing</option>
+                            <option value={FOLDER_NAME.ACADMEMICS} >Academics</option>
+                            <option value={FOLDER_NAME.VISA} >Visa</option>
+                            <option value={FOLDER_NAME.CONTRACT} >Contract</option>
+                        </>
+                    )}
                 </select>
-                <p className="flex gap-x-2 justify-end text-sm"><img src={InfoIcon} alt="info" /> <span>Maximum size: 5MB</span></p>
-            </div>
+                <p className="flex gap-x-2 justify-end text-sm"><img src={InfoIcon} alt="info" /> <span>Maximum size: 3MB</span></p>
+            </div >
 
             <div className="flex flex-col gap-y-2 mt-3">
                 {

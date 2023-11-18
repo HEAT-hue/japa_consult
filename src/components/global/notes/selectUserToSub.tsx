@@ -17,6 +17,7 @@ type SelectUserToSubmitNoteProp = {
     role: USERROLES,
     submitNote(toId: number): Promise<MutationResultType>
     isSendNoteLoading: boolean
+    closeModal?: () => void
 }
 
 const override: CSSProperties = {
@@ -27,7 +28,7 @@ const override: CSSProperties = {
 
 let timeoutID: any;
 
-export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ submitNote, isSendNoteLoading }) => {
+export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ submitNote, isSendNoteLoading, role, closeModal }) => {
 
     const { userProfile } = useAppSelector((state) => state.auth)
 
@@ -140,8 +141,11 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
 
         timeoutID = setTimeout(() => {
             setActionSuccess(undefined);
-            navigate("/admin/notes");
+            navigate(`${role == USERROLES.USER ? "/notes" : "/admin/notes"}`);
+            // close any open modal
+            closeModal?.();
         }, 2000)
+
     }
 
     return (
@@ -217,7 +221,9 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
             {actionSuccess && (
                 <Toast desc={actionSuccess ?? "Success"} action={() => {
                     setActionSuccess(undefined)
-                    navigate("/admin/notes")
+                    navigate(`${role == USERROLES.USER ? "/notes" : "/admin/notes"}`)
+                    // close any open modal
+                    closeModal?.();
                 }} />
             )}
 
