@@ -14,7 +14,7 @@ import {
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
-  CreateNotePage, InvoicePage, PayInvoicePage, VerifyCardPaymentPage
+  CreateNotePage, InvoicePage, PayInvoicePage, VerifyCardPaymentPage, UserMessagePage
 } from "@/pages/user";
 import {
   AdminDashboardPage, AdminInvoicePage, CreateInvoicePage,
@@ -43,8 +43,7 @@ export default function App() {
               {/* Only signed in users can access these routes */}
               <Route element={<UserLayout />}>
                 <Route path="/" element={<DashboardPage />} />
-                <Route path="/users" element={<ComingSoonPage />} />
-                <Route path="/messages" element={<ComingSoonPage />} />
+                <Route path="/messages" element={<UserMessagePage />} />
                 <Route path="/notes" element={<NotePage />} />
                 <Route path="/notes/create" element={<CreateNotePage />} />
                 <Route path="/files" element={<FilesPage />} />
