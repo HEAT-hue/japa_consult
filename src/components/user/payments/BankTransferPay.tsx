@@ -152,14 +152,14 @@ export const BankTransferPay: React.FC<BankTransferPayProp> = ({ invoice }) => {
                 </div>
                 <div>
                     <h2 className="text-xs font-Inter-Regular">Amount</h2>
-                    <p className="font-Inter-Bold text-lg">{Number(invoice.price).toLocaleString()}</p>
+                    <p className="font-Inter-Bold text-lg">{Number(bankDetails?.transfer_amount).toLocaleString()}</p>
                 </div>
             </div>
 
             <div className="flex flex-col items-center gap-y-5">
                 {/* Expiry */}
                 <div className="text-center mt-3">
-                    <p>Expires in <span className="text-brandColor">{convertMsToTime(bankDetails?.expires_in ?? 1699487109095)}</span> </p>
+                    <p>Expires in <span className="text-brandColor">{convertMsToTime(new Date(bankDetails?.expires_in ?? new Date()).getMilliseconds() ?? 1699487109095)}</span> </p>
                 </div>
 
                 {/* Button confirmation */}

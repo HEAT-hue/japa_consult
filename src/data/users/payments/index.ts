@@ -3,5 +3,6 @@ export type {
     BankTransferPaymentResponse, CardPaymentRequest,
     CardPaymentResponse, VerifyCardPaymentRequest,
     VerifyCardPaymentResponse, GetUserTotalSpendResponse, GetRaveCheckoutLinkRequest,
-    GetRaveCheckoutResponse, VerifyRaveCheckoutPayment
+    GetRaveCheckoutResponse, VerifyRaveCheckoutPayment, GetRavePaymentCallbackRequest,
+    GetRavePaymentCallbackResponse
 } from "./apiTypes";

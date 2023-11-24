@@ -5,7 +5,7 @@ import {
     VerifyBankPaymentRequest, VerifyBankPaymentResponse, GetUserTotalSpendResponse,
     CardPaymentRequest, CardPaymentResponse, VerifyCardPaymentRequest,
     VerifyCardPaymentResponse, GetRaveCheckoutLinkRequest, GetRaveCheckoutResponse,
-    VerifyRaveCheckoutPayment
+    VerifyRaveCheckoutPayment, GetRavePaymentCallbackRequest, GetRavePaymentCallbackResponse
 } from "@/data/users/payments";
 
 export const paymentsAPI = emptySplitApi.injectEndpoints({
@@ -21,7 +21,7 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
         // Get user profile
         bankTransferPay: builder.query<BankTransferPaymentResponse, BankTransferPaymentRequest>({
             query: (params) => ({
-                url: `bankTransfer/pay`,
+                url: `flutterwave/bankTransfer`,
                 params
             }),
         }),
@@ -50,9 +50,16 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             }),
         }),
 
-        raveCheckoutPay: builder.query<GetRaveCheckoutResponse, GetRaveCheckoutLinkRequest>({
+        raveCheckoutModal: builder.query<GetRaveCheckoutResponse, GetRaveCheckoutLinkRequest>({
             query: (params) => ({
-                url: `raveCheckout/pay`,
+                url: `flutterwave/checkoutModal`,
+                params
+            }),
+        }),
+
+        ravePaymentCallback: builder.query<GetRavePaymentCallbackResponse, GetRavePaymentCallbackRequest>({
+            query: (params) => ({
+                url: `flutterwave/paymentCallback`,
                 params
             }),
         }),
@@ -71,5 +78,5 @@ export const {
     useLazyBankTransferPayQuery, useVerifyTransferQuery,
     useLazyVerifyTransferQuery, useCardPaymentMutation,
     useVerifyCardPaymentMutation, useUserTotalSpendQuery,
-    useRaveCheckoutPayQuery, useLazyVerifyCheckoutPayQuery
+    useRaveCheckoutModalQuery, useLazyVerifyCheckoutPayQuery, useRavePaymentCallbackQuery
 } = paymentsAPI

@@ -18,7 +18,9 @@ export const PaymentNotification: React.FC<PaymentNotificationProp> = ({ error, 
 
                 <p className="font-Inter-Bold">{error ? "Payment failed" : "Payment Successful"}</p>
 
-                <p>{errorMessage && "Payment failed due to insufficient funds in your account."}</p>
+                {errorMessage && (
+                    <p>{errorMessage}</p>
+                )}
 
                 <button onClick={action} className="w-[250px] mx-auto border py-2 rounded">{buttonTitle}</button>
             </div>

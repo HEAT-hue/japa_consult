@@ -6,8 +6,9 @@ export type BankTransferPaymentResponse = {
     "ref_id": string,
     "bank_name": string,
     "bank_account": string,
-    "expires_in": number,
-    "message": string
+    "expires_in": Date,
+    "message": string,
+    "transfer_amount": number
 }
 
 export type VerifyBankPaymentRequest = {
@@ -63,7 +64,7 @@ export type GetRaveCheckoutLinkRequest = {
 }
 
 export type GetRaveCheckoutResponse = {
-    "flw_txref": string,
+    "ref_id": string,
     "status": string,
     "link": string,
     "link_type": string
@@ -71,4 +72,15 @@ export type GetRaveCheckoutResponse = {
 
 export type VerifyRaveCheckoutPayment = {
     "msg": string,
+}
+
+export type GetRavePaymentCallbackRequest = {
+    tx_ref: string,
+    tx_status: string,
+    transaction_id?: string
+}
+
+export type GetRavePaymentCallbackResponse = {
+    "status": string,
+    "ref_id": string
 }

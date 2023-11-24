@@ -3,19 +3,11 @@ import { useState, useEffect, CSSProperties } from "react"
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice"
 import { Toast } from "@/components/global"
 // import { useNavigate } from "react-router-dom"
-import { useRaveCheckoutPayQuery } from "@/app/services/user/payments"
+import { useRaveCheckoutModalQuery } from "@/app/services/user/payments"
 import { BeatLoader } from "react-spinners"
 import { Link } from "react-router-dom"
 import { ReceiptSVG } from "@/components/global/svg/invoice"
 import { getErrorMessage } from "@/utils/global"
-
-// type CardDetailsType = {
-//     "cardno": string,
-//     "cvv": string,
-//     "expirymonth": string,
-//     "expiryyear": string,
-//     "pin": string
-// }
 
 type CardTransferPayProp = {
     invoice: PaidInvoiceType
@@ -34,7 +26,7 @@ export const CardTransferPay: React.FC<CardTransferPayProp> = ({ invoice }) => {
 
     // const navigate = useNavigate();
 
-    const { data: raveData, isLoading: isRaveCheckoutLoading, isError: isRaveCheckoutError, error: raveCheckoutError } = useRaveCheckoutPayQuery({ invoiceId: invoice.inv_id });
+    const { data: raveData, isLoading: isRaveCheckoutLoading, isError: isRaveCheckoutError, error: raveCheckoutError } = useRaveCheckoutModalQuery({ invoiceId: invoice.inv_id });
 
     console.log(raveData)
 

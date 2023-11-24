@@ -4,7 +4,8 @@ export enum PAYMENT_STATUS {
     COMPLETED = "completed",
     CANCELLED = 'cancelled',
     PENDING = 'pending',
-    PAID = "paid"
+    PAID = "paid",
+    FAILED = 'failed'
 }
 
 export type UserType = {

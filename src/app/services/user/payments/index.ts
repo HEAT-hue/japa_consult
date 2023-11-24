@@ -1,5 +1,5 @@
 export {
     useVerifyTransferQuery, useLazyBankTransferPayQuery, useUserTotalSpendQuery,
     useLazyVerifyTransferQuery, useCardPaymentMutation, useVerifyCardPaymentMutation,
-    useRaveCheckoutPayQuery, useLazyVerifyCheckoutPayQuery
+    useRaveCheckoutModalQuery, useLazyVerifyCheckoutPayQuery, useRavePaymentCallbackQuery
 } from "./paymentAPI";

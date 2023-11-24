@@ -42,6 +42,7 @@ export function getErrorMessage(error: unknown): string {
             case 400: {
                 console.log("Case matched")
                 errorMessage = (error as any).data.detail
+                console.log((error as any).data.detail)
                 break;
             }
             case 404: {
