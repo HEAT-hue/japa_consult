@@ -77,7 +77,7 @@ export type VerifyRaveCheckoutPayment = {
 export type GetRavePaymentCallbackRequest = {
     tx_ref: string,
     tx_status: string,
-    transaction_id?: string
+    transaction_id?: string | number
 }
 
 export type GetRavePaymentCallbackResponse = {
