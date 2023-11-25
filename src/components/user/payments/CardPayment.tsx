@@ -5,7 +5,6 @@ import { Toast } from "@/components/global"
 // import { useNavigate } from "react-router-dom"
 import { useRaveCheckoutModalQuery } from "@/app/services/user/payments"
 import { BeatLoader } from "react-spinners"
-import { Link } from "react-router-dom"
 import { ReceiptSVG } from "@/components/global/svg/invoice"
 import { getErrorMessage } from "@/utils/global"
 
@@ -26,7 +25,7 @@ export const CardTransferPay: React.FC<CardTransferPayProp> = ({ invoice }) => {
 
     // const navigate = useNavigate();
 
-    const { data: raveData, isLoading: isRaveCheckoutLoading, isError: isRaveCheckoutError, error: raveCheckoutError } = useRaveCheckoutModalQuery({ invoiceId: invoice.inv_id });
+    const { data: raveData, isFetching: isRaveCheckoutLoading, isError: isRaveCheckoutError, error: raveCheckoutError } = useRaveCheckoutModalQuery({ invoiceId: invoice.inv_id });
 
     console.log(raveData)
 
@@ -81,10 +80,10 @@ export const CardTransferPay: React.FC<CardTransferPayProp> = ({ invoice }) => {
             <div className="flex flex-col gap-y-3">
                 <p className="font-Inter-Regular">Click to pay with Flutterwave</p>
 
-                <div className="py-3 bg-brandColor font-Inter-Medium text-white text-center cursor-pointer">
-                    <Link className="w-full h-full" to={raveData?.link ?? "/invoice/pay"}>
+                <div className="bg-brandColor font-Inter-Medium text-white text-center cursor-pointer">
+                    <a className="block py-3 w-full h-full" href={raveData?.link ?? "/invoice/pay"} rel="noopener noreferrer">
                         Pay Now
-                    </Link>
+                    </a>
                 </div>
             </div>
 
