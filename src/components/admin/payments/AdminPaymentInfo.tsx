@@ -93,6 +93,10 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
                     {paymentData.status == PAYMENT_STATUS.ERROR && (
                         <span>Payment Error</span>
                     )}
+
+                    {paymentData.status == PAYMENT_STATUS.CHECKING && (
+                        <span>Checking Payment</span>
+                    )}
                 </p>
 
                 {/* Invoice details */}
