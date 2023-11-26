@@ -1,15 +1,26 @@
 // jshint esversion:6
 import { useLocation } from "react-router-dom"
 import { Navigate } from "react-router-dom";
-import { PAYMENT_METHOD } from "@/data/global/payment";
-import { useState } from "react";
-import cardIcon from "@/assets/payments/creditcard.svg";
-import cardIconDark from "@/assets/payments/creditcardDark.svg";
-import bankIcon from "@/assets/payments/bank.svg";
+import { useState, CSSProperties, useEffect } from "react";
 import bankDarkIcon from "@/assets/payments/bankDark.svg";
-import { BankTransferPay, CardTransferPay } from "@/components/user/payments";
+import flutterWaveIcon from "@/assets/payments/flutterwave.png"
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
+import { FaAngleRight } from "react-icons/fa6";
+import { useLazyRaveCheckoutModalQuery } from "@/app/services/user/payments";
+import { Toast } from "@/components/global";
+import { BeatLoader } from "react-spinners";
+import { getErrorMessage } from "@/utils/global";
+import { Link } from "react-router-dom";
 
+const override: CSSProperties = {
+    display: "inline-block",
+    margin: "0 auto",
+    borderColor: "red",
+};
+
+let timeoutId: any;
+
+let link: HTMLAnchorElement;
 
 export const PayInvoicePage: React.FC = () => {
     // Get State from Page
@@ -17,17 +28,60 @@ export const PayInvoicePage: React.FC = () => {
 
     const invoice = (state?.invoice as PaidInvoiceType)
 
+    // Define Error message
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+
     if (state == null || !invoice) {
         return <Navigate to={"/invoice"} />
     }
 
-    const [paymentMethod, setPaymentmethod] = useState<PAYMENT_METHOD>(PAYMENT_METHOD.CARD)
+    const [trigger, result,] = useLazyRaveCheckoutModalQuery();
+
+    useEffect(() => {
+        return () => {
+            if (link) {
+                document.body.removeChild(link);
+            }
+            clearTimeout(timeoutId);
+        }
+    }, [])
+
+
+    async function handleRaveClick() {
+        const response = await trigger({ invoiceId: invoice.inv_id });
+
+        if (response.isError) {
+            setErrorMessage(getErrorMessage(response.error));
+            timeoutId = setTimeout(() => {
+                setErrorMessage(undefined);
+            }, 3000)
+            return;
+        }
+
+
+        // Fetch link
+        const fileLink = response.data?.link ?? "#";
+
+        // Create link element
+        link = document.createElement("a");
+
+        // Set the href attribute
+        link.href = fileLink;
+
+        // Open Link in the same window
+        link.target = "_self";
+
+        // Append child to body
+        document.body.appendChild(link);
+
+        link.click();
+    }
 
 
     return (
         <>
             <div className="pt-9 sm:pt-3">
-                <div className="bg-white p-7 px-5 sm:p-9 mx-[-15px] rounded h-[85vh] overflow-scroll">
+                <div className="bg-[#f7f5f5] p-7 pt-2 px-5 sm:p-9 mx-[-15px] rounded h-[85vh] overflow-scroll">
                     {/* Invoice details */}
                     <div className="flex flex-col gap-y-1">
                         <h1 className="text-xl font-Inter-Bold">{invoice.title}</h1>
@@ -38,41 +92,47 @@ export const PayInvoicePage: React.FC = () => {
                         </div>
                     </div>
 
-                    <h1 className="text-lg text-center font-Inter-Bold mt-2">Select method of Payment</h1>
-
-                    {/* Payment method navigation */}
-                    <div className="mt-3 w-full flex justify-center [&>*]:flex-shrink-0 cursor-pointer">
-
-                        {/* Card Transfer */}
-                        <div onClick={() => setPaymentmethod(PAYMENT_METHOD.CARD)} className={`w-[160px] p-3 rounded-l border border-brandColor flex items-center gap-x-2 ${paymentMethod == PAYMENT_METHOD.CARD ? "text-white bg-brandColor" : "text-pry bg-white"}`}>
-                            <img src={paymentMethod == PAYMENT_METHOD.CARD ? cardIcon : cardIconDark} alt="" />
-
-                            <p>Rave</p>
-                        </div>
-
-                        {/* Bank Transfer */}
-                        <div onClick={() => setPaymentmethod(PAYMENT_METHOD.BANK_TRANSFER)} className={`w-[160px] p-3 rounded-r border border-brandColor flex items-center gap-x-2 ${paymentMethod == PAYMENT_METHOD.BANK_TRANSFER ? "text-white bg-brandColor" : "text-pry bg-white"}`}>
-                            <img src={paymentMethod == PAYMENT_METHOD.BANK_TRANSFER ? bankIcon : bankDarkIcon} alt="" />
-
-                            <p>Bank Transfer</p>
-                        </div>
-                    </div>
-
-                    {/* Payment method */}
-                    <section className="mt-5">
-                        {paymentMethod == PAYMENT_METHOD.BANK_TRANSFER && (
-                            <BankTransferPay invoice={invoice} />
-                        )}
-
-                        {paymentMethod == PAYMENT_METHOD.CARD && (
-                            <div className="pt-3">
-                                <CardTransferPay invoice={invoice} />
+                    <div className="mt-5 flex flex-col gap-y-3">
+                        {/* Flutter wave payment */}
+                        <div onClick={handleRaveClick} className="flex items-center gap-x-4 h-[60px] border-brandColor bg-white shadow py-2 px-3 rounded cursor-pointer transition-all ease-in-out hover:scale-[1.001]">
+                            <img className="w-[40px] h-[40px]" src={flutterWaveIcon} alt="" />
+                            <p className="text-lg">Pay with Flutterwave</p>
+                            <div className="ml-auto">
+                                {result.isLoading ? (
+                                    <div className="mt-2">
+                                        <BeatLoader
+                                            color={"#E1AE3C"}
+                                            loading={true}
+                                            cssOverride={override}
+                                            size={10}
+                                            aria-label="Loading Spinner"
+                                            data-testid="loader"
+                                        />
+                                    </div>
+                                ) : (
+                                    <FaAngleRight />
+                                )}
                             </div>
-                        )}
-                    </section>
+                        </div>
 
+                        {/* Flutter wave payment */}
+                        <Link to={"bank"} state={{ invoice }} className="flex items-center gap-x-4 h-[60px]  border-brandColor bg-white shadow py-2 px-3 rounded cursor-pointer transition-all ease-in-out hover:scale-[1.001]">
+                            <div className="p-2">
+                                <img className="w-[25px] h-[25px]" src={bankDarkIcon} alt="" />
+                            </div>
+                            <p className="text-lg">Bank Transfer</p>
+                            <div className="ml-auto">
+                                <FaAngleRight />
+                            </div>
+                        </Link>
+
+                    </div>
                 </div>
             </div>
+
+            {errorMessage && (
+                <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
+            )}
         </>
     )
 }

@@ -11,11 +11,12 @@ export type BankTransferPaymentResponse = {
     "transfer_amount": number
 }
 
-export type VerifyBankPaymentRequest = {
+export type VerifyPaymentRequest = {
     refId: string
 }
 
-export type VerifyBankPaymentResponse = {
+export type VerifyPaymentResponse = {
+    status: string,
     "msg": string,
     "transactionComplete": boolean
 }

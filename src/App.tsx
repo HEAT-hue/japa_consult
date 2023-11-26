@@ -14,7 +14,8 @@ import {
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
-  CreateNotePage, InvoicePage, PayInvoicePage, VerifyCardPaymentPage, UserMessagePage, CallBackPage
+  CreateNotePage, InvoicePage, PayInvoicePage,
+  VerifyCardPaymentPage, UserMessagePage, CallBackPage, BankPaymentPage
 } from "@/pages/user";
 import {
   AdminDashboardPage, AdminInvoicePage, CreateInvoicePage,
@@ -50,6 +51,7 @@ export default function App() {
                 <Route path="/files/file/:folderName" element={<FolderPage />} />
                 <Route path="/invoice" element={<InvoicePage />} />
                 <Route path="/invoice/pay" element={<PayInvoicePage />} />
+                <Route path="/invoice/pay/bank" element={<BankPaymentPage />} />
                 <Route path="/invoice/pay/verify" element={<VerifyCardPaymentPage />} />
                 <Route path="/flutterwave/callback" element={<CallBackPage />} />
                 <Route path="/payments" element={<AdminPaymentPage />} />

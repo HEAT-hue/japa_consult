@@ -29,8 +29,8 @@ export function UserLayout() {
         <div className="grid grid-rows-1 h-screen">
 
             {/******************** DESKTOP VIEW NAVIGATION *********************/}
-            <header className="hidden sm:flex fixed top-0 inset-x-0 lg:left-[14rem] items-center pl-6 h-[60px] shadow-sm border-b-[1px] border-[#dcdcdc] bg-white z-[90]">
-                
+            <header className="hidden sm:flex justify-between fixed top-0 inset-x-0 lg:left-[14rem] items-center pl-6 h-[60px] shadow-sm border-b-[1px] border-[#dcdcdc] bg-white z-[90]">
+
                 {/* Hamburger menu */}
                 <div className="hover:cursor-pointer lg:hidden"
                     onClick={() => setIsNavOpen(true)}
@@ -53,7 +53,8 @@ export function UserLayout() {
                     {currentLocationPathname == "/notes" && "Notes"}
                     {currentLocationPathname == "/notes/create" && "Notes"}
                     {currentLocationPathname == "/invoice" && "Invoice"}
-                    {currentLocationPathname == "/invoice/pay" && "Invoice"}
+                    {currentLocationPathname == "/invoice/pay" && "Payment Option"}
+                    {currentLocationPathname == "/invoice/pay/bank" && "Bank Transfer"}
                     {currentLocationPathname == "/wallets" && "Wallet"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}
@@ -63,14 +64,14 @@ export function UserLayout() {
                 </div>
 
                 {/* Navigation */}
-                <nav className="w-full flex items-center flex-wrap text-base justify-end bg-red-00 h-full gap-[1.5rem] pr-[7%] lg:pr-[5%] ">
+                <nav className="w-ful flex items-center flex-wrap text-base justify-end bg-red-00 h-full gap-[1.5rem] pr-[7%] lg:pr-[5%] ">
                     <UserProfileMenu />
                 </nav>
             </header>
 
             {/******************** MOBILE VIEW NAVIGATION *********************/}
             <header className="sm:hidden h-[60px] fixed top-0 inset-x-0 lg:left-[14rem] flex items-center justify-between px-6 shadow-sm bg-white z-[90]">
-                
+
                 {/* Hamburger menu */}
                 <div className="cursor-pointer" onClick={() => setIsNavOpen(true)}>
                     <HiBars3BottomLeft size={35} />
@@ -92,7 +93,8 @@ export function UserLayout() {
                     {currentLocationPathname == "/notes" && "Notes"}
                     {currentLocationPathname == "/notes/create" && "Notes"}
                     {currentLocationPathname == "/invoice" && "Invoice"}
-                    {currentLocationPathname == "/invoice/pay" && "Invoice"}
+                    {currentLocationPathname == "/invoice/pay" && "Select Payment"}
+                    {currentLocationPathname == "/invoice/pay/bank" && "Bank Transfer"}
                     {currentLocationPathname == "/rate" && "Calculate Rate"}
                     {currentLocationPathname == "/account" && "Accounts"}
                     {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
