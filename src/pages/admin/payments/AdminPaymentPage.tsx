@@ -34,7 +34,6 @@ export const AdminPaymentPage: React.FC = () => {
 
     // List to hold selected users
     const [paymentList, setPaymentList] = useState<PaymentResponse[]>([]);
-    // const [pendingPaymentList, setPendingPaymentList] = useState<PendingPaymentResponse[]>([]);
 
 
     // Payment Info data
@@ -198,7 +197,7 @@ export const AdminPaymentPage: React.FC = () => {
             {
                 paymentInfoData && (
                     <Modal closeModal={() => setPaymentInfoData(null)}>
-                        <AdminPaymentInfo paymentData={paymentInfoData} />
+                        <AdminPaymentInfo paymentData={paymentInfoData} closeModal={() => setPaymentInfoData(null)} />
                     </Modal>
                 )
             }

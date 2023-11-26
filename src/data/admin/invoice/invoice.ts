@@ -56,6 +56,22 @@ export const PaymentStatusColor: PaymentStatusInterface = {
         color: "#FF4848",
         backgroundColor: "#FF48484D",
     },
+    cancelled: {
+        color: "#FF4848",
+        backgroundColor: "#FF48484D",
+    },
+    Cancelled: {
+        color: "#FF4848",
+        backgroundColor: "#FF48484D",
+    },
+    error: {
+        color: "#FF4848",
+        backgroundColor: "#FF48484D",
+    },
+    Error: {
+        color: "#FF4848",
+        backgroundColor: "#FF48484D",
+    },
     paid: {
         color: "#68EE76",
         backgroundColor: "#68EE764D",

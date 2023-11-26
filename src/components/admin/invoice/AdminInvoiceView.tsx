@@ -7,6 +7,8 @@ import { USERROLES } from "@/data/global/auth"
 import { useNavigate } from "react-router-dom"
 import checkBoxIcon from "@/assets/admin/checkbox.png";
 import { TrashSVG } from "@/components/global/svg/trash"
+// import { useLazyVerifyPaymentQuery } from "@/app/services/user/payments"
+// import { PAYMENT_STATUS } from "@/data/admin/dashboard"
 
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
@@ -17,6 +19,13 @@ type InvoiceView = {
 export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick, deleteInvoice }) => {
 
     const navigate = useNavigate();
+
+    // // Verfy Transfer
+    // const [verifyPayment, { isLoading: isVerificationLoading }] = useLazyVerifyPaymentQuery()
+
+    // function verifyInvoicePayment(invoiceId: string) {
+
+    // }
 
     const { userProfile } = useAppSelector((state) => state.auth);
 

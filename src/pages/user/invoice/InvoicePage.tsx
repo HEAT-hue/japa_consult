@@ -30,7 +30,6 @@ export const InvoicePage: React.FC = () => {
     const { data: PaidInvoiceData, isLoading: isPaidInvoiceLoading } = useGetPaidInvoiceQuery(undefined, { refetchOnMountOrArgChange: true })
 
     const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfotype>({ status: false, data: undefined });
-
     const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
     const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
 
@@ -100,8 +99,6 @@ export const InvoicePage: React.FC = () => {
                 break;
         }
     }
-
-
 
 
     return (

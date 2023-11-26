@@ -19,7 +19,7 @@ const override: CSSProperties = {
 
 export const PaymentActivityWrapper: React.FC = () => {
     // Fetching list of users
-    const { data: allPaymentsData, isLoading: isAllPaymentsLoading } = useGetAllPaymentsQuery()
+    const { data: allPaymentsData, isFetching: isAllPaymentsLoading } = useGetAllPaymentsQuery()
 
     // Payment Info data
     const [paymentInfoData, setPaymentInfoData] = useState<PaymentResponse | null>(null)
@@ -27,7 +27,6 @@ export const PaymentActivityWrapper: React.FC = () => {
     function handlePaymentClick(payment: PaymentResponse) {
         setPaymentInfoData(payment);
     }
-
 
     return (
         <div>
@@ -80,7 +79,7 @@ export const PaymentActivityWrapper: React.FC = () => {
             {
                 paymentInfoData && (
                     <Modal closeModal={() => setPaymentInfoData(null)}>
-                        <AdminPaymentInfo paymentData={paymentInfoData} />
+                        <AdminPaymentInfo paymentData={paymentInfoData} closeModal={() => setPaymentInfoData(null)} />
                     </Modal>
                 )
             }

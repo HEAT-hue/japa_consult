@@ -93,8 +93,9 @@ export const PayInvoicePage: React.FC = () => {
                     </div>
 
                     <div className="mt-5 flex flex-col gap-y-3">
+
                         {/* Flutter wave payment */}
-                        <div onClick={handleRaveClick} className="flex items-center gap-x-4 h-[60px] border-brandColor bg-white shadow py-2 px-3 rounded cursor-pointer transition-all ease-in-out hover:scale-[1.001]">
+                        <div onClick={handleRaveClick} className="flex items-center gap-x-4 h-[60px] bg-white shadow py-2 px-3 rounded cursor-pointer transition-all ease-in-out hover:scale-[1.001]">
                             <img className="w-[40px] h-[40px]" src={flutterWaveIcon} alt="" />
                             <p className="text-lg">Pay with Flutterwave</p>
                             <div className="ml-auto">
@@ -116,7 +117,7 @@ export const PayInvoicePage: React.FC = () => {
                         </div>
 
                         {/* Flutter wave payment */}
-                        <Link to={"bank"} state={{ invoice }} className="flex items-center gap-x-4 h-[60px]  border-brandColor bg-white shadow py-2 px-3 rounded cursor-pointer transition-all ease-in-out hover:scale-[1.001]">
+                        <Link to={"bank"} state={{ invoice }} className="flex items-center gap-x-4 h-[60px] bg-white shadow py-2 px-3 rounded cursor-pointer transition-all ease-in-out hover:scale-[1.001]">
                             <div className="p-2">
                                 <img className="w-[25px] h-[25px]" src={bankDarkIcon} alt="" />
                             </div>

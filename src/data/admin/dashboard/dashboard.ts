@@ -6,7 +6,8 @@ export enum PAYMENT_STATUS {
     PENDING = 'pending',
     PAID = "paid",
     FAILED = 'failed',
-    ERROR = "error"
+    ERROR = "error",
+    CHECKING = "checking"
 }
 
 export type UserType = {
