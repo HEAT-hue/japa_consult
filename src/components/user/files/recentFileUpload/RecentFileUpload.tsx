@@ -1,6 +1,7 @@
 // jshint esversion:6
 import { FileResponseType } from "@/data/users/files/file"
 import { getFormattedDate } from "@/utils/global"
+import { formatBytes } from "@/utils/global/formatBytes"
 
 type RecentFileUploadProp = {
     data: FileResponseType[]
@@ -54,7 +55,7 @@ export const RecentFileUpload: React.FC<RecentFileUploadProp> = ({ data }) => {
                                         <span>{fileData.folder}</span>
                                     </td>
                                     <td className="hidden sm:table-cell w-full truncate text-[#AFAFAF]">
-                                        <span>{fileData.size}</span>
+                                        <span>{formatBytes(Number(fileData.size?.split(" ")[0]))}</span>
                                     </td>
                                     <td className="w-full truncate text-[#AFAFAF]">
                                         <span>{`${day} ${monthShort}, ${year}`}</span>
