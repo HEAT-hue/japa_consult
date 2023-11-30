@@ -3,7 +3,7 @@ import { emptySplitApi } from "../../api";
 
 import {
     GetPaidInvoiceResponse, GetTotalRevenueResponse,
-    GetAllInvoiceResponse, GetPendingInvoiceResponse,
+    GetAllInvoiceResponse, GetPendingInvoiceResponse, GetExpiredInvoiceResponse,
     CreateInvoiceRequest, CreateInvoiceResponse, UpdateInvoiceStatusRequest,
     UpdateInvoiceStatusResponse, AdminDeleteInvoiceRequest, AdminDeleteInvoiceResponse
 } from "@/data/admin";
@@ -31,6 +31,12 @@ export const invoiceAPI = emptySplitApi.injectEndpoints({
         // Get Total revenue
         getPendingInvoice: builder.query<GetPendingInvoiceResponse, void>({
             query: () => ({ url: "invoice/pending" }),
+            providesTags: ['INVOICE']
+        }),
+
+        // Get Total revenue
+        getExpiredInvoice: builder.query<GetExpiredInvoiceResponse, void>({
+            query: () => ({ url: "invoice/expired" }),
             providesTags: ['INVOICE']
         }),
 
@@ -66,6 +72,6 @@ export const invoiceAPI = emptySplitApi.injectEndpoints({
 
 export const {
     useGetPaidInvoiceQuery, useGetTotalRevenueQuery,
-    useGetAllInvoiceQuery, useGetPendingInvoiceQuery,
+    useGetAllInvoiceQuery, useGetPendingInvoiceQuery, useGetExpiredInvoiceQuery,
     useCreateInvoiceMutation, useUpdateInvoiceStatusMutation, useDeleteInvoiceMutation
 } = invoiceAPI

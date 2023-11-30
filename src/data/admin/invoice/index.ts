@@ -1,6 +1,6 @@
 export type {
     GetPaidInvoiceResponse, GetAllInvoiceResponse,
-    GetPendingInvoiceResponse, GetTotalRevenueResponse,
+    GetPendingInvoiceResponse, GetTotalRevenueResponse, GetExpiredInvoiceResponse,
     CreateInvoiceRequest, CreateInvoiceResponse, UpdateInvoiceStatusRequest,
     UpdateInvoiceStatusResponse, AdminDeleteInvoiceRequest, AdminDeleteInvoiceResponse
 } from "./apiTypes";

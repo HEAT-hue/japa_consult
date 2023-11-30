@@ -6,9 +6,9 @@ import { useAppSelector } from "@/hooks/typedHooks"
 import { USERROLES } from "@/data/global/auth"
 import { useNavigate } from "react-router-dom"
 import checkBoxIcon from "@/assets/admin/checkbox.png";
+import expiredIcon from "@/assets/payments/date-expired-icon.webp";
 import { TrashSVG } from "@/components/global/svg/trash"
-// import { useLazyVerifyPaymentQuery } from "@/app/services/user/payments"
-// import { PAYMENT_STATUS } from "@/data/admin/dashboard"
+import { INVOICE_STATUS } from "@/data/admin/invoice/invoice"
 
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
@@ -20,12 +20,6 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
 
     const navigate = useNavigate();
 
-    // // Verfy Transfer
-    // const [verifyPayment, { isLoading: isVerificationLoading }] = useLazyVerifyPaymentQuery()
-
-    // function verifyInvoicePayment(invoiceId: string) {
-
-    // }
 
     const { userProfile } = useAppSelector((state) => state.auth);
 
@@ -117,7 +111,9 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
                                     </td>
 
                                     {(userProfile?.role == USERROLES.USER) &&
-                                        (
+                                        (invoice?.status == INVOICE_STATUS.EXPIRED ? (
+                                            <img className="w-[40px] h-[48px]" src={expiredIcon} alt="sel" />
+                                        ) :
                                             invoice.paid == false ? (
                                                 <td className="w-full truncate text-[#AFAFAF]">
                                                     <button onClick={() => navigate("pay", { state: { invoice } })} className="px-2 py-1 text-white bg-brandColor rounded">Pay now</button>

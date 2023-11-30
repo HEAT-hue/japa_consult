@@ -7,7 +7,8 @@ export type MutationResultType = {
 export enum INVOICE_NAVIGATION {
     ALL = 'ALL',
     PENDING = 'PENDING',
-    PAID = 'PAID'
+    PAID = 'PAID',
+    EXPIRED = 'EXPIRED'
 }
 
 export enum NOTE_NAVIGATION {

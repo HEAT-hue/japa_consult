@@ -1,9 +1,7 @@
 // jshint esversion:6
 import { CSSProperties, ChangeEvent } from "react";
 import { PaidInvoiceType } from "@/data/admin/invoice/invoice";
-import { useGetAllInvoiceQuery } from "@/app/services/admin/invoice";
-import { useGetPendingInvoiceQuery } from "@/app/services/admin/invoice";
-import { useGetPaidInvoiceQuery } from "@/app/services/admin/invoice";
+import { useGetPaidInvoiceQuery, useGetPendingInvoiceQuery, useGetAllInvoiceQuery, useGetExpiredInvoiceQuery } from "@/app/services/admin/invoice";
 import { useEffect, useState } from "react";
 import { INVOICE_NAVIGATION } from "@/data/global";
 import { BeatLoader } from "react-spinners";
@@ -23,11 +21,30 @@ export type InvoiceInfotype = {
     data: PaidInvoiceType | undefined
 }
 
+/*
+inv_id: 'JPC-1700967850',
+    title: 'Research Proposal',
+    desc: 'What shall we do here',
+    price: 20,
+    to_email: 'onyejemeemmanuel65@gmail.com',
+    created_at: '2023-11-26T03:04:10',
+    created_by: 'Ike Norah',
+    updated_at: null,
+    updated_by: null,
+    due_date: '2023-11-26',
+    paid: false,
+    paid_at: null,
+    rave_txref: null,
+    ref_id: null,
+    status: null
+*/
+
 export const InvoicePage: React.FC = () => {
 
     const { data: AllInvoiceData, isLoading: isAllInvoiceLoading } = useGetAllInvoiceQuery(undefined, { refetchOnMountOrArgChange: true })
     const { data: PendingInvoiceData, isLoading: isPendingInvoiceLoading } = useGetPendingInvoiceQuery(undefined, { refetchOnMountOrArgChange: true })
     const { data: PaidInvoiceData, isLoading: isPaidInvoiceLoading } = useGetPaidInvoiceQuery(undefined, { refetchOnMountOrArgChange: true })
+    const { data: ExpiredInvoiceData, isLoading: isExpiredInvoiceLoading } = useGetExpiredInvoiceQuery(undefined, { refetchOnMountOrArgChange: true })
 
     const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfotype>({ status: false, data: undefined });
     const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
@@ -55,7 +72,10 @@ export const InvoicePage: React.FC = () => {
                     setInvoiceData(PendingInvoiceData ?? []);
                     break;
                 }
-
+                case INVOICE_NAVIGATION.EXPIRED: {
+                    setInvoiceData(ExpiredInvoiceData ?? []);
+                    break;
+                }
                 default:
                     break;
             }
@@ -91,6 +111,13 @@ export const InvoicePage: React.FC = () => {
                 setInvoiceType(INVOICE_NAVIGATION.PAID)
                 break;
             }
+            case INVOICE_NAVIGATION.EXPIRED: {
+                if (ExpiredInvoiceData) {
+                    setInvoiceData(ExpiredInvoiceData)
+                }
+                setInvoiceType(INVOICE_NAVIGATION.EXPIRED)
+                break;
+            }
             default:
                 if (AllInvoiceData) {
                     setInvoiceData(AllInvoiceData)
@@ -118,6 +145,7 @@ export const InvoicePage: React.FC = () => {
                     <option value={INVOICE_NAVIGATION.ALL} >All Invoices</option>
                     <option value={INVOICE_NAVIGATION.PENDING} >Pending Invoices</option>
                     <option value={INVOICE_NAVIGATION.PAID} >Paid Invoices</option>
+                    <option value={INVOICE_NAVIGATION.EXPIRED} >Expired Invoices</option>
                 </select>
 
                 {/* <div className="hidden sm:block"> */}
@@ -128,7 +156,7 @@ export const InvoicePage: React.FC = () => {
             </div>
 
             {/* Invoice Data Wrapper */}
-            {(isAllInvoiceLoading || isPendingInvoiceLoading || isPaidInvoiceLoading) ? (
+            {(isAllInvoiceLoading || isPendingInvoiceLoading || isPaidInvoiceLoading || isExpiredInvoiceLoading) ? (
                 <div className="w-full flex items-center justify-center">
                     <div className="my-[5rem] mx-auto">
                         <BeatLoader

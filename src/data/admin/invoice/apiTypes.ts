@@ -6,6 +6,8 @@ export type GetAllInvoiceResponse = PaidInvoiceType[]
 
 export type GetPendingInvoiceResponse = PaidInvoiceType[]
 
+export type GetExpiredInvoiceResponse = PaidInvoiceType[]
+
 
 export type GetTotalRevenueResponse = {
     year?: {

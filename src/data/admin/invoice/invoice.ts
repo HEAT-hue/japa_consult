@@ -1,5 +1,9 @@
 import { PAYMENT_STATUS } from "../dashboard"
 
+export enum INVOICE_STATUS {
+    EXPIRED = 'expired'
+}
+
 export type PaymentActivityType = {
     name: string,
     invoiceID: string,
@@ -20,7 +24,10 @@ export type PaidInvoiceType = {
     "updated_by": string | null,
     "due_date": Date,
     "paid": boolean,
-    "paid_at": Date
+    "paid_at": Date,
+    rave_txref?: string;
+    ref_id?: string;
+    status?: INVOICE_STATUS;
 }
 
 type PaymentStatusInterface = {
