@@ -12,7 +12,7 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             query: () => ({
                 url: "payments/all"
             }),
-            // providesTags: ['INVOICE']
+            providesTags: ['PAYMENTS']
         }),
 
         // Get USER FILE
@@ -20,7 +20,7 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             query: () => ({
                 url: "payments/pending"
             }),
-            // providesTags: ['INVOICE']
+            providesTags: ['PAYMENTS']
         }),
 
         // Get USER FILE
@@ -28,7 +28,7 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             query: () => ({
                 url: "payments/cancelledPayments"
             }),
-            // providesTags: ['INVOICE']
+            providesTags: ['PAYMENTS']
         }),
 
         // Get USER FILE
@@ -36,7 +36,7 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             query: () => ({
                 url: "payments/paid"
             }),
-            // providesTags: ['INVOICE']
+            providesTags: ['PAYMENTS']
         }),
     })
 })

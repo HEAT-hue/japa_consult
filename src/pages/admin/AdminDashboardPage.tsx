@@ -11,10 +11,10 @@ export const AdminDashboardPage: React.FC = () => {
 
                 {/* Overview boxes */}
                 <div className="flex flex-wrap items-start justify-center gap-3">
-                        <TotalRevenueOverviewBox />
-                        <TotalUsersOverviewBox />
-                        <ActiveUsersOverviewBox />
-                        <DocumentUploadDoughnutChart />
+                    <TotalRevenueOverviewBox />
+                    <TotalUsersOverviewBox />
+                    <ActiveUsersOverviewBox />
+                    <DocumentUploadDoughnutChart />
                 </div>
             </div>
 

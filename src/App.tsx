@@ -8,14 +8,14 @@ import { LineLoader } from "./components/global/loader";
 
 import {
   LoginPage, RegisterPage, VerifyUserEmailPage,
-  PasswordResetPage, PasswordResetRequestPage, ComingSoonPage,
+  PasswordResetPage, PasswordResetRequestPage,
   AdminRegisterPage,
 } from "@/pages/global"
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
   CreateNotePage, InvoicePage, PayInvoicePage,
-  VerifyCardPaymentPage, UserMessagePage, CallBackPage, BankPaymentPage
+  VerifyCardPaymentPage, CallBackPage, BankPaymentPage
 } from "@/pages/user";
 import {
   AdminDashboardPage, AdminInvoicePage, CreateInvoicePage,
@@ -44,7 +44,7 @@ export default function App() {
               {/* Only signed in users can access these routes */}
               <Route element={<UserLayout />}>
                 <Route path="/" element={<DashboardPage />} />
-                <Route path="/messages" element={<UserMessagePage />} />
+                {/* <Route path="/messages" element={<UserMessagePage />} /> */}
                 <Route path="/notes" element={<NotePage />} />
                 <Route path="/notes/create" element={<CreateNotePage />} />
                 <Route path="/files" element={<FilesPage />} />
@@ -64,7 +64,7 @@ export default function App() {
                 <Route index element={<AdminDashboardPage />} />
                 <Route path="users" element={<AdminUsersPage />} />
                 <Route path="users/user/:userId" element={<AdminUserPage />} />
-                <Route path="messages" element={<ComingSoonPage />} />
+                {/* <Route path="messages" element={<ComingSoonPage />} /> */}
                 <Route path="notes" element={<NotePage />} />
                 <Route path="notes/create" element={<CreateNotePage />} />
                 <Route path="files" element={<FilesPage />} />

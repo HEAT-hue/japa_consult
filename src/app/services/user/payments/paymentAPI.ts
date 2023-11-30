@@ -30,7 +30,7 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
             query: (params) => ({
                 url: `flutterwave/verifyPayments`,
                 params,
-            }),
+            })
         }),
 
         cardPayment: builder.mutation<CardPaymentResponse, CardPaymentRequest>({

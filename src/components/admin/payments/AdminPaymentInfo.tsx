@@ -25,8 +25,6 @@ let timeoutId: any;
 
 export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, closeModal }) => {
 
-    console.log(paymentData);
-
     // Verfy Transfer
     const [verifyPayment, { isLoading: isVerificationLoading }] = useLazyVerifyPaymentQuery()
 
@@ -109,10 +107,12 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
                     </div>
 
                     {/* Rave Ref ID */}
-                    <div className="flex flex-wrap justify-between">
-                        <p className="text-placeholder">Rave Ref ID</p>
-                        <span className="text-black">{paymentData.rave_txRef}</span>
-                    </div>
+                    {paymentData.status != PAYMENT_STATUS.CANCELLED &&
+                        < div className="flex flex-wrap justify-between">
+                            <p className="text-placeholder">Rave Ref ID</p>
+                            <span className="text-black">{paymentData.rave_txRef}</span>
+                        </div>
+                    }
 
                     {/* User */}
                     <div className=" flex flex-wrap justify-between">
@@ -150,23 +150,27 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
                 {paymentData.status == PAYMENT_STATUS.CHECKING && (
                     <button onClick={verifyBankDetail} className="w-max p-2 mt-[-1rem] text-white bg-brandColor text-center rounded">{isVerificationLoading ? "Verifying..." : "Verify Payment"}</button>
                 )}
-            </div>
+            </div >
 
             {/* Error message */}
-            {errorMessage && (
-                <>
-                    <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
-                </>
-            )}
+            {
+                errorMessage && (
+                    <>
+                        <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
+                    </>
+                )
+            }
 
-            {success && (
-                <>
-                    <Toast desc={"Payment verified successful"} action={() => setErrorMessage(undefined)} />
-                    <Modal closeModal={closeModal}>
-                        <PaymentNotification buttonTitle="Close" action={closeModal} />
-                    </Modal>
-                </>
-            )}
+            {
+                success && (
+                    <>
+                        <Toast desc={"Payment verified successful"} action={() => setErrorMessage(undefined)} />
+                        <Modal closeModal={closeModal}>
+                            <PaymentNotification buttonTitle="Close" action={closeModal} />
+                        </Modal>
+                    </>
+                )
+            }
         </>
     )
 }

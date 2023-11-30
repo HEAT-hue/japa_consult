@@ -5,7 +5,9 @@ import RevenueIcon from "@/assets/user/wallet.svg";
 export const TotalSpentOverviewBox: React.FC = () => {
 
     const { data: spendData, isLoading: isTotalRevenueLoading } = useUserTotalSpendQuery();
-    
+
+    console.log(spendData);
+
     return (
         <>
             <div className="w-[250px] rounded-xl bg-[#E1AE3C]/30 p-4 border">

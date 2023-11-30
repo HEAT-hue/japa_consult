@@ -15,9 +15,10 @@ import { useAppSelector } from "@/hooks/typedHooks"
 
 type SelectUserToSubmitNoteProp = {
     role: USERROLES,
-    submitNote(toId: number): Promise<MutationResultType>
+    submitNote: (toId: number, noteId?: number) => Promise<MutationResultType>
     isSendNoteLoading: boolean
     closeModal?: () => void
+    noteId: number
 }
 
 const override: CSSProperties = {
@@ -28,7 +29,7 @@ const override: CSSProperties = {
 
 let timeoutID: any;
 
-export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ submitNote, isSendNoteLoading, role, closeModal }) => {
+export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ submitNote, isSendNoteLoading, role, noteId, closeModal }) => {
 
     const { userProfile } = useAppSelector((state) => state.auth)
 
@@ -42,8 +43,11 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
 
     // Fetching list of users
     const [getAllAdmins, { isLoading: isAllAdminsLoading }] = useLazyGetAllAdminsQuery()
+
     const [getAllManagers, { isLoading: isAllManagersLoading }] = useLazyGetAllManagersQuery()
+
     const [getAllStaffs, { isLoading: isAllStaffsLoading }] = useLazyGetAllStaffsQuery()
+
     const [getAllUsers, { isLoading: isAllUsersLoading }] = useLazyGetAllUsersQuery()
 
     // Selected Users
@@ -123,7 +127,7 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
         }
 
         // Send note to user
-        let response = await submitNote(selectedUserId);
+        let response = await submitNote(selectedUserId, noteId);
 
         if (!response.success) {
             // An error occurred
@@ -137,7 +141,7 @@ export const SelectUserToSubmitNote: React.FC<SelectUserToSubmitNoteProp> = ({ s
         }
 
         // Inform user
-        setActionSuccess("Note successfully saved");
+        setActionSuccess("Note successfully submitted");
 
         timeoutID = setTimeout(() => {
             setActionSuccess(undefined);

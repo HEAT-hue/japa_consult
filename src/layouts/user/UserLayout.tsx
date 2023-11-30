@@ -9,6 +9,7 @@ import ProfileImage from "@/assets/global/defaultAvatar.png";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { UserProfileMenu } from "@/components/user/global";
+import { useEffect } from "react";
 
 
 export function UserLayout() {
@@ -24,6 +25,18 @@ export function UserLayout() {
 
     // Handle the state of the aside navigation on mobile
     const [isNavOpen, setIsNavOpen] = useState(false);
+
+    useEffect(() => {
+        var Tawk_API: any = Tawk_API || {};
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6558d8cfd600b968d314908d/1hfhgtrjb';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode?.insertBefore(s1, s0);
+        })();
+    }, [])
 
     return (
         <div className="grid grid-rows-1 h-screen">

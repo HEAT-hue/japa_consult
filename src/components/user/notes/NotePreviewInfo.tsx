@@ -100,7 +100,7 @@ export const NotePreviewInfo: React.FC<NotePreviewInfoProp> = ({ data, closeModa
 
             {submitNoteModalOpen && userProfile && (
                 <Modal bare closeModal={() => setSubmitNoteModalOpen(false)}>
-                    <SelectUserToSubmitNote closeModal={closeModal} role={userProfile?.role} submitNote={submitNote} isSendNoteLoading={isSendNoteLoading} />
+                    <SelectUserToSubmitNote noteId={data.draft_id} closeModal={closeModal} role={userProfile?.role} submitNote={submitNote} isSendNoteLoading={isSendNoteLoading} />
                 </Modal>
             )}
         </>

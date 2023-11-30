@@ -9,7 +9,7 @@ import { BeatLoader } from "react-spinners";
 import { AdminPaymentInfo } from "../../payments";
 import { Modal } from "@/components/global";
 import { PaymentResponse } from "@/data/admin/payments";
-
+import { Link } from "react-router-dom";
 
 const override: CSSProperties = {
     display: "inline-block",
@@ -19,7 +19,7 @@ const override: CSSProperties = {
 
 export const PaymentActivityWrapper: React.FC = () => {
     // Fetching list of users
-    const { data: allPaymentsData, isFetching: isAllPaymentsLoading } = useGetAllPaymentsQuery()
+    const { data: allPaymentsData, isFetching: isAllPaymentsLoading } = useGetAllPaymentsQuery(undefined, { refetchOnMountOrArgChange: true });
 
     // Payment Info data
     const [paymentInfoData, setPaymentInfoData] = useState<PaymentResponse | null>(null)
@@ -33,6 +33,9 @@ export const PaymentActivityWrapper: React.FC = () => {
             {/* Table Header */}
             <div className="flex justify-between font-CabinetGrotesk-Bold text-lg mb-3">
                 <h4>Payment Activity</h4>
+                {(allPaymentsData && allPaymentsData.length > 0) && (
+                    <Link to={"/payments"} className="bg-brandColor text-white px-2 py-1 rounded">View more</Link>
+                )}
             </div>
 
             {/* Users Wrapper */}

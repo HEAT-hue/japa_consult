@@ -6,7 +6,7 @@ import { RootState } from '../store'
 const userTags: string[] = ['GET_NOTES', 'GET_FILES', 'GET_PROFILE', 'INVOICE']
 
 // Define your tags here for admin section
-const adminTags: string[] = ['GET_ALL_FILES', 'GET_ALL_USERS', 'GET_ALL_ADMINS', 'GET_ALL_STAFFS', 'GET_ALL_MANAGERS', 'GET_USER_FILES']
+const adminTags: string[] = ['GET_ALL_FILES', 'GET_ALL_USERS', 'GET_ALL_ADMINS', 'GET_ALL_STAFFS', 'GET_ALL_MANAGERS', 'GET_USER_FILES', 'PAYMENTS']
 
 // Define your base query function
 const baseQuery = fetchBaseQuery({

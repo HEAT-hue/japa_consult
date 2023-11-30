@@ -9,6 +9,7 @@ import { SelectUserToSubmitNote } from "@/components/global/notes"
 import { useAppSelector } from "@/hooks/typedHooks";
 import { MutationResultType } from "@/data/global";
 import { NOTE_NAVIGATION } from "@/data/global";
+import { delayTimeout } from "@/utils/global";
 
 // Build the Customized module:
 let modules = {
@@ -42,10 +43,10 @@ type TextEditorProp = {
     NoteAPIProps: {
         isNoteSaveLoading: boolean;
         isNoteSaveError: boolean;
-        submitNote(toId: number): Promise<MutationResultType>
+        submitNote: (toId: number, noteId?: number) => Promise<MutationResultType>
         isSendNoteLoading: boolean
     },
-    saveNote(): Promise<void>
+    saveNote(data?: { preserve?: boolean; }): Promise<number | undefined>
     noteType: NOTE_NAVIGATION
 }
 
@@ -55,7 +56,7 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
 
     const { isNoteSaveLoading, submitNote, isSendNoteLoading } = NoteAPIProps
 
-    const [submitNoteModalOpen, setSubmitNoteModalOpen] = useState<boolean>(false);
+    const [submitNoteModalOpen, setSubmitNoteModalOpen] = useState<number | undefined>(undefined);
 
     const handleProcedureContentChange = (content: string) => {
         setNoteData((prev) => ({ ...prev, content }))
@@ -70,10 +71,22 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
             {noteType == NOTE_NAVIGATION.RECENT && (
                 <div className="flex justify-end gap-x-3 my-[0.6rem]">
                     {/* Save Document */}
-                    <button onClick={saveNote} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving..." : "Save"}</button>
+                    <button onClick={() => saveNote()} className="border-[1px] border-brandColor text-sm px-4 py-2 rounded">{isNoteSaveLoading ? "Saving..." : "Save"}</button>
 
                     {/* Submit document */}
-                    <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => setSubmitNoteModalOpen(true)}>Send</button>
+                    <button className="bg-brandColor text-white text-sm px-4 py-2 rounded" onClick={() => {
+                        // Save note first
+                        (async () => {
+                            const noteId = await saveNote({ preserve: true });
+
+                            // 2s delay
+                            await delayTimeout(2000);
+
+                            // Send note
+                            setSubmitNoteModalOpen(noteId)
+                        })()
+
+                    }}>Send</button>
                 </div>
             )}
 
@@ -102,8 +115,8 @@ export const TextEditor: React.FC<TextEditorProp> = ({ noteData, setNoteData, No
 
 
             {submitNoteModalOpen && userProfile && (
-                <Modal bare closeModal={() => setSubmitNoteModalOpen(false)}>
-                    <SelectUserToSubmitNote role={userProfile?.role} submitNote={submitNote} isSendNoteLoading={isSendNoteLoading} />
+                <Modal bare closeModal={() => setSubmitNoteModalOpen(undefined)}>
+                    <SelectUserToSubmitNote role={userProfile?.role} noteId={submitNoteModalOpen} submitNote={submitNote} isSendNoteLoading={isSendNoteLoading} />
                 </Modal>
             )}
         </>

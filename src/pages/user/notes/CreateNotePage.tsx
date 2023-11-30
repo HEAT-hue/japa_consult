@@ -7,6 +7,8 @@ import { Toast } from "@/components/global"
 import { SaveUserNotesResponse } from "@/data/users/notes"
 import { MutationResultType } from "@/data/global"
 import { NOTE_NAVIGATION } from "@/data/global"
+import { useAppSelector } from "@/hooks/typedHooks"
+import { USERROLES } from "@/data/global/auth"
 
 export type NoteDataType = {
     title: string,
@@ -20,6 +22,8 @@ export const CreateNotePage: React.FC = () => {
 
     // Get Navigator
     const navigate = useNavigate();
+
+    const { userProfile } = useAppSelector((state) => state.auth)
 
     // Get State from Page
     const { state } = useLocation();
@@ -58,20 +62,22 @@ export const CreateNotePage: React.FC = () => {
 
     const NoteAPIProps = { isNoteSaveLoading: isNoteSaveLoading || isNoteUpdateLoading, isNoteSaveError: isNoteSaveError || isNoteUpdateError, submitNote, isSendNoteLoading: isSendNoteLoading || isNoteSaveLoading || isNoteUpdateLoading }
 
-    async function saveNote() {
-        let response;
+    async function saveNote(data?: { preserve?: boolean }): Promise<number | undefined> {
+        let response: MutationResultType;
+
+        let noteid: number;
 
         // Create new note
         if (noteIDRef.current == null) {
             response = await saveUserNote({ ...noteData, date_created: noteData.date_created });
+            noteIDRef.current = (response.data as SaveUserNotesResponse).draft_id;
+            noteid = (response.data as SaveUserNotesResponse).draft_id;
         } else {
+            noteid = noteIDRef.current;
             response = await updateUserNote({ ...noteData, date_created: noteData.date_created, draft_id: noteIDRef.current })
-            console.log(response);
         }
 
-        // Set the Note ID
-        // Some code here
-
+        // Error saving note
         if (!response.success) {
             // An error occurred
             setErrorMessage(response.message);
@@ -88,28 +94,21 @@ export const CreateNotePage: React.FC = () => {
 
         timeoutID = setTimeout(() => {
             setActionSuccess(undefined);
-            navigate("/notes");
-        }, 2000)
-    }
 
-    async function submitNote(toId: number): Promise<MutationResultType> {
-        let response;
-
-        // Save note first before submitting
-        if (noteIDRef.current == null) {
-            response = await saveUserNote({ ...noteData, date_created: noteData.date_created });
-
-            // If not success
-            if (!response?.success) {
-                return response;
+            // Don't navigate away
+            if (data?.preserve) {
+                return;
             }
 
-            // Set the draft ID
-            noteIDRef.current = (response.data as SaveUserNotesResponse).draft_id
-        }
+            navigate(`${userProfile?.role == USERROLES.USER ? "/notes" : "/admin/notes"}`);
+        }, 2000)
 
+        return noteid;
+    }
+
+    async function submitNote(toId: number, noteId?: number): Promise<MutationResultType> {
         // Submit Note
-        return await sendNoteToUser({ draftId: noteIDRef.current, toId });
+        return await sendNoteToUser({ draftId: noteId ?? 0, toId });
     }
 
     return (
