@@ -31,7 +31,7 @@ export function UserLayout() {
 
     useEffect(() => {
         var Tawk_API: any = Tawk_API || {};
-       
+
         Tawk_API.visitor = {
             name: userProfile?.name,
             email: userProfile?.email
@@ -45,6 +45,10 @@ export function UserLayout() {
             s1.setAttribute('crossorigin', '*');
             s0.parentNode?.insertBefore(s1, s0);
         })();
+
+        Tawk_API.onLoad = function () {
+            Tawk_API.showWidget();
+        };
 
         return () => {
             Tawk_API.onLoad = function () {
