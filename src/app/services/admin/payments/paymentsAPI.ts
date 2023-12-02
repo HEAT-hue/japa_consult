@@ -2,7 +2,7 @@
 import { emptySplitApi } from "../../api";
 import {
     GetAllPaymentsResponse, GetPendingPaymentsResponse,
-    GetCancelledPaymentsResponse, GetPaidPaymentsResponse
+    GetCancelledPaymentsResponse, GetPaidPaymentsResponse, GetErrorPaymentsResponse, GetFailedPaymentsResponse
 } from "@/data/admin/payments";
 
 export const paymentsAPI = emptySplitApi.injectEndpoints({
@@ -35,6 +35,21 @@ export const paymentsAPI = emptySplitApi.injectEndpoints({
         getPaidPayments: builder.query<GetPaidPaymentsResponse, void>({
             query: () => ({
                 url: "payments/paid"
+            }),
+            providesTags: ['PAYMENTS']
+        }),
+
+        // Get USER FILE
+        getFailedPayments: builder.query<GetFailedPaymentsResponse, void>({
+            query: () => ({
+                url: "payments/failedPayments"
+            }),
+            providesTags: ['PAYMENTS']
+        }),
+        // Get USER FILE
+        getErrorPayments: builder.query<GetErrorPaymentsResponse, void>({
+            query: () => ({
+                url: "payments/paymentsError"
             }),
             providesTags: ['PAYMENTS']
         }),

@@ -9,7 +9,7 @@ export type PaymentResponse = {
     "paid_by"?: string,
     "amount"?: number,
     "paid_at"?: Date | null,
-    "payment_type": string,
+    "checkout_type": string,
     "title": null | string,
     "status": PAYMENT_STATUS,
 }
@@ -30,3 +30,5 @@ export type GetAllPaymentsResponse = PaymentResponse[]
 export type GetPendingPaymentsResponse = PaymentResponse[]
 export type GetPaidPaymentsResponse = PaymentResponse[]
 export type GetCancelledPaymentsResponse = PaymentResponse[]
+export type GetErrorPaymentsResponse = PaymentResponse[]
+export type GetFailedPaymentsResponse = PaymentResponse[]

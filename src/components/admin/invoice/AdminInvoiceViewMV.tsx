@@ -76,14 +76,16 @@ export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleI
                                                 <span>Delete</span>
                                             </div>
 
-                                            <div className="w-max truncate flex items-center gap-x-2 justify-ensd text-brandColor mt-1" onClick={(e: any) => {
-                                                // Stop propagation
-                                                e.stopPropagation();
-                                                handleUpdateInvoiceClick?.(invoice);
-                                            }}>
-                                                <EditSVG />
-                                                <span>Update</span>
-                                            </div>
+                                            {!invoice.paid && (
+                                                <div className="w-max truncate flex items-center gap-x-2 justify-ensd text-brandColor mt-1" onClick={(e: any) => {
+                                                    // Stop propagation
+                                                    e.stopPropagation();
+                                                    handleUpdateInvoiceClick?.(invoice);
+                                                }}>
+                                                    <EditSVG />
+                                                    <span>Update</span>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>

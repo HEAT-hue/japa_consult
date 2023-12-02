@@ -129,13 +129,17 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
                                     {(userProfile?.role == USERROLES.ADMIN || userProfile?.role == USERROLES.MANAGER) && deleteInvoice && (
                                         <td className="w-full truncate">
                                             <div className="flex gap-x-2">
-                                                <div className="text-brandColor" onClick={(e: any) => {
-                                                    // Stop propagation
-                                                    e.stopPropagation();
-                                                    handleUpdateInvoiceClick?.(invoice);
-                                                }}>
-                                                    <EditSVG />
-                                                </div>
+                                                {invoice.paid ? (
+                                                    <div className="w-[16px]"></div>
+                                                ) : (
+                                                    <div className="text-brandColor" onClick={(e: any) => {
+                                                        // Stop propagation
+                                                        e.stopPropagation();
+                                                        handleUpdateInvoiceClick?.(invoice);
+                                                    }}>
+                                                        <EditSVG />
+                                                    </div>
+                                                )}
 
                                                 {/* Delete invoice */}
                                                 <div className="text-error" onClick={(e: any) => {

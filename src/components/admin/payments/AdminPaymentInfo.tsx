@@ -143,7 +143,7 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
                     {/* Payment Type */}
                     <div className=" flex justify-between">
                         <p className="text-placeholder">Mode:</p>
-                        <span className="text-black capitalize">{(paymentData as PaymentResponse).payment_type}</span>
+                        <span className="text-black capitalize">{(paymentData as PaymentResponse)?.checkout_type}</span>
                     </div>
                 </div>
 
