@@ -60,7 +60,7 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
 
     return (
         <>
-            <div className="w-[300px] sm:p-5 bg-white flex flex-col items-center gap-y-5 rounded-lg my-[-1.5rem]">
+            <div className="w-[320px] py-5 bg-white flex flex-col items-center gap-y-5 rounded-lg sm:mx-[-1rem] my-[-1.5rem]">
 
                 <h1 className="font-Inter-Bold text-lg">{paymentData.title ?? "Payment"}</h1>
 
@@ -74,7 +74,7 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
 
                 {/* Status */}
                 <p
-                    className={`${paymentData.status == PAYMENT_STATUS.PAID && 'text-green-700'} ${paymentData.status == PAYMENT_STATUS.PENDING && 'text-brandColor'} ${(paymentData.status == PAYMENT_STATUS.CANCELLED || paymentData.status == PAYMENT_STATUS.ERROR) && 'text-error'} self-end`}
+                    className={`${paymentData.status == PAYMENT_STATUS.PAID && 'text-green-700'} ${paymentData.status == PAYMENT_STATUS.PENDING && 'text-brandColor'} ${(paymentData.status == PAYMENT_STATUS.CANCELLED || (paymentData.status == PAYMENT_STATUS.ERROR || paymentData.status == PAYMENT_STATUS.FAILED)) && 'text-error'} self-end`}
                 >
                     {paymentData.status == PAYMENT_STATUS.PAID && (
                         <span>Paid</span>
@@ -90,6 +90,10 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
 
                     {paymentData.status == PAYMENT_STATUS.ERROR && (
                         <span>Payment Error</span>
+                    )}
+
+                    {paymentData.status == PAYMENT_STATUS.FAILED && (
+                        <span>Payment Failed</span>
                     )}
 
                     {paymentData.status == PAYMENT_STATUS.CHECKING && (

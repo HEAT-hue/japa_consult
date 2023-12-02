@@ -2,6 +2,7 @@
 import { FileResponseType } from "@/data/users/files/file"
 import { getFormattedDate } from "@/utils/global"
 import FileImg from "@/assets/global/file.png";
+import { formatBytes } from "@/utils/global/formatBytes"
 
 type RecentFileUploadMVProp = {
     data: FileResponseType[]
@@ -25,7 +26,7 @@ export const RecentFileUploadMV: React.FC<RecentFileUploadMVProp> = ({ data }) =
                             <p>{file.name}</p>
                             <div className="text-sm flex flex-col gap-y-1">
                                 <p><span className="text-placeholder">Folder: </span>{file.folder}</p>
-                                <p><span className="text-placeholder">Size: </span>{file.size}</p>
+                                <p><span className="text-placeholder">Size: </span>{formatBytes(Number(file.size?.split(" ")[0]))}</p>
                                 <p><span className="text-placeholder">Date: </span>{`${day} ${monthShort}, ${year}`}</p>
                             </div>
                         </div>

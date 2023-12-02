@@ -1,18 +1,40 @@
 // jshint esversion:6
-import { useGetPaidInvoiceQuery } from "@/app/services/admin/invoice"
 import RevenueIcon from "@/assets/user/wallet.svg";
+import { useGetTotalRevenueQuery } from "@/app/services/admin/invoice";
+import { useEffect, useState } from "react";
 
 export const TotalRevenueOverviewBox: React.FC = () => {
 
-    const { data: PaidInvoiceData, isLoading: isTotalRevenueLoading } = useGetPaidInvoiceQuery();
+    const [totalRevenue, setTotalRevenue] = useState<number>(0);
 
-    let totalRevenue = 0;
+    // Revenue data
+    const { data: totalRevenueData, isFetching: isTotalRevenueLoading } = useGetTotalRevenueQuery(undefined, { refetchOnMountOrArgChange: true });
 
-    PaidInvoiceData?.forEach((invoice) => {
-        if (invoice.paid) {
-            totalRevenue += invoice.price
+    useEffect(() => {
+        if (!totalRevenueData) {
+            return;
         }
-    })
+
+        let revenue: number = 0;
+
+        const years = Object.keys(totalRevenueData);
+
+        years.forEach((year) => {
+            const monthlyRevenue = totalRevenueData[year as keyof typeof totalRevenueData];
+
+            if (monthlyRevenue) {
+                const AllMonthRevenue = Object.values(monthlyRevenue);
+
+                // Add each revenue for the year
+                AllMonthRevenue.forEach((revenueData: number) => {
+                    revenue += revenueData;
+                })
+            }
+
+            setTotalRevenue(revenue);
+        })
+
+    }, [totalRevenueData])
 
     return (
         <>

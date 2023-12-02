@@ -92,6 +92,9 @@ export function AsideNavigation({ closeNav }: AsideNavigationProps) {
                     </div>
                 </div>
 
+                {/* Attach third party messaging app */}
+                <div id="user-messages"></div>
+
                 {/* NavLinks */}
                 <ul className="font-medium transition duration-500 flex flex-col space-y-3 sm:space-y-2 mx-auto pt-5 px-5">
 

@@ -8,7 +8,6 @@ export type GetPendingInvoiceResponse = PaidInvoiceType[]
 
 export type GetExpiredInvoiceResponse = PaidInvoiceType[]
 
-
 export type GetTotalRevenueResponse = {
     year?: {
         "January"?: number

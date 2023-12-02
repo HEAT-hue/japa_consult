@@ -44,53 +44,57 @@ export const AdminPayment: React.FC<PaymentActivityProp> = ({ data, handlePaymen
 
                         {/* Table Body */}
                         <tbody className="divide-y-[1px] font-Manrope-Regular">
-                            {data.map((paymentData: PaymentResponse, index: number) => {
+                            {data
+                                // .slice(11, 12)
+                                .map((paymentData: PaymentResponse, index: number) => {
 
-                                return (
+                                    console.log(paymentData);
 
-                                    // Trade Item Data
-                                    <tr
-                                        key={index}
-                                        className="font-Manrope-Regular text-[15px] [&>*]:p-2 [&>*]:py-3 cursor-pointer"
-                                        onClick={() => handlePaymentClick(paymentData)}
-                                    >
-                                        <td className={`w-full truncate capitalize`}>
-                                            {paymentData.paid_by && (
-                                                <span>{`${((paymentData)?.paid_by ?? "N/A").toLowerCase()}`}</span>
-                                            )}
-                                        </td>
+                                    return (
 
-                                        <td className="w-full truncate capitalize">
-                                            <span>{paymentData.invoice_id}</span>
-                                        </td>
+                                        // Trade Item Data
+                                        <tr
+                                            key={index}
+                                            className="font-Manrope-Regular text-[15px] [&>*]:p-2 [&>*]:py-3 cursor-pointer"
+                                            onClick={() => handlePaymentClick(paymentData)}
+                                        >
+                                            <td className={`w-full truncate capitalize`}>
+                                                {paymentData.paid_by && (
+                                                    <span>{`${((paymentData)?.paid_by ?? "N/A").toLowerCase()}`}</span>
+                                                )}
+                                            </td>
 
-                                        <td className="w-full truncate text-[#AFAFAF]">
-                                            {paymentData.amount && (
-                                                <div className="flex">
-                                                    <span>&#8358;</span>
-                                                    <span>{`${Number((paymentData as PaymentResponse).amount).toLocaleString() ?? "N / A"}`}</span>
-                                                </div>
-                                            )}
-                                        </td>
+                                            <td className="w-full truncate capitalize">
+                                                <span>{paymentData.invoice_id}</span>
+                                            </td>
 
-                                        <td className={`w-full truncate capitalize`}>
-                                            <span
-                                                className="rounded-full py-1 px-3 flex gap-x-2 items-center w-max"
-                                                style={{
-                                                    color: PaymentStatusColor[paymentData.status]?.color ?? "#333",
-                                                    backgroundColor: PaymentStatusColor[paymentData.status]?.backgroundColor ?? "#fff"
-                                                }}
-                                            >
-                                                <div className="w-[5px] h-[5px] rounded-full" style={{ backgroundColor: PaymentStatusColor[paymentData.status]?.color ?? "#333" }}></div>
-                                                {(paymentData.status).toLocaleLowerCase()}
-                                            </span>
-                                        </td>
-                                        <td className="w-full truncate text-[#AFAFAF]">
-                                            <span>{`${day} ${monthShort}, ${year}`}</span>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
+                                            <td className="w-full truncate text-[#AFAFAF]">
+                                                {paymentData.amount && (
+                                                    <div className="flex">
+                                                        <span>&#8358;</span>
+                                                        <span>{`${Number((paymentData as PaymentResponse).amount).toLocaleString() ?? "N / A"}`}</span>
+                                                    </div>
+                                                )}
+                                            </td>
+
+                                            <td className={`w-full truncate capitalize`}>
+                                                <span
+                                                    className="rounded-full py-1 px-3 flex gap-x-2 items-center w-max"
+                                                    style={{
+                                                        color: PaymentStatusColor[paymentData.status]?.color ?? "#333",
+                                                        backgroundColor: PaymentStatusColor[paymentData.status]?.backgroundColor ?? "#fff"
+                                                    }}
+                                                >
+                                                    <div className="w-[5px] h-[5px] rounded-full" style={{ backgroundColor: PaymentStatusColor[paymentData.status]?.color ?? "#333" }}></div>
+                                                    {(paymentData.status).toLocaleLowerCase()}
+                                                </span>
+                                            </td>
+                                            <td className="w-full truncate text-[#AFAFAF]">
+                                                <span>{`${day} ${monthShort}, ${year}`}</span>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
                         </tbody>
                     </table>
                 </div >

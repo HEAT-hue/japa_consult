@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import PlusIcon from "@/assets/global/Plus.svg";
 import { useGetAllInvoiceQuery } from "@/app/services/admin/invoice";
 import { useGetPendingInvoiceQuery } from "@/app/services/admin/invoice";
-import { useGetPaidInvoiceQuery } from "@/app/services/admin/invoice";
+import { useGetPaidInvoiceQuery, useGetExpiredInvoiceQuery } from "@/app/services/admin/invoice";
 import { CSSProperties, useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { INVOICE_NAVIGATION } from "@/data/global";
@@ -48,11 +48,15 @@ export const AdminInvoicePage: React.FC = () => {
     const { data: AllInvoiceData, isFetching: isAllInvoiceLoading } = useGetAllInvoiceQuery()
     const { data: PendingInvoiceData, isFetching: isPendingInvoiceLoading } = useGetPendingInvoiceQuery()
     const { data: PaidInvoiceData, isFetching: isPaidInvoiceLoading } = useGetPaidInvoiceQuery()
+    const { data: ExpiredInvoiceData, isFetching: isExpiredInvoiceLoading } = useGetExpiredInvoiceQuery()
 
     // Delete Invoice
     const { deleteUserInvoice, isLoading: isDeleteInvoiceLoading } = useDeleteInvoiceHook();
+
     const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfotype>({ status: false, data: undefined });
+
     const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
+
     const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
 
     useEffect(() => {
@@ -119,6 +123,13 @@ export const AdminInvoicePage: React.FC = () => {
                 setInvoiceType(INVOICE_NAVIGATION.PAID)
                 break;
             }
+            case INVOICE_NAVIGATION.EXPIRED: {
+                if (ExpiredInvoiceData) {
+                    setInvoiceData(ExpiredInvoiceData)
+                }
+                setInvoiceType(INVOICE_NAVIGATION.EXPIRED)
+                break;
+            }
             default:
                 if (AllInvoiceData) {
                     setInvoiceData(AllInvoiceData)
@@ -169,14 +180,15 @@ export const AdminInvoicePage: React.FC = () => {
 
 
             {/* Invoive Navigation */}
-            <div className="flex gap-x-3 mt-5">
+            <div className="flex [&>*]:flex-1 gap-x-3 justify-center mt-5">
                 <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.ALL)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.ALL && "border-b-[2px] border-brandColor"}`}>All Invoices</h3>
                 <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PAID)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PAID && "border-b-[2px] border-brandColor"}`}>Paid Invoices</h3>
                 <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PENDING)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PENDING && "border-b-[2px] border-brandColor"}`}>Pending Invoices</h3>
+                <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.EXPIRED)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.EXPIRED && "border-b-[2px] border-brandColor"}`}>Expired Invoices</h3>
             </div>
 
             {/* Invoice Data Wrapper */}
-            {(isAllInvoiceLoading || isPendingInvoiceLoading || isPaidInvoiceLoading) ? (
+            {(isAllInvoiceLoading || isPendingInvoiceLoading || isPaidInvoiceLoading || isExpiredInvoiceLoading) ? (
                 <div className="w-full flex items-center justify-center">
                     <div className="my-[5rem] mx-auto">
                         <BeatLoader

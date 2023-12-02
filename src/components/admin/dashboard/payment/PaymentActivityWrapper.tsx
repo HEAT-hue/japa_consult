@@ -10,6 +10,8 @@ import { AdminPaymentInfo } from "../../payments";
 import { Modal } from "@/components/global";
 import { PaymentResponse } from "@/data/admin/payments";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "@/hooks/typedHooks";
+import { USERROLES } from "@/data/global/auth";
 
 const override: CSSProperties = {
     display: "inline-block",
@@ -18,12 +20,17 @@ const override: CSSProperties = {
 };
 
 export const PaymentActivityWrapper: React.FC = () => {
+
+    // user profile
+    const { userProfile } = useAppSelector((state) => state.auth);
+
     // Fetching list of users
     const { data: allPaymentsData, isFetching: isAllPaymentsLoading } = useGetAllPaymentsQuery(undefined, { refetchOnMountOrArgChange: true });
 
     // Payment Info data
     const [paymentInfoData, setPaymentInfoData] = useState<PaymentResponse | null>(null)
 
+    // handle payment click
     function handlePaymentClick(payment: PaymentResponse) {
         setPaymentInfoData(payment);
     }
@@ -34,7 +41,7 @@ export const PaymentActivityWrapper: React.FC = () => {
             <div className="flex justify-between font-CabinetGrotesk-Bold text-lg mb-3">
                 <h4>Payment Activity</h4>
                 {(allPaymentsData && allPaymentsData.length > 0) && (
-                    <Link to={"/payments"} className="bg-brandColor text-white px-2 py-1 rounded">View more</Link>
+                    <Link to={`${userProfile?.role == USERROLES.USER ? "/payments" : "/admin/payments"}`} className="bg-brandColor text-white px-2 py-1 rounded">View more</Link>
                 )}
             </div>
 
@@ -53,7 +60,6 @@ export const PaymentActivityWrapper: React.FC = () => {
                     </div>
                 </div>
             ) : (
-
                 <div className="mt-5">
                     {!allPaymentsData || allPaymentsData.length == 0 ? (
                         <div className="h-[30vh] flex flex-col justify-center items-center gap-y-5">

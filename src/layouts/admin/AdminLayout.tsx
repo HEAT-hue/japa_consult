@@ -41,9 +41,9 @@ export function AdminLayout() {
 
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold ml-9 lg:ml-0">
-                    {currentLocationPathname == "/" && "Home"}
-                    {currentLocationPathname == "/messages" && "Messages"}
-                    {currentLocationPathname == "/files" && "Files"}
+                    {currentLocationPathname == "/admin" && "Home"}
+                    {/* {currentLocationPathname == "/messages" && "Messages"} */}
+                    {currentLocationPathname == "/admin/files" && "Files"}
                     {currentLocationPathname.substring(0, 11) == '/files/file' && (
                         <div className="flex gap-x-3">
                             <Link to="/files">File</Link>
@@ -51,14 +51,14 @@ export function AdminLayout() {
                             <span className="capitalize">{currentLocationPathname.substring(12).toLowerCase()}</span>
                         </div>
                     )}
-                    {currentLocationPathname == "/notes" && "Notes"}
-                    {currentLocationPathname == "/notes/create" && "Notes"}
-                    {currentLocationPathname == "/invoice" && "Invoice"}
-                    {currentLocationPathname == "/wallets" && "Wallet"}
-                    {currentLocationPathname == "/rate" && "Calculate Rate"}
-                    {currentLocationPathname == "/account" && "Accounts"}
-                    {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
-                    {currentLocationPathname == "/account/report" && "Report an Issue"}
+                    {currentLocationPathname == "/admin/notes" && "Notes"}
+                    {currentLocationPathname == "/admin/notes/create" && "Notes"}
+                    {currentLocationPathname == "/admin/invoice" && "Invoice"}
+                    {currentLocationPathname == "/admin/wallets" && "Wallet"}
+                    {currentLocationPathname == "/admin/rate" && "Calculate Rate"}
+                    {currentLocationPathname == "/admin/account" && "Accounts"}
+                    {currentLocationPathname == "/admin/wallets/transactions" && "Wallet Transactions"}
+                    {currentLocationPathname == "/admin/account/report" && "Report an Issue"}
                     {currentLocationPathname == "/admin/invoice" && "Invoice"}
                     {currentLocationPathname == "/admin/payments" && "Payments"}
                 </div>
@@ -79,10 +79,10 @@ export function AdminLayout() {
 
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold absolute left-[50%] translate-x-[-50%]">
-                    {currentLocationPathname == "/" && "Home"}
-                    {currentLocationPathname == "/messages" && "Messages"}
-                    {currentLocationPathname == "/files" && "Files"}
-                    {currentLocationPathname == "/files/file" && "Files"}
+                    {currentLocationPathname == "/admin/" && "Home"}
+                    {/* {currentLocationPathname == "/messages" && "Messages"} */}
+                    {currentLocationPathname == "/admin/files" && "Files"}
+                    {currentLocationPathname == "/admin/files/file" && "Files"}
                     {currentLocationPathname.substring(0, 11) == '/files/file' && (
                         <div className="flex gap-x-3">
                             <Link to="/files">File</Link>
@@ -90,13 +90,13 @@ export function AdminLayout() {
                             <span className="capitalize">{currentLocationPathname.substring(12).toLowerCase()}</span>
                         </div>
                     )}
-                    {currentLocationPathname == "/notes" && "Notes"}
-                    {currentLocationPathname == "/notes/create" && "Notes"}
-                    {currentLocationPathname == "/invoice" && "Invoice"}
-                    {currentLocationPathname == "/rate" && "Calculate Rate"}
-                    {currentLocationPathname == "/account" && "Accounts"}
-                    {currentLocationPathname == "/wallets/transactions" && "Wallet Transactions"}
-                    {currentLocationPathname == "/account/report" && "Report an Issue"}
+                    {currentLocationPathname == "/admin/notes" && "Notes"}
+                    {currentLocationPathname == "/admin/notes/create" && "Notes"}
+                    {currentLocationPathname == "/admin/invoice" && "Invoice"}
+                    {currentLocationPathname == "/admin/rate" && "Calculate Rate"}
+                    {currentLocationPathname == "/admin/account" && "Accounts"}
+                    {currentLocationPathname == "/admin/wallets/transactions" && "Wallet Transactions"}
+                    {currentLocationPathname == "/admin/account/report" && "Report an Issue"}
                     {currentLocationPathname == "/admin/invoice" && "Invoice"}
                     {currentLocationPathname == "/admin/payments" && "Payments"}
                 </div>

@@ -2,5 +2,7 @@ export enum PAYMENT_NAVIGATION {
     ALL = "ALL",
     PENDING = "PENDING",
     PAID = "PAID",
-    CANCELLED = "CANCELLED"
+    CANCELLED = "CANCELLED",
+    ERROR = "ERROR",
+    FAILED = 'FAILED'
 }
