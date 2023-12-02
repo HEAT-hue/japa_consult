@@ -6,6 +6,7 @@ import { useAppSelector } from "@/hooks/typedHooks"
 import { USERROLES } from "@/data/global/auth"
 import { useNavigate } from "react-router-dom"
 import { TrashSVG } from "@/components/global/svg/trash"
+import { EditSVG } from "@/components/global/svg/invoice"
 
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
@@ -14,7 +15,7 @@ type InvoiceView = {
     deleteInvoice?: (invoiceId: string) => void
 }
 
-export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick, deleteInvoice }) => {
+export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick, handleUpdateInvoiceClick, deleteInvoice }) => {
 
     const { userProfile } = useAppSelector((state) => state.auth);
 
@@ -65,13 +66,24 @@ export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleI
 
                                     {/* Trash icon */}
                                     {(userProfile?.role == USERROLES.ADMIN || userProfile?.role == USERROLES.MANAGER) && deleteInvoice && (
-                                        <div className="w-full truncate flex items-center gap-x-2 justify-ensd text-error mt-1" onClick={(e: any) => {
-                                            // Stop propagation
-                                            e.stopPropagation();
-                                            deleteInvoice(invoice.inv_id)
-                                        }}>
-                                            <TrashSVG />
-                                            <span>Delete</span>
+                                        <div className="flex gap-x-3">
+                                            <div className="w-max truncate flex items-center gap-x-2 justify-ensd text-error mt-1" onClick={(e: any) => {
+                                                // Stop propagation
+                                                e.stopPropagation();
+                                                deleteInvoice(invoice.inv_id)
+                                            }}>
+                                                <TrashSVG />
+                                                <span>Delete</span>
+                                            </div>
+
+                                            <div className="w-max truncate flex items-center gap-x-2 justify-ensd text-brandColor mt-1" onClick={(e: any) => {
+                                                // Stop propagation
+                                                e.stopPropagation();
+                                                handleUpdateInvoiceClick?.(invoice);
+                                            }}>
+                                                <EditSVG />
+                                                <span>Update</span>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
