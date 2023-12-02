@@ -20,10 +20,7 @@ export const useAuthSendEmailTokenHook = () => {
             data = response;
             success = true;
         } catch (error) {
-            console.log(error);
-            console.log(isError);
             message = (error as any)?.status == 404 ? "Email not found" : getErrorMessage(error);
-            console.log(message);
         }
 
         return { success, message, data };

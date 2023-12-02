@@ -18,8 +18,6 @@ export const FolderPage: React.FC = () => {
     // Get the ID
     const { folderName } = useParams();
 
-    console.log(folderName);
-
     if (!folderName) {
         return <Navigate to="/files" />
     }

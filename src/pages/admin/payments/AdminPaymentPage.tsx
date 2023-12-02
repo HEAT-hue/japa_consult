@@ -95,7 +95,6 @@ export const AdminPaymentPage: React.FC = () => {
                 case PAYMENT_NAVIGATION.CANCELLED: {
                     try {
                         const data = await getCancelledPayments().unwrap();
-                        console.log(data);
                         setPaymentList(data);
                     } catch (error) {
                         setPaymentList([]);

@@ -16,6 +16,8 @@ import { AdminInvoiceInfo } from "@/components/admin/invoice";
 import { useDeleteInvoiceHook } from "@/hooks/admin/invoice";
 import { Toast } from "@/components/global";
 import { DeleteConfirmation } from "@/components/admin/users";
+import { UpdateInvoice } from "@/components/admin/invoice/UpdateInvoice";
+import { INVOICE_TYPE } from "@/data/users/invoice";
 
 
 const override: CSSProperties = {
@@ -38,18 +40,18 @@ export const AdminInvoicePage: React.FC = () => {
     // Error message
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+    const [updateInvoiceOpen, setUpdateInvoiceOpen] = useState<PaidInvoiceType | undefined>(undefined);
+
     // Consnt to delete file
     const [actionConsent, setActionConsent] = useState<boolean>(false);
 
-    const { data: AllInvoiceData, isLoading: isAllInvoiceLoading } = useGetAllInvoiceQuery()
-    const { data: PendingInvoiceData, isLoading: isPendingInvoiceLoading } = useGetPendingInvoiceQuery()
-    const { data: PaidInvoiceData, isLoading: isPaidInvoiceLoading } = useGetPaidInvoiceQuery()
+    const { data: AllInvoiceData, isFetching: isAllInvoiceLoading } = useGetAllInvoiceQuery()
+    const { data: PendingInvoiceData, isFetching: isPendingInvoiceLoading } = useGetPendingInvoiceQuery()
+    const { data: PaidInvoiceData, isFetching: isPaidInvoiceLoading } = useGetPaidInvoiceQuery()
 
     // Delete Invoice
     const { deleteUserInvoice, isLoading: isDeleteInvoiceLoading } = useDeleteInvoiceHook();
-
     const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfotype>({ status: false, data: undefined });
-
     const [invoiceType, setInvoiceType] = useState<INVOICE_NAVIGATION>(INVOICE_NAVIGATION.ALL);
     const [invoiceData, setInvoiceData] = useState<PaidInvoiceType[]>([])
 
@@ -126,11 +128,14 @@ export const AdminInvoicePage: React.FC = () => {
         }
     }
 
+    function handleUpdateInvoiceClick(invoice: PaidInvoiceType | undefined) {
+        setUpdateInvoiceOpen(invoice);
+    }
+
     async function handleInvoiceDeleteClick(invoiceId: string) {
         const response = await deleteUserInvoice({ invoiceId });
 
         if (!response.success) {
-            console.log(response);
             setErrorMessage("Cannot perform operation!");
             timeoutID = setTimeout(() => {
                 setErrorMessage(undefined);
@@ -143,6 +148,8 @@ export const AdminInvoicePage: React.FC = () => {
         // Close modal
         setActionConsent(false);
     }
+
+
 
     function deleteInvoice(invoiceId: string) {
         actionToExecute = () => handleInvoiceDeleteClick(invoiceId);
@@ -197,10 +204,10 @@ export const AdminInvoicePage: React.FC = () => {
                 ) : (
                     <div>
                         <div className="sm:hidden">
-                            <AdminInvoiceViewMV invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} deleteInvoice={deleteInvoice} />
+                            <AdminInvoiceViewMV handleUpdateInvoiceClick={handleUpdateInvoiceClick} invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} deleteInvoice={deleteInvoice} />
                         </div>
                         <div className="hidden sm:block">
-                            <AdminInvoiceView invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} deleteInvoice={deleteInvoice} />
+                            <AdminInvoiceView handleUpdateInvoiceClick={handleUpdateInvoiceClick} invoiceData={invoiceData} handleInvoiceClick={handleInvoiceClick} deleteInvoice={deleteInvoice} />
                         </div>
                     </div>
                 )
@@ -210,6 +217,12 @@ export const AdminInvoicePage: React.FC = () => {
             {invoiceInfo.status && invoiceInfo.data && (
                 <Modal bare closeModal={() => setInvoiceInfo({ status: false, data: undefined })}>
                     <AdminInvoiceInfo invoice={invoiceInfo.data} />
+                </Modal>
+            )}
+
+            {updateInvoiceOpen && (
+                <Modal closeModal={() => setUpdateInvoiceOpen(undefined)}>
+                    <UpdateInvoice closeModal={() => setUpdateInvoiceOpen(undefined)} invoice={updateInvoiceOpen} invoiceType={updateInvoiceOpen.title as INVOICE_TYPE} />
                 </Modal>
             )}
 

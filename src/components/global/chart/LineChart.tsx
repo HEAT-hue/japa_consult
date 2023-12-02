@@ -17,8 +17,6 @@ export const LineChart: React.FC<LineChartType> = ({ monthlabel, withdrawalData 
         )
     })
 
-    console.log(data)
-
     return (
         <div>
             <AreaChart

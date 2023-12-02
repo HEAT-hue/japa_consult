@@ -97,7 +97,6 @@ export const PasswordResetPage = () => {
             setModalOpen(true);
 
         } catch (error) {
-            console.log(error);
             const errorData = getErrorMessage(error);
             setErrorMessage(errorData)
             timeoutId = setTimeout(() => {

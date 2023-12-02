@@ -26,14 +26,11 @@ export const useUploadFileHook = () => {
             formData.append("file", file);
         })
 
-        console.log(formData);
-
         // make request
         try {
             const uploadResponse = await uploadFiles({ body: formData, params: { folder_name: fileData.folder_name } }).unwrap();
             data = uploadResponse;
             success = true;
-            console.log(uploadResponse);
         } catch (error) {
             
             message = getErrorMessage(error);

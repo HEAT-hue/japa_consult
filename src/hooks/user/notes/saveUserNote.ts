@@ -29,7 +29,6 @@ export const useSaveUserNoteHook = () => {
             const uploadResponse = await saveNote({ title, content, date_created }).unwrap();
             data = uploadResponse;
             success = true;
-            console.log(uploadResponse);
         } catch (error) {
             message = getErrorMessage(error);
         }

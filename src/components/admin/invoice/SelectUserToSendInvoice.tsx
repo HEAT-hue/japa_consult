@@ -47,13 +47,11 @@ export const SelectUserToSendInvoice: React.FC<SelectUserToSubmitNoteProp> = ({ 
 
 
         (async function () {
-            console.log("Fetching list of users");
             switch (selectedUser) {
                 // Fetch All Users
                 case USERROLES.USER: {
                     try {
                         const data = await getAllUsers().unwrap();
-                        console.log(data)
                         setUsersList(data);
                     } catch (error) {
                         setErrorMessage(getErrorMessage(error));

@@ -10,6 +10,7 @@ import { TrashSVG } from "@/components/global/svg/trash"
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
     handleInvoiceClick: (data: InvoiceInfotype) => void
+    handleUpdateInvoiceClick?: (invoice: PaidInvoiceType | undefined) => void
     deleteInvoice?: (invoiceId: string) => void
 }
 

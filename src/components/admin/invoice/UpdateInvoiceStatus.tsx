@@ -38,7 +38,6 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
 
 
     async function update() {
-        console.log(newStatus);
 
         const response = await updateInvoiceStatus({ invoiceId: invoice.inv_id });
 
@@ -65,6 +64,7 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
 
                 <select
                     name="folder"
+                    value={newStatus}
                     className="p-2 bg-white border border-brandColor rounded cursor-pointer"
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         setNewStatus(e.target.value as INVOICE_STATUS)

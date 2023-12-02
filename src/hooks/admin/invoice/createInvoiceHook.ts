@@ -27,7 +27,6 @@ export const useCreateInvoiceHook = () => {
         try {
             const response = await createInvoice(invoiceData).unwrap();
             data = response;
-            console.log(data);
             success = true;
         } catch (error) {
             message = getErrorMessage(error);

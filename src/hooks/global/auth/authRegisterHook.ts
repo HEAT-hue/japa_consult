@@ -31,15 +31,10 @@ export const useAuthRegisterHook = () => {
 
         // make request
         try {
-            const signUpResponse = await registerUser(formBody).unwrap();
-            console.log(signUpResponse)
+            await registerUser(formBody).unwrap();
             success = true;
         } catch (error) {
-            console.log(error);
-            console.log(isError);
-            console.log(getErrorMessage(error))
             message = (error as any)?.status == 409 ? "Account already exist!" : getErrorMessage(error);
-            console.log(message);
         }
 
         return { success, message };

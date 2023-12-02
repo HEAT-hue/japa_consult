@@ -18,7 +18,6 @@ let timeoutID: any;
 
 export const ReceivedNotePreview: React.FC<NotePreviewProp> = ({ data }) => {
     // Error uploading files
-    console.log(data)
     // const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     // Get Time Info

@@ -8,18 +8,19 @@ import { useNavigate } from "react-router-dom"
 import checkBoxIcon from "@/assets/admin/checkbox.png";
 import expiredIcon from "@/assets/payments/date-expired-icon.webp";
 import { TrashSVG } from "@/components/global/svg/trash"
+import { EditSVG } from "@/components/global/svg/invoice"
 import { INVOICE_STATUS } from "@/data/admin/invoice/invoice"
 
 type InvoiceView = {
     invoiceData: PaidInvoiceType[]
     handleInvoiceClick: (data: InvoiceInfotype) => void
+    handleUpdateInvoiceClick?: (invoice: PaidInvoiceType | undefined) => void
     deleteInvoice?: (invoiceId: string) => void
 }
 
-export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick, deleteInvoice }) => {
+export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInvoiceClick, handleUpdateInvoiceClick, deleteInvoice }) => {
 
     const navigate = useNavigate();
-
 
     const { userProfile } = useAppSelector((state) => state.auth);
 
@@ -126,12 +127,25 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
 
                                     {/* Trash icon */}
                                     {(userProfile?.role == USERROLES.ADMIN || userProfile?.role == USERROLES.MANAGER) && deleteInvoice && (
-                                        <td className="w-full truncate text-error" onClick={(e: any) => {
-                                            // Stop propagation
-                                            e.stopPropagation();
-                                            deleteInvoice(invoice.inv_id)
-                                        }}>
-                                            <TrashSVG />
+                                        <td className="w-full truncate">
+                                            <div className="flex gap-x-2">
+                                                <div className="text-brandColor" onClick={(e: any) => {
+                                                    // Stop propagation
+                                                    e.stopPropagation();
+                                                    handleUpdateInvoiceClick?.(invoice);
+                                                }}>
+                                                    <EditSVG />
+                                                </div>
+
+                                                {/* Delete invoice */}
+                                                <div className="text-error" onClick={(e: any) => {
+                                                    // Stop propagation
+                                                    e.stopPropagation();
+                                                    deleteInvoice(invoice.inv_id)
+                                                }}>
+                                                    <TrashSVG />
+                                                </div>
+                                            </div>
                                         </td>
                                     )}
                                 </tr>

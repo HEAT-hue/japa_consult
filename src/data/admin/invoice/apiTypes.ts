@@ -33,6 +33,20 @@ export type CreateInvoiceRequest = {
     "to_email": string
 }
 
+export type UpdateInvoiceRequest = {
+    "desc": string,
+    "due_date": Date | string,
+    "inv_id": string,
+    "price": number,
+    "title": string,
+}
+
+export type UpdateInvoiceResponse = {
+    msg?: string
+    detail?: string
+    details?: string
+}
+
 export type CreateInvoiceResponse = {
     msg?: string
     detail?: string

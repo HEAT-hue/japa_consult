@@ -30,8 +30,11 @@ export function getErrorMessage(error: unknown): string {
                 errorMessage = (error as any).data.detail
                 break;
             }
+            case 403: {
+                errorMessage = (error as any).data.detail
+                break;
+            }
             case 413: {
-                console.log(error);
                 errorMessage = (error as any).data.detail
                 break;
             }
@@ -40,9 +43,7 @@ export function getErrorMessage(error: unknown): string {
                 break;
             }
             case 400: {
-                console.log("Case matched")
                 errorMessage = (error as any).data.detail
-                console.log((error as any).data.detail)
                 break;
             }
             case 404: {

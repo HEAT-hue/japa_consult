@@ -1,18 +1,15 @@
 // jshint esversion:6
-import { useAdminDeleteUserFileMutation } from "@/app/services/admin/files"
+import { useUpdateInvoiceMutation } from "@/app/services/admin/invoice"
 import { MutationResultType } from "../../../data/global"
 import { getErrorMessage } from "../../../utils/global"
+import { UpdateInvoiceRequest } from "@/data/admin"
 
-type FileData = {
-    fileId: string
-}
-
-export const useAdminDeleteUserFileHook = () => {
+export const useUpdateInvoiceHook = () => {
 
     // Login mutation for both users and admin
-    const [deleteFile, { isLoading, isError, isSuccess, reset }] = useAdminDeleteUserFileMutation()
+    const [updayeInvoice, { isLoading, isError, isSuccess, reset }] = useUpdateInvoiceMutation()
 
-    async function adminDeleteUserFile(fileData: FileData): Promise<MutationResultType> {
+    async function updateUserInvoice(invoiceData: UpdateInvoiceRequest): Promise<MutationResultType> {
 
         // Clear all errors and messages
         let message = ""
@@ -21,7 +18,7 @@ export const useAdminDeleteUserFileHook = () => {
 
         // make request
         try {
-            const response = await deleteFile(fileData).unwrap();
+            const response = await updayeInvoice(invoiceData).unwrap();
             data = response;
             success = true;
         } catch (error) {
@@ -31,5 +28,5 @@ export const useAdminDeleteUserFileHook = () => {
         return { success, message, data };
     }
 
-    return { adminDeleteUserFile, isLoading, isError, isSuccess, reset };
+    return { updateUserInvoice, isLoading, isError, isSuccess, reset };
 }

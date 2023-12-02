@@ -10,9 +10,12 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { UserProfileMenu } from "@/components/user/global";
 import { useEffect } from "react";
+import { useAppSelector } from "@/hooks/typedHooks";
 
 
 export function UserLayout() {
+
+    const { userProfile } = useAppSelector((state) => state.auth)
 
     // Get Location
     const location = useLocation();
@@ -28,6 +31,12 @@ export function UserLayout() {
 
     useEffect(() => {
         var Tawk_API: any = Tawk_API || {};
+       
+        Tawk_API.visitor = {
+            name: userProfile?.name,
+            email: userProfile?.email
+        };
+
         (function () {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
             s1.async = true;
@@ -36,6 +45,12 @@ export function UserLayout() {
             s1.setAttribute('crossorigin', '*');
             s0.parentNode?.insertBefore(s1, s0);
         })();
+
+        return () => {
+            Tawk_API.onLoad = function () {
+                Tawk_API.hideWidget();
+            };
+        }
     }, [])
 
     return (
