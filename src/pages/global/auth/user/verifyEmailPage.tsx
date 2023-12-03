@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Modal, Notification } from "@/components/global";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+// import { Toast } from "@/components/global";
 
 export const VerifyUserEmailPage: React.FC = () => {
 
@@ -16,8 +17,11 @@ export const VerifyUserEmailPage: React.FC = () => {
     // Get query parameters
     const [queryParameters] = useSearchParams();
 
+    // Error message
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+
     // Error modal
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    // const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     // Success modal
     const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false);
@@ -37,7 +41,7 @@ export const VerifyUserEmailPage: React.FC = () => {
             const response = await authVerifyEmailToken(userToken);
 
             if (!response.success) {
-                setModalOpen(true);
+                setErrorMessage(response.message);
                 return;
             }
 
@@ -57,23 +61,30 @@ export const VerifyUserEmailPage: React.FC = () => {
                 (
                     <>
                         <LineLoader />
-                        <div className="fixed bg-white rounded top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ">
+                        <div className="fixed bg-white rounded w-screen h-screen flex items-center justify-center">
                             <p className="p-9">We are verifing your email...</p>
                         </div>
                     </>
                 )}
 
-            {modalOpen && (
+            {errorMessage && (
                 <Modal closeModal={() => {
                     navigate("/login")
                 }}>
                     <Notification error title="Error"
-                        desc={<p>Email could not be verified!</p>}
+                        desc={<p>{errorMessage}</p>}
                         action={() => {
                             navigate("/login")
                         }} buttonTitle="Close" />
                 </Modal>
             )}
+
+            {/* {
+                errorMessage && (
+                    <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
+                )
+            } */}
+
 
             {successModalOpen && (
                 <Modal closeModal={() => {

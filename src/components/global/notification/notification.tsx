@@ -13,7 +13,7 @@ export const Notification: React.FC<NotificationProps> = ({ title, desc, action,
     return (
         <>
             {/* Information container */}
-            <div className="w-[340px]">
+            <div className="w-[310px]">
 
                 {/* information Details */}
                 <div className="flex flex-col gap-y-2">
