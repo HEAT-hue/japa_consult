@@ -38,12 +38,7 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
 
 
     async function update() {
-
-        console.log("Update clicked")
-
         const response = await updateInvoiceStatus({ invoiceId: invoice.inv_id });
-
-        console.log(response);
 
         if (!response.success) {
             setErrorMessage(response.message);
