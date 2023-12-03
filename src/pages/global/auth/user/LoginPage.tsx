@@ -6,6 +6,7 @@ import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
 import jwt_decode from "jwt-decode";
 import { Modal, Notification } from "@/components/global";
 import { getErrorMessage } from "@/utils/global";
+import { Toast } from "@/components/global";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -244,6 +245,11 @@ export const LoginPage: React.FC = () => {
                     </div>
                 </section >
             </section >
+
+            {errorMessage && (
+                <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
+            )}
+
 
             {verificationModalOpen && (
                 <Modal closeModal={() => {

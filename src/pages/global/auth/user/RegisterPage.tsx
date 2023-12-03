@@ -60,6 +60,7 @@ export const RegisterPage: React.FC = () => {
         // Registration not successful
         if (!response.success) {
             setErrorMessage(response.message ?? "Could not login!")
+            return;
         }
 
         // Navigate to login
@@ -107,7 +108,7 @@ export const RegisterPage: React.FC = () => {
                                 <div className="flex flex-col gap-y-3">
 
                                     <div className="grid grid-cols-2 gap-x-3">
-                                        
+
                                         {/* First Input */}
                                         <div className="flex flex-col gap-y-3">
                                             <div className="flex justify-between items-center text-base font-CabinetGrotesk-Medium">
@@ -155,7 +156,7 @@ export const RegisterPage: React.FC = () => {
                                             <input
                                                 {...register("phone")}
                                                 className="w-full h-full px-4 pr-6 bg-inputFieldBg font-Inter-Regular text-base rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 "
-                                                placeholder="Phone number +234..."
+                                                placeholder="Phone number +234"
                                                 type="tel"
                                                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                                                     e.target.value = e.target.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1')
