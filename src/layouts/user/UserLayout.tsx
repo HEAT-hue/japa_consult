@@ -1,10 +1,9 @@
 /* Please do not modify this file. This will affect the layout of the application */
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 import { AsideNavigation } from "@/components/user";
 // import { useAppSelector } from "@/hooks/typedHooks";
-import ProfileImage from "@/assets/global/defaultAvatar.png";
 // import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -19,13 +18,11 @@ export function UserLayout() {
 
     // Get Location
     const location = useLocation();
-    
+
     const currentLocationPathname = location.pathname;
 
     // profile image selector from the state
     // const { userProfile } = useAppSelector((state) => state.auth);
-
-    const navigateTo = useNavigate();
 
     // Handle the state of the aside navigation on mobile
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -57,6 +54,8 @@ export function UserLayout() {
             };
         }
     }, [])
+
+    console.log(currentLocationPathname);
 
     return (
         <div className="grid grid-rows-1 h-screen">
@@ -137,18 +136,9 @@ export function UserLayout() {
 
                 {/* Navigation */}
                 {/* Display those icons only on dashboard page */}
-                {currentLocationPathname == "/home" && (
-                    <nav className="flex items-center text-base bg-red-00 h-full gap-[1.5rem]">
-
-                        {/* Profile Avatar */}
-                        <div className="w-[35px] h-[35px] rounded-full overflow-hidden">
-                            <img
-                                src={ProfileImage}
-                                alt="profile pix"
-                                className="w-full h-full hover:cursor-pointer"
-                                onClick={() => navigateTo("/account")}
-                            />
-                        </div>
+                {currentLocationPathname == "/" && (
+                    <nav className="w-ful flex items-center flex-wrap text-base justify-end bg-red-00 h-full gap-[1.5rem] pr-[7%] lg:pr-[5%] ">
+                        <UserProfileMenu />
                     </nav>
                 )}
             </header >

@@ -1,9 +1,13 @@
 // jshint esversion:6
 import { useState, useRef, useEffect, ChangeEvent } from "react";
-import defaultAvatar from "@/assets/global/defaultAvatar.png";
+import GravatarImg from "@/assets/payments/gravatarImage.png";
 import { useAppSelector } from "@/hooks/typedHooks";
 import { useUpdateUserPictureHook } from "@/hooks/user";
 import { Toast } from "@/components/global";
+import { useAppDispatch } from "@/hooks/typedHooks";
+import { AuthSliceActions } from "@/features/global/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useAuthLogoutHook } from "@/hooks/global/auth";
 
 // Timeout to clear interval
 let timeout: any;
@@ -16,6 +20,9 @@ export const UserProfileMenu: React.FC = () => {
     // Error message
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+    // GET a navigator
+    const navigate = useNavigate();
+
     // Ref for input element
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -25,7 +32,13 @@ export const UserProfileMenu: React.FC = () => {
     // Get User Profile Details
     const { userProfile } = useAppSelector((state) => state.auth);
 
-    const { updateUserProfilePicture, isLoading: isUpdateImgLoading } = useUpdateUserPictureHook();
+    const { updateUserProfilePicture } = useUpdateUserPictureHook();
+
+    const dispatch = useAppDispatch()
+
+
+    // Logout hook to invalidate token
+    const { authLogout } = useAuthLogoutHook();
 
     // Change Handler
     const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +110,20 @@ export const UserProfileMenu: React.FC = () => {
         }, 3000)
     }
 
+    async function logout() {
+        // Clear all tokens in state
+        dispatch(AuthSliceActions.logout());
+
+        // Invalidate token
+        await authLogout();
+
+        // Reload doc
+        window.location.reload();
+
+        // Navigate to login page
+        navigate("/login");
+    }
+
 
     return (
         <div className="relative">
@@ -106,11 +133,11 @@ export const UserProfileMenu: React.FC = () => {
             {/* Profile Avatar */}
             <div
                 onMouseEnter={() => setProfileMenuOpen(true)}
-                // onMouseEnter={() => setProfileMenuOpen(true)}
-                className="w-[35px] h-[35px] rounded-full overflow-hidden border border-red-700"
+                onClick={() => setProfileMenuOpen(!isProfileMenuOpen)}
+                className="w-[35px] h-[35px] rounded-full overflow-hidden"
             >
                 <img
-                    src={defaultAvatar}
+                    src={GravatarImg}
                     alt="profile pix"
                     className="w-full h-full hover:cursor-pointer rounded-full"
                 />
@@ -121,15 +148,15 @@ export const UserProfileMenu: React.FC = () => {
                 <div
                     id="profile-menu"
                     onMouseLeave={() => setProfileMenuOpen(false)}
-                    className="w-[200px] border absolute left-[-380%] bottom-[-645%] rounded-lg shadow-md">
+                    className="w-[200px] border absolute left-[-380%] bottom-[-540%] rounded-lg shadow-md">
 
                     {/* Image container */}
-                    <div className="flex flex-col items-center py-3 gap-y-2 bg-brandColor/40">
+                    <div className="flex flex-col items-center py-3 gap-y-2 bg-brandColor/95">
 
                         {/* User role */}
                         <p className="w-full text-right px-5 uppercase -mb-1 text-sm" font-Inter-Regular>{userProfile?.role}</p>
 
-                        <img onClick={selectImage} className="w-[70px] h-[70px] cursor-pointer" src={userProfile?.profile_pic ?? defaultAvatar} alt="avatar" />
+                        <img onClick={selectImage} className="w-[70px] h-[70px] rounded-full cursor-pointer" src={GravatarImg} alt="avatar" />
 
                         {/* Name */}
                         <p className="text-sm">{userProfile?.name}</p>
@@ -137,8 +164,8 @@ export const UserProfileMenu: React.FC = () => {
 
                     {/* Profile Options */}
                     <div className="w-full bg-white text-sm flex flex-col divide-y divide-gray-600 [&>*]:py-2 rounded-b-lg ">
-                        <button onClick={selectImage}>{isUpdateImgLoading ? 'Updating...' : 'Change Picture'}</button>
-                        <button>Log out</button>
+                        {/* <button onClick={selectImage}>{isUpdateImgLoading ? 'Updating...' : 'Change Picture'}</button> */}
+                        <button onClick={logout}>Log out</button>
                     </div>
                 </div>
             )}

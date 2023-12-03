@@ -1,11 +1,11 @@
 /* Please do not modify this file. This will affect the layout of the application */
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 import { AdminAsideNavigation } from "@/components/user/global";
 // import { AsideNavigation } from "@/components/user";
 // import { useAppSelector } from "@/hooks/typedHooks";
-import ProfileImage from "@/assets/global/defaultAvatar.png";
+// import ProfileImage from "@/assets/global/defaultAvatar.png";
 // import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ export function AdminLayout() {
     // profile image selector from the state
     // const { userProfile } = useAppSelector((state) => state.auth);
 
-    const navigateTo = useNavigate();
+    // const navigateTo = useNavigate();
 
     // Handle the state of the aside navigation on mobile
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -79,7 +79,7 @@ export function AdminLayout() {
 
                 {/* Navigation title */}
                 <div className="font-bold text-[24px] font-CabinetGrotesk-Bold absolute left-[50%] translate-x-[-50%]">
-                    {currentLocationPathname == "/admin/" && "Home"}
+                    {currentLocationPathname == "/admin" && "Home"}
                     {/* {currentLocationPathname == "/messages" && "Messages"} */}
                     {currentLocationPathname == "/admin/files" && "Files"}
                     {currentLocationPathname == "/admin/files/file" && "Files"}
@@ -103,18 +103,9 @@ export function AdminLayout() {
 
                 {/* Navigation */}
                 {/* Display those icons only on dashboard page */}
-                {currentLocationPathname == "/home" && (
-                    <nav className="flex items-center text-base bg-red-00 h-full gap-[1.5rem]">
-
-                        {/* Profile Avatar */}
-                        <div className="w-[35px] h-[35px] rounded-full overflow-hidden">
-                            <img
-                                src={ProfileImage}
-                                alt="profile pix"
-                                className="w-full h-full hover:cursor-pointer"
-                                onClick={() => navigateTo("/account")}
-                            />
-                        </div>
+                {currentLocationPathname == "/admin" && (
+                    <nav className="w-ful flex items-center flex-wrap text-base justify-end bg-red-00 h-full gap-[1.5rem] pr-[7%] lg:pr-[5%] ">
+                        <UserProfileMenu />
                     </nav>
                 )}
             </header >
