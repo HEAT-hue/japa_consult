@@ -100,9 +100,9 @@ export const AdminInvoiceView: React.FC<InvoiceView> = ({ invoiceData, handleInv
                                     {/* Invoice status */}
                                     <td className={`w-full truncate capitalize`}>
                                         {<span
-                                            className={`${invoice.paid ? 'text-green-700' : 'text-brandColor'} self-end`}
+                                            className={`${invoice.paid ? 'text-green-700' : invoice.status == INVOICE_STATUS.EXPIRED ? 'text-error' : 'text-brandColor'} self-end`}
                                         >
-                                            {invoice.paid ? "Paid" : "Pending"}
+                                            {invoice.paid ? "Paid" : invoice.status == INVOICE_STATUS.EXPIRED ? 'Expired' : "Pending"}
                                         </span>}
                                     </td>
 

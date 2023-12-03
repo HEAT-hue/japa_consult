@@ -2,7 +2,7 @@ import { PAYMENT_STATUS } from "../dashboard"
 
 export type PaymentResponse = {
     "ref_id": string,
-    "rave_txRef": string,
+    "rave_txRef"?: string,
     "invoice_id": string,
     "paid": boolean,
     "payer_email": string,

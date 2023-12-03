@@ -9,6 +9,7 @@ import { UpdateInvoiceStatus } from "."
 import { Modal } from "@/components/global"
 import { useAppSelector } from "@/hooks/typedHooks"
 import { USERROLES } from "@/data/global/auth"
+import { INVOICE_STATUS } from "@/data/admin/invoice/invoice"
 
 type AdminInvoiceInfoProp = {
     invoice: PaidInvoiceType
@@ -37,17 +38,25 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
 
             {/* Status */}
             <p
-                className={`${invoice.paid ? 'text-green-700' : 'text-brandColor'} self-end`}
+                className={`${invoice.paid ? 'text-green-700' : invoice.status == INVOICE_STATUS.EXPIRED ? 'text-error' : 'text-brandColor'} self-end`}
             >
                 {invoice.paid ? "Paid" : (
                     <div className="flex gap-x-3 items-center">
-                        <span>Pending</span>
-                        
-                        {(userProfile?.role !== USERROLES.USER) && (
-                            <span onClick={() => setUpdateStatus(true)} className="text-placeholder cursor-pointer">
-                                <FaRegEdit />
-                            </span>
+                        {invoice.status == INVOICE_STATUS.EXPIRED ? (
+                            <span>Expired</span>
+                        ) : (
+                            <>
+                                <span>Pending</span>
+
+                                {(userProfile?.role !== USERROLES.USER) && (
+                                    <span onClick={() => setUpdateStatus(true)} className="text-placeholder cursor-pointer">
+                                        <FaRegEdit />
+                                    </span>
+                                )}
+                            </>
                         )}
+
+
                     </div>
                 )}
             </p>
@@ -92,7 +101,7 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
                 {/* Desc */}
                 <div className=" flex justify-between">
                     <p className="text-placeholder">Desc:</p>
-                    <textarea className="w-2/3 h-[70px] p-1 text-sm resize-none overflow-auto outline-none border text-right" value={invoice.desc}></textarea>
+                    <textarea disabled className="w-2/3 h-[70px] p-1 text-sm resize-none overflow-auto outline-none border text-right" value={invoice.desc}></textarea>
                 </div>
 
             </div>

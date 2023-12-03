@@ -41,6 +41,8 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
         }
     }, [])
 
+    console.log(paymentData)
+
     async function verifyBankDetail() {
         const response = await verifyPayment({ refId: paymentData.ref_id ?? "" });
 
@@ -60,7 +62,7 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
 
     return (
         <>
-            <div className="w-[320px] py-5 bg-white flex flex-col items-center gap-y-5 rounded-lg sm:mx-[-1rem] my-[-1.5rem]">
+            <div className="w-[300px] py-5 bg-white flex flex-col items-center gap-y-5 rounded-lg sm:mx-[-1rem] my-[-1.5rem]">
 
                 <h1 className="font-Inter-Bold text-lg">{paymentData.title ?? "Payment"}</h1>
 
@@ -106,17 +108,27 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
 
                     {/* Ref ID */}
                     <div className="flex flex-wrap justify-between">
+                        <p className="text-placeholder">Invoice ID:</p>
+                        <span className="text-black">{paymentData.invoice_id}</span>
+                    </div>
+
+                    {/* Ref ID */}
+                    <div className="flex flex-wrap justify-between">
                         <p className="text-placeholder">Ref ID:</p>
                         <span className="text-black">{paymentData.ref_id}</span>
                     </div>
 
                     {/* Rave Ref ID */}
-                    {paymentData.status != PAYMENT_STATUS.CANCELLED &&
-                        < div className="flex flex-wrap justify-between">
-                            <p className="text-placeholder">Rave Ref ID</p>
+                    {/* {paymentData.rave_txRef &&
+                        <div className="flex flex-wrap justify-between">
+                            <p className="text-placeholder">Flutterwave Ref</p>
                             <span className="text-black">{paymentData.rave_txRef}</span>
                         </div>
-                    }
+                    } */}
+                    <div className="flex flex-wrap justify-between">
+                        <p className="text-placeholder">Flutterwave Ref</p>
+                        <span className="text-black">{paymentData?.rave_txRef ?? "N/A"}</span>
+                    </div>
 
                     {/* User */}
                     <div className=" flex flex-wrap justify-between">
