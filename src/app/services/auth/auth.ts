@@ -30,10 +30,10 @@ export const authAPI = emptySplitApi.injectEndpoints({
 
         // Send Email token
         sendEmailToken: builder.mutation<unknown, AuthSendEmailToken>({
-            query: (credentials) => ({
+            query: (params) => ({
                 url: 'auth/generate/emailToken',
                 method: 'POST',
-                body: credentials,
+                params
             }),
         }),
 
