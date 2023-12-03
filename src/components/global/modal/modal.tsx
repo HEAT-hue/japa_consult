@@ -5,10 +5,11 @@ import closeIconImg from "@/assets/global/close.png";
 type ModalProps = {
     closeModal: () => void;
     children: ReactNode;
+    info?: boolean
     bare?: boolean
 };
 
-export function Modal({ closeModal, children, bare }: ModalProps) {
+export function Modal({ closeModal, children, bare, info }: ModalProps) {
     // Prevent background scroll
     useEffect(() => {
         document.body.style.overflow = "hidden";
@@ -18,6 +19,9 @@ export function Modal({ closeModal, children, bare }: ModalProps) {
         };
     }, []);
 
+    console.log(bare);
+    console.log(info);
+
     return (
         <div
             className="fixed inset-0 bg-black/30 flex justify-center items-center transition-colors z-[999]"
@@ -25,7 +29,7 @@ export function Modal({ closeModal, children, bare }: ModalProps) {
         >
             <div className={`relative bg-white ${!bare && "px-5 py-10 sm:p-10 "} rounded`}>
                 {/* This  */}
-                {!bare && (
+                {(!bare && !info) && (
                     <img
                         className="absolute top-9 right-6 w-[30px] h-[30px] z-[10] cursor-pointer"
                         src={closeIconImg}

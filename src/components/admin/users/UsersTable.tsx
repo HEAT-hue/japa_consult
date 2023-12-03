@@ -2,14 +2,24 @@
 import { UserType } from "@/data/admin/dashboard/dashboard"
 import { getFormattedDate } from "@/utils/global";
 import { useNavigate } from "react-router-dom";
+import { EditSVG } from "@/components/global/svg/invoice";
+import { USERROLES } from "@/data/global/auth";
+import { useAppSelector } from "@/hooks/typedHooks";
 
 type UsersTableProp = {
     userData: UserType[]
+    handleRoleUpdateClick: (userData: {
+        email: string;
+        currentRole: USERROLES;
+    }) => void
 }
 
-export const UsersTable: React.FC<UsersTableProp> = ({ userData }) => {
+export const UsersTable: React.FC<UsersTableProp> = ({ userData, handleRoleUpdateClick }) => {
 
     const navigate = useNavigate();
+
+    const { userProfile } = useAppSelector((state) => state.auth)
+
 
     return (
         <>
@@ -57,7 +67,17 @@ export const UsersTable: React.FC<UsersTableProp> = ({ userData }) => {
 
                                     {/* Role */}
                                     <td className="w-full truncate capitalize">
-                                        <span>{user.role}</span>
+                                        <div className="flex gap-x-2 items-center">
+                                            <span>{user.role}</span>
+                                            {userProfile?.user_id != user.user_id && (userProfile?.role == USERROLES.ADMIN || userProfile?.role == USERROLES.MANAGER) &&
+                                                <div onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleRoleUpdateClick({ email: user.email, currentRole: user.role })
+                                                }}>
+                                                    <EditSVG />
+                                                </div>
+                                            }
+                                        </div>
                                     </td>
 
                                     {/* Email */}

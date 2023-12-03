@@ -1,6 +1,9 @@
 // jshint esversion:6
 import { emptySplitApi } from "../../api";
-import { GetAllUsersResponse, GetAllAdminsResponse, GetAllManagersResponse, GetAllStaffsResponse } from "@/data/admin/users";
+import {
+    GetAllUsersResponse, GetAllAdminsResponse,
+    GetAllManagersResponse, GetAllStaffsResponse, UpdateUserRoleRequest, UpdateUserRoleResponse
+} from "@/data/admin/users";
 
 export const usersAPI = emptySplitApi.injectEndpoints({
 
@@ -36,9 +39,18 @@ export const usersAPI = emptySplitApi.injectEndpoints({
             }),
             providesTags: ['GET_ALL_STAFFS']
         }),
+
+        // delete user file
+        updateUserRole: builder.mutation<UpdateUserRoleResponse, UpdateUserRoleRequest>({
+            query: (credentials) => ({
+                url: `user/changeRole`,
+                method: "PATCH",
+                body: credentials
+            }),
+        }),
     })
 })
 
 export const {
-    useGetAllUsersQuery, useGetAllAdminsQuery,
-    useGetAllManagersQuery, useGetAllStaffsQuery, useLazyGetAllAdminsQuery, useLazyGetAllManagersQuery, useLazyGetAllStaffsQuery, useLazyGetAllUsersQuery,} = usersAPI
+    useGetAllUsersQuery, useGetAllAdminsQuery, useUpdateUserRoleMutation,
+    useGetAllManagersQuery, useGetAllStaffsQuery, useLazyGetAllAdminsQuery, useLazyGetAllManagersQuery, useLazyGetAllStaffsQuery, useLazyGetAllUsersQuery, } = usersAPI

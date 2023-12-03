@@ -14,7 +14,7 @@ export const Toast: React.FC<ToastProp> = ({ error, desc, action }) => {
         <>
             <div
                 onClick={action}
-                className={`h-[50px] w-[80vw]  max-w-[400px] py-[1rem] fixed top-[4.6rem] right-5 transition-all ${error ? "bg-error" : "bg-[#1CBF74]"} text-white text-sm rounded-md flex gap-x-4 items-center justify-between px-4`}>
+                className={`h-[50px] w-[90vw]  max-w-[400px] py-[1rem] fixed top-[4.6rem] right-5 transition-all ${error ? "bg-error" : "bg-[#1CBF74]"} text-white text-sm rounded-md flex gap-x-4 items-center justify-between px-4`}>
 
                 {/* Check mark icon */}
                 <div className="p-[1px] bg-white rounded-full">

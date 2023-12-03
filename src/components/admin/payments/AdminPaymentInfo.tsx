@@ -41,7 +41,6 @@ export const AdminPaymentInfo: React.FC<AdminInvoiceInfoProp> = ({ paymentData, 
         }
     }, [])
 
-    console.log(paymentData)
 
     async function verifyBankDetail() {
         const response = await verifyPayment({ refId: paymentData.ref_id ?? "" });

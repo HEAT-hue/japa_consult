@@ -10,6 +10,8 @@ import { Toast } from "@/components/global"
 import { BeatLoader } from "react-spinners"
 import { NoUserSVG } from "@/components/global/svg"
 import { useAppSelector } from "@/hooks/typedHooks"
+import { UpdateUserRole } from "@/components/admin/users"
+import { Modal } from "@/components/global"
 
 let timeoutID: any;
 
@@ -19,6 +21,11 @@ const override: CSSProperties = {
     borderColor: "red",
 };
 
+type UpdateRole = {
+    email: string,
+    currentRole: USERROLES
+}
+
 export const AdminUsersPage: React.FC = () => {
 
     const { userProfile } = useAppSelector((state) => state.auth);
@@ -26,11 +33,13 @@ export const AdminUsersPage: React.FC = () => {
     // Error message
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+    const [updateRole, setUpdateRole] = useState<UpdateRole | null>(null);
+
     // Fetching list of users
-    const [getAllAdmins, { isLoading: isAllAdminsLoading }] = useLazyGetAllAdminsQuery()
-    const [getAllManagers, { isLoading: isAllManagersLoading }] = useLazyGetAllManagersQuery()
-    const [getAllStaffs, { isLoading: isAllStaffsLoading }] = useLazyGetAllStaffsQuery()
-    const [getAllUsers, { isLoading: isAllUsersLoading }] = useLazyGetAllUsersQuery()
+    const [getAllAdmins, { isFetching: isAllAdminsLoading }] = useLazyGetAllAdminsQuery()
+    const [getAllManagers, { isFetching: isAllManagersLoading }] = useLazyGetAllManagersQuery()
+    const [getAllStaffs, { isFetching: isAllStaffsLoading }] = useLazyGetAllStaffsQuery()
+    const [getAllUsers, { isFetching: isAllUsersLoading }] = useLazyGetAllUsersQuery()
 
     // Selected Users
     const [selectedUser, setSelectedUser] = useState<USERROLES | undefined>(userProfile?.role);
@@ -116,6 +125,11 @@ export const AdminUsersPage: React.FC = () => {
 
     }, [selectedUser])
 
+    function handleRoleUpdateClick(userData: { email: string, currentRole: USERROLES }) {
+        const { email, currentRole } = userData;
+        setUpdateRole({ email, currentRole });
+    }
+
     return (
         <div className="py-5">
 
@@ -178,10 +192,10 @@ export const AdminUsersPage: React.FC = () => {
                     ) : (
                         <div>
                             <div className="hidden sm:block">
-                                <UsersTable userData={usersList} />
+                                <UsersTable handleRoleUpdateClick={handleRoleUpdateClick} userData={usersList} />
                             </div>
                             <div className="sm:hidden">
-                                <UsersTableMV userData={usersList} />
+                                <UsersTableMV handleRoleUpdateClick={handleRoleUpdateClick} userData={usersList} />
                             </div>
                         </div>
                     )}
@@ -193,6 +207,12 @@ export const AdminUsersPage: React.FC = () => {
                     <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
                 )
             }
+
+            {updateRole?.email && updateRole.currentRole && (
+                <Modal info closeModal={() => setUpdateRole(null)}>
+                    <UpdateUserRole setNavigation={setSelectedUser} email={updateRole.email} currentUserRole={updateRole.currentRole} closeModal={() => setUpdateRole(null)} />
+                </Modal>
+            )}
         </div >
     )
 }
