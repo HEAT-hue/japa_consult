@@ -88,6 +88,7 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
             <button
                 type="button"
                 onClick={update}
+                disabled={newStatus == INVOICE_STATUS.PENDING}
                 className={`h-[40px] px-12 mt-5 ${errorMessage ? "bg-error" : "bg-brandColor hover:bg-brandColor/90"}  text-white block w-full  font-Inter-Regular text-base text-center transition-colors duration-150  border border-transparent rounded  focus:outline-none focus:shadow-outline-blue`}
             >
                 {isLoading ? "Updating..." : "Update"}
