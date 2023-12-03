@@ -19,6 +19,7 @@ export function UserLayout() {
 
     // Get Location
     const location = useLocation();
+    
     const currentLocationPathname = location.pathname;
 
     // profile image selector from the state
