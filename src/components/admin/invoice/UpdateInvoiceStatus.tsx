@@ -39,7 +39,11 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
 
     async function update() {
 
+        console.log("Update clicked")
+
         const response = await updateInvoiceStatus({ invoiceId: invoice.inv_id });
+
+        console.log(response);
 
         if (!response.success) {
             setErrorMessage(response.message);
@@ -82,7 +86,7 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
                 onClick={update}
                 className={`h-[40px] px-12 mt-5 ${errorMessage ? "bg-error" : "bg-brandColor hover:bg-brandColor/90"}  text-white block w-full  font-Inter-Regular text-base text-center transition-colors duration-150  border border-transparent rounded  focus:outline-none focus:shadow-outline-blue`}
             >
-                {isLoading ? "Updating" : "Update"}
+                {isLoading ? "Updating..." : "Update"}
             </button>
 
             {/* Toast message to inform user */}
