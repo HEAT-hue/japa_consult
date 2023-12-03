@@ -86,6 +86,8 @@ export const PasswordResetPage = () => {
             return;
 
         try {
+            console.log(userToken);
+
             // Send OTP to user email
             const response = await authChangePassword({ token: userToken, new_pwd: userData.password });
 
