@@ -40,7 +40,6 @@ export const UpdateUserRole: React.FC<UpdateUserRole> = ({ email: user_email, cu
             return;
         }
 
-        // Update role response
         const response = await updateUserRole({ user_email, role: newRole });
 
         // Navigate to the tab
@@ -57,12 +56,11 @@ export const UpdateUserRole: React.FC<UpdateUserRole> = ({ email: user_email, cu
         // Success changing the role
         setSuccess(true);
 
-        // timeout 
+        // timeout
         timeoutID = setTimeout(() => {
             setSuccess(false);
+            closeModal();
         }, 2000)
-
-        closeModal();
     }
 
     return (

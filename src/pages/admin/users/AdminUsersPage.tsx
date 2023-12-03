@@ -35,6 +35,9 @@ export const AdminUsersPage: React.FC = () => {
 
     const [updateRole, setUpdateRole] = useState<UpdateRole | null>(null);
 
+    // // Verification successful
+    // const [success, setSuccess] = useState<boolean>(false);
+
     // Fetching list of users
     const [getAllAdmins, { isFetching: isAllAdminsLoading }] = useLazyGetAllAdminsQuery()
     const [getAllManagers, { isFetching: isAllManagersLoading }] = useLazyGetAllManagersQuery()
@@ -211,8 +214,19 @@ export const AdminUsersPage: React.FC = () => {
             {updateRole?.email && updateRole.currentRole && (
                 <Modal info closeModal={() => setUpdateRole(null)}>
                     <UpdateUserRole setNavigation={setSelectedUser} email={updateRole.email} currentUserRole={updateRole.currentRole} closeModal={() => setUpdateRole(null)} />
+                    {/* <UpdateUserRole setSuccess={setSuccess} setNavigation={setSelectedUser} email={updateRole.email} currentUserRole={updateRole.currentRole} closeModal={() => setUpdateRole(null)} /> */}
                 </Modal>
             )}
+
+            {/* {
+                success && (
+                    <>
+                        <Toast desc={"User role updated!"} action={() => {
+                            setSuccess(false);
+                        }} />
+                    </>
+                )
+            } */}
         </div >
     )
 }

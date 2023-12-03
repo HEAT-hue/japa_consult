@@ -21,24 +21,6 @@ export type InvoiceInfotype = {
     data: PaidInvoiceType | undefined
 }
 
-/*
-inv_id: 'JPC-1700967850',
-    title: 'Research Proposal',
-    desc: 'What shall we do here',
-    price: 20,
-    to_email: 'onyejemeemmanuel65@gmail.com',
-    created_at: '2023-11-26T03:04:10',
-    created_by: 'Ike Norah',
-    updated_at: null,
-    updated_by: null,
-    due_date: '2023-11-26',
-    paid: false,
-    paid_at: null,
-    rave_txref: null,
-    ref_id: null,
-    status: null
-*/
-
 export const InvoicePage: React.FC = () => {
 
     const { data: AllInvoiceData, isLoading: isAllInvoiceLoading } = useGetAllInvoiceQuery(undefined, { refetchOnMountOrArgChange: true })
@@ -196,7 +178,7 @@ export const InvoicePage: React.FC = () => {
             {/* More Info about Invoice */}
             {invoiceInfo.status && invoiceInfo.data && (
                 <Modal bare closeModal={() => setInvoiceInfo({ status: false, data: undefined })}>
-                    <AdminInvoiceInfo invoice={invoiceInfo.data} />
+                    <AdminInvoiceInfo closeModal={() => setInvoiceInfo({ status: false, data: undefined })} invoice={invoiceInfo.data} />
                 </Modal>
             )}
         </div>

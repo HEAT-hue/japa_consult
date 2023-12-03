@@ -19,7 +19,6 @@ import { DeleteConfirmation } from "@/components/admin/users";
 import { UpdateInvoice } from "@/components/admin/invoice/UpdateInvoice";
 import { INVOICE_TYPE } from "@/data/users/invoice";
 
-
 const override: CSSProperties = {
     display: "inline-block",
     margin: "0 auto",
@@ -160,8 +159,6 @@ export const AdminInvoicePage: React.FC = () => {
         setActionConsent(false);
     }
 
-
-
     function deleteInvoice(invoiceId: string) {
         actionToExecute = () => handleInvoiceDeleteClick(invoiceId);
         setActionConsent(true)
@@ -180,7 +177,7 @@ export const AdminInvoicePage: React.FC = () => {
 
 
             {/* Invoive Navigation */}
-            <div className="flex [&>*]:flex-1 gap-x-3 justify-center mt-5">
+            <div className="flex [&>*]:flex-1 sm:[&>*]:flex-grow-[0] sm:[&>*]:basis-auto gap-x-3 justify-center sm:justify-start mt-5">
                 <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.ALL)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.ALL && "border-b-[2px] border-brandColor"}`}>All Invoices</h3>
                 <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PAID)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PAID && "border-b-[2px] border-brandColor"}`}>Paid Invoices</h3>
                 <h3 onClick={() => handleNavigationClick(INVOICE_NAVIGATION.PENDING)} className={`cursor-pointer w-max py-1 ${invoiceType == INVOICE_NAVIGATION.PENDING && "border-b-[2px] border-brandColor"}`}>Pending Invoices</h3>
@@ -228,7 +225,7 @@ export const AdminInvoicePage: React.FC = () => {
             {/* More Info about Invoice */}
             {invoiceInfo.status && invoiceInfo.data && (
                 <Modal bare closeModal={() => setInvoiceInfo({ status: false, data: undefined })}>
-                    <AdminInvoiceInfo invoice={invoiceInfo.data} />
+                    <AdminInvoiceInfo closeModal={() => setInvoiceInfo({ status: false, data: undefined })} invoice={invoiceInfo.data} />
                 </Modal>
             )}
 

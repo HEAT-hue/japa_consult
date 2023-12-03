@@ -13,9 +13,10 @@ import { INVOICE_STATUS } from "@/data/admin/invoice/invoice"
 
 type AdminInvoiceInfoProp = {
     invoice: PaidInvoiceType
+    closeModal: () => void
 }
 
-export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) => {
+export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice, closeModal }) => {
 
     const [updateStatus, setUpdateStatus] = useState<boolean>(false);
 
@@ -108,8 +109,8 @@ export const AdminInvoiceInfo: React.FC<AdminInvoiceInfoProp> = ({ invoice }) =>
 
             {/* Update Invoice Sttaus */}
             {updateStatus && (
-                <Modal bare closeModal={() => setUpdateStatus(false)}>
-                    <UpdateInvoiceStatus invoice={invoice} closeModal={() => setUpdateStatus(false)} />
+                <Modal bare closeModal={closeModal}>
+                    <UpdateInvoiceStatus invoice={invoice} closeModal={closeModal} />
                 </Modal>
             )}
         </div>

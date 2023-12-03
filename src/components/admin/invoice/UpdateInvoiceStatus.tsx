@@ -23,6 +23,9 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
     // Error message
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+    // Verification successful
+    const [success, setSuccess] = useState<boolean>(false);
+
     // Update invoice status
     const { updateInvoiceStatus, isLoading, } = useUpdateInvoiceStatusHook();
 
@@ -47,9 +50,15 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
             }, 3000)
             return;
         }
+        // Success changing the role
+        setSuccess(true);
 
-        // Success, close Modal
-        closeModal();
+        // timeout
+        timeoutID = setTimeout(() => {
+            setSuccess(false);
+            console.log("Closing modal");
+            closeModal();
+        }, 2000)
     }
 
     return (
@@ -88,6 +97,16 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
             {
                 errorMessage && (
                     <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
+                )
+            }
+            {
+                success && (
+                    <>
+                        <Toast desc={"Invoice status has been updated!"} action={() => {
+                            setSuccess(false);
+                            closeModal();
+                        }} />
+                    </>
                 )
             }
         </div>
