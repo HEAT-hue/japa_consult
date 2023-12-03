@@ -2,7 +2,7 @@ import AuthImg from "@/assets/auth/auth_img.png";
 import { useState, useEffect } from "react";
 import openEye from "@/assets/auth/eye.svg";
 import slashEye from "@/assets/auth/eye-slash.svg"
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "@/utils/global";
 import { Modal } from "@/components/global";
 import { Notification } from "@/components/global";
@@ -43,7 +43,7 @@ let timeoutId: any;
 export const PasswordResetPage = () => {
 
     // GET navigator
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     // Hide or View password
     const [passwordShown, setPasswordShown] = useState<boolean>(true);
@@ -86,8 +86,6 @@ export const PasswordResetPage = () => {
             return;
 
         try {
-            console.log(userToken);
-
             // Send OTP to user email
             const response = await authChangePassword({ token: userToken, new_pwd: userData.password });
 
@@ -206,11 +204,15 @@ export const PasswordResetPage = () => {
             {
                 modalOpen && (
                     <Modal closeModal={() => {
-                        setModalOpen(false)
+                        setModalOpen(false);
+                        navigate("/login")
                     }}>
                         <Notification title="Info"
                             desc={<p>Your password has been reset successfully!</p>}
-                            action={() => setModalOpen(false)} buttonTitle="Okay" />
+                            action={() => {
+                                setModalOpen(false)
+                                navigate("/login");
+                            }} buttonTitle="Okay" />
                     </Modal>
                 )
             }

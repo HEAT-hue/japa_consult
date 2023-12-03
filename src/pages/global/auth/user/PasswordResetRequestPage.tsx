@@ -55,8 +55,6 @@ export const PasswordResetRequestPage = () => {
             // Send verification link to user email
             const response = await authSendEmailToken(userData.email, EMAIL_VERIFICATION_TYPE.PASSWORD_CHANGE);
 
-            console.log(response);
-
             if (!response.success) {
                 throw new Error(response.message);
             }
@@ -69,7 +67,7 @@ export const PasswordResetRequestPage = () => {
             setErrorMessage(errorData);
             timeoutId = setTimeout(() => {
                 setErrorMessage(undefined);
-            }, 2000)
+            }, 5000)
         }
     }
 
