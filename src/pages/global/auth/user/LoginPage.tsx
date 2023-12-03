@@ -5,16 +5,19 @@ import AuthImg from "@/assets/auth/auth_img.png";
 import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
 import jwt_decode from "jwt-decode";
 import { Modal, Notification } from "@/components/global";
+import { getErrorMessage } from "@/utils/global";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // import { useAuthLoginHook } from "../../../../hooks/global/auth/authLoginHook";
 import { useAuthLoginHook } from "@/hooks/global/auth";
 import { AuthLoginResponse } from "@/data/global/auth";
 import { LoginTokenDecodeType, USERROLES } from "@/data/global/auth/auth";
+import { useAuthSendEmailTokenHook } from "@/hooks/global/auth";
+import { EMAIL_VERIFICATION_TYPE } from "@/data/global/auth/apiTypes";
 
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +32,7 @@ const schema = z.object({
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
 
+let timeoutId: any;
 
 export const LoginPage: React.FC = () => {
 
@@ -43,6 +47,9 @@ export const LoginPage: React.FC = () => {
 
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+    // Send Verification Link
+    const { authSendEmailToken, isLoading: isSendEmailTokenLoading } = useAuthSendEmailTokenHook();
+
     // Invalid token error
     const [tokenError, setTokenError] = useState<boolean>(false);
 
@@ -50,6 +57,37 @@ export const LoginPage: React.FC = () => {
     const { register, handleSubmit, formState: { errors, isValid: formValid } } = useForm<FormData>({ resolver: zodResolver(schema) });
 
     const { authLogin, isError, isLoading: signInloading, } = useAuthLoginHook()
+
+    // Clear timeout upon component unmount
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutId);
+        }
+    }, [])
+
+    async function UserEmailVerification(userData: FormData) {
+        try {
+
+            // Send verification link to user email
+            const response = await authSendEmailToken(userData.email, EMAIL_VERIFICATION_TYPE.NEW_USER);
+
+            console.log(response);
+
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+
+            // Inform user of successful password verification link
+            return true;
+
+        } catch (error) {
+            const errorData = getErrorMessage(error);
+            setErrorMessage(errorData);
+            timeoutId = setTimeout(() => {
+                setErrorMessage(undefined);
+            }, 2000)
+        }
+    }
 
     const onSubmit = async (data: FormData) => {
 
@@ -83,7 +121,10 @@ export const LoginPage: React.FC = () => {
 
         // Inform user if not verified
         if (!userInfo.is_verified) {
-            setVerificationModalOpen(true);
+            const verificationResponse = await UserEmailVerification(data);
+            if (verificationResponse) {
+                setVerificationModalOpen(true);
+            }
             return;
         }
 
@@ -187,7 +228,7 @@ export const LoginPage: React.FC = () => {
                                     disabled={!formValid}
                                     className={`${formValid ? "bg-brandColor hover:bg-brandColor/90 text-white" : "bg-formDisabledBg"} mt-5 block w-full px-12 py-4 font-Inter-Regular text-base text-center transition-colors duration-150  border border-transparent rounded-lg  focus:outline-none focus:shadow-outline-blue`}
                                 >
-                                    {signInloading ? "Signing in..." : "Sign In"}
+                                    {signInloading ? "Signing in..." : isSendEmailTokenLoading ? "Verifying..." : "Sign In"}
                                 </button>
 
                                 {/* No account found! */}

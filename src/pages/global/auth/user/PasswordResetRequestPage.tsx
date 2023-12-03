@@ -6,6 +6,7 @@ import { getErrorMessage } from "@/utils/global";
 import { Modal } from "@/components/global";
 import { useAuthSendEmailTokenHook } from "@/hooks/global/auth";
 import { Notification } from "@/components/global";
+import { EMAIL_VERIFICATION_TYPE } from "@/data/global/auth/apiTypes";
 
 // Signup Validation imports
 import { z } from "zod";
@@ -50,9 +51,11 @@ export const PasswordResetRequestPage = () => {
     // Submit from details to server and verify OTP
     async function RequestPasswordReset(userData: FormData) {
         try {
-            
+
             // Send verification link to user email
-            const response = await authSendEmailToken(userData.email);
+            const response = await authSendEmailToken(userData.email, EMAIL_VERIFICATION_TYPE.PASSWORD_CHANGE);
+
+            console.log(response);
 
             if (!response.success) {
                 throw new Error(response.message);

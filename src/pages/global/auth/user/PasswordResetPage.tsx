@@ -87,7 +87,7 @@ export const PasswordResetPage = () => {
 
         try {
             // Send OTP to user email
-            const response = await authChangePassword({ token: 'wknniwwibwibwibwiww', new_pwd: userData.password });
+            const response = await authChangePassword({ token: userToken, new_pwd: userData.password });
 
             if (!response.success) {
                 throw new Error(response.message);
@@ -104,6 +104,7 @@ export const PasswordResetPage = () => {
             }, 2000)
         }
     }
+
 
     // Submit Form Details
     const onSubmit = (data: FormData) => {

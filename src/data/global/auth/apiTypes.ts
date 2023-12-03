@@ -1,6 +1,11 @@
 import { USERROLES } from "."
 import { USERSTATUS } from "./auth"
 
+export enum EMAIL_VERIFICATION_TYPE {
+    NEW_USER = 'new_user',
+    PASSWORD_CHANGE = 'password_change'
+}
+
 export type AuthLoginRequest = {
     username: string
     password: string
@@ -30,6 +35,7 @@ export type AuthUserRegisterResponse = {
 
 export type AuthSendEmailToken = {
     "mail": string
+    "verv_type": EMAIL_VERIFICATION_TYPE
 }
 
 export type AuthVerifyEmailTokenRequest = {
