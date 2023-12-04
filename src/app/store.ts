@@ -6,6 +6,7 @@ import { AuthSliceReducer } from "@/features/global/authSlice";
 import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from "@reduxjs/toolkit";
+// import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 
 // Combine all reducers here
 const rootReducer = combineReducers({
@@ -18,8 +19,10 @@ const rootReducer = combineReducers({
 
 // Persist Configuration
 const persistConfig = {
-    key: 'root',
+    key: 'japaRoot',
     storage,
+    // stateReconciler: autoMergeLevel2,
+    timeout: 2000
 }
 
 // Create Persisted Reducer
@@ -31,10 +34,12 @@ export const store = configureStore({
     // Persisted reducer here
     reducer: persistedReducer,
 
+    devTools: process.env.NODE_ENV !== 'production',
+
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        
+
         // Ignore action types dipatched by redux persist to prevent serializable issues
         serializableCheck: {
             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

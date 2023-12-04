@@ -11,16 +11,19 @@ import {
   PasswordResetPage, PasswordResetRequestPage,
   AdminRegisterPage, PageNotFound, ServerErrorPage
 } from "@/pages/global"
+
 import {
   DashboardPage,
   FilesPage, FolderPage, NotePage,
   CreateNotePage, InvoicePage, PayInvoicePage,
   VerifyCardPaymentPage, CallBackPage, BankPaymentPage
 } from "@/pages/user";
+
 import {
   AdminDashboardPage, AdminInvoicePage, CreateInvoicePage,
   AdminUsersPage, AdminUserPage, AdminPaymentPage
 } from "./pages/admin";
+
 import { RequireAuth, AdminRequireAuth } from "@/components/global/auth/protectedRoute";
 import { AdminLayout, UserLayout } from "./layouts";
 
