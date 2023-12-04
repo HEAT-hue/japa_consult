@@ -9,7 +9,7 @@ import { LineLoader } from "./components/global/loader";
 import {
   LoginPage, RegisterPage, VerifyUserEmailPage,
   PasswordResetPage, PasswordResetRequestPage,
-  AdminRegisterPage,
+  AdminRegisterPage, PageNotFound, ServerErrorPage
 } from "@/pages/global"
 import {
   DashboardPage,
@@ -77,7 +77,10 @@ export default function App() {
             </Route>
 
             {/* Error Page */}
-            <Route path="*" element={<p>404, Page not found</p>} />
+            <Route path="*" element={<PageNotFound />} />
+
+            {/* Server Error page */}
+            <Route path="error" element={<ServerErrorPage />} />
           </Routes>
         </BrowserRouter>
       </PersistGate>
