@@ -1,36 +1,20 @@
 // jshint esversion:6
 import FolderImg from "@/assets/global/Folder.svg";
 import { useNavigate } from "react-router-dom";
-// import { useGetFilesHook } from "@/hooks/user/files";
-import { useLazyGetFileQuery } from "@/app/services/user/files";
-// import { useGetFileQuery } from "@/app/services/user/files";
-import { useEffect } from "react";
+import { FileResponseType } from "@/data/users/files/file";
 
 type UserFolderProp = {
     name: string,
     url: string,
-    numberOfItems: number
+    files?: FileResponseType[]
 }
 
-export const UserFolder: React.FC<UserFolderProp> = ({ name, url }) => {
-
-    // const [fileSize, setFileSize] = useState<number | undefined>(undefined);
-
-    useEffect(() => {
-        (async function () {
-            await getFile({ folderName: name.toLowerCase() });
-        })()
-    }, [])
-
+export const UserFolder: React.FC<UserFolderProp> = ({ name, url, files }) => {
     const navigate = useNavigate();
-
-    const [getFile, { isLoading: isFilesloading }] = useLazyGetFileQuery()
-
-    // const { data: fileData, isLoading: isFilesloading } = useGetFileQuery({ folderName: name.toLowerCase() })
 
     return (
         <div
-            className=""
+            className="cursor-pointer"
             onClick={() => {
                 navigate(url);
             }}>
@@ -42,12 +26,7 @@ export const UserFolder: React.FC<UserFolderProp> = ({ name, url }) => {
 
                 {/* Description */}
                 <p className="font-Inter-Bold text-sm mt-[15px]">{name}</p>
-                {isFilesloading ? (
-                    <p>...</p>
-                ) : (
-                    <p></p>
-                    // <p className="text-xs">{`${fileSize ?? 0} items`}</p>
-                )}
+                <p className="text-xs">{`${files?.length ?? 0} items`}</p>
             </div>
         </div >
     )

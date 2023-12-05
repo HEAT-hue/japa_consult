@@ -2,25 +2,24 @@
 import FileImg from "@/assets/global/file.png";
 // import DownloadIcon from "@/assets/global/logout.svg";
 import { TrashSVG } from "@/components/global/svg/trash"
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { FileResponseType } from "@/data/users/files/file";
-import { useDeleteFileHook } from "@/hooks/user/files";
-import { Toast } from "@/components/global";
-import { DeleteConfirmation } from "@/components/admin/users";
-import { Modal } from "@/components/global";
+// import { useDeleteFileHook } from "@/hooks/user/files";
+// import { Toast } from "@/components/global";
+// import { DeleteConfirmation } from "@/components/admin/users";
+// import { Modal } from "@/components/global";
+// import { useNavigate } from "react-router-dom";
 
 type UserFolderProp = {
     file: FileResponseType
-}
-
-type ActionConsent = {
-    status: boolean,
-    data: FileResponseType | undefined
+    handleDeleteUserFile: (file: FileResponseType) => void
 }
 
 let timeoutID: any;
 
-export const UserFile: React.FC<UserFolderProp> = ({ file }) => {
+export const UserFile: React.FC<UserFolderProp> = ({ file, handleDeleteUserFile }) => {
+
     const onButtonClick = () => {
         const fileLink = file.file_url;
         const link = document.createElement("a");
@@ -31,13 +30,6 @@ export const UserFile: React.FC<UserFolderProp> = ({ file }) => {
         document.body.removeChild(link);
     };
 
-    const { deleteFile, isLoading: isDeleteFileLoading } = useDeleteFileHook();
-
-    // Error message
-    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-
-    // Consnt to delete file
-    const [actionConsent, setActionConsent] = useState<ActionConsent>({ status: false, data: undefined });
 
     // Clear error state
     useEffect(() => {
@@ -46,26 +38,6 @@ export const UserFile: React.FC<UserFolderProp> = ({ file }) => {
         }
     }, [])
 
-    // Delete user file
-    async function deleteUSerFile(file: FileResponseType | undefined) {
-        if (!file) {
-            return;
-        }
-
-        const response = await deleteFile({ fileId: file.file_id });
-
-        if (!response.success) {
-            setErrorMessage(response.message);
-            timeoutID = setTimeout(() => {
-                setErrorMessage(undefined);
-            }, 3000)
-        }
-
-
-        // Close consent modal
-        setActionConsent({ status: false, data: undefined })
-    }
-
     return (
         <>
             <div className="block relative">
@@ -73,7 +45,7 @@ export const UserFile: React.FC<UserFolderProp> = ({ file }) => {
                 <div
                     onClick={(e) => {
                         e.stopPropagation();
-                        setActionConsent({ status: true, data: file })
+                        handleDeleteUserFile(file);
                     }}
                     className="w-max ml-auto absolute top-3 right-3 z-[300] truncate cursor-pointer text-[#AFAFAF]">
                     <TrashSVG width={23} height={23} />
@@ -90,25 +62,6 @@ export const UserFile: React.FC<UserFolderProp> = ({ file }) => {
                     <p className="font-Inter-Bold text-sm mt-[15px] text-center truncate">{file.name}</p>
                 </div>
             </div>
-
-            {/* Consent modal */}
-            {actionConsent.status && (
-                <Modal closeModal={() => setActionConsent({ status: false, data: undefined })}>
-                    <DeleteConfirmation
-                        title="Delete File"
-                        desc="Are you sure you want to delete this file?"
-                        cancel={() => setActionConsent({ status: false, data: undefined })}
-                        next={() => deleteUSerFile(actionConsent.data)}
-                        isLoading={isDeleteFileLoading}
-                        loadingTitle="Deleting..."
-                    />
-                </Modal>
-            )}
-
-            {/* Error deletinh */}
-            {errorMessage && (
-                <Toast error desc={errorMessage ?? "An error occurred"} action={() => setErrorMessage(undefined)} />
-            )}
         </>
     )
 }

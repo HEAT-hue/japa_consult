@@ -1,29 +1,33 @@
 // jshint esversion:6
 import { UserUploadFile } from "@/components/user/files";
-import { useGetFilesHook } from "@/hooks/user/files"
 import { useParams } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 import { getErrorMessage } from "@/utils/global";
-import { LineLoader } from "@/components/global/loader";
 import { UserFile } from "@/components/user/files";
 import { FOLDER_NAME, FileResponseType } from "@/data/users/files/file";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UploadIcon from "@/assets/global/export.svg"
 import { Modal } from "@/components/global";
 import { Notification } from "@/components/global";
 import { useUploadFileHook } from "@/hooks/user";
+import { useDeleteFileHook } from "@/hooks/user/files";
+import { DeleteConfirmation } from "@/components/admin/users";
+import { LineLoader } from "@/components/global/loader";
+import { useGetFileQuery } from "@/app/services/user/files";
+
+let timeoutID: any;
+
+type ActionConsent = {
+    status: boolean,
+    data: FileResponseType | undefined
+}
 
 export const FolderPage: React.FC = () => {
 
     // Get the ID
     const { folderName } = useParams();
 
-    if (!folderName) {
-        return <Navigate to="/files" />
-    }
-
     // Get files hook
-    const { data, isError, error, isFetching: isGetFileFetching } = useGetFilesHook({ folderName })
+    const { data, isError: isGetFileError, error: getFileError, isFetching: isGetFileFetching } = useGetFileQuery({ folderName })
 
     // File Uplaod Modal
     const [fileUploadModal, setFileUploadModal] = useState<boolean>(false);
@@ -40,12 +44,26 @@ export const FolderPage: React.FC = () => {
     // File to upload
     const [filesUploaded, setFilesUploaded] = useState<File[]>([])
 
+    const { deleteFile, isLoading: isDeleteFileLoading } = useDeleteFileHook();
+
+    // Consnt to delete file
+    const [actionConsent, setActionConsent] = useState<ActionConsent>({ status: false, data: undefined });
+
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutID);
+        }
+    }, [])
+
+
     async function submitFiles(folderName: string) {
         if (filesUploaded.length == 0) {
             return;
         }
 
         const response = await uploadUserFile({ folder_name: folderName, files: filesUploaded });
+
+        console.log(response);
 
         if (!response.success) {
             setErrorMessage(response.message);
@@ -55,15 +73,47 @@ export const FolderPage: React.FC = () => {
         // success
         setUploadSuccess(true);
 
+
         // Reset files
         setFilesUploaded([]);
     }
 
+
+    // Delete user file
+    async function deleteUSerFile(file: FileResponseType | undefined) {
+        if (!file) {
+            return;
+        }
+
+        const response = await deleteFile({ fileId: file.file_id });
+
+        console.log(response);
+
+        if (!response.success) {
+            setErrorMessage(response.message);
+            timeoutID = setTimeout(() => {
+                setErrorMessage(undefined);
+            }, 3000)
+        }
+
+        // Close consent modal
+        setActionConsent({ status: false, data: undefined })
+
+        // if (response.success) {
+        //     await fetchUserFiles();
+        // }
+    }
+
+
+    function handleDeleteUserFile(file: FileResponseType) {
+        setActionConsent({ status: true, data: file });
+    }
+
     return (
         <div className="mt-5">
-            {isGetFileFetching && (
+            {/* {isGetFileFetching && (
                 <LineLoader />
-            )}
+            )} */}
 
             <div className="flex justify-end my-2">
                 {/* Upload Button */}
@@ -73,8 +123,11 @@ export const FolderPage: React.FC = () => {
                 </button>
             </div>
 
-            {isError ? (
-                (error as any).status == 404 ? (
+            {isGetFileError ? (
+                <p className="mt-[5rem] text-center text-error">{getErrorMessage(getFileError)}</p>
+            ) : (
+
+                data == undefined || data.length == 0 ? (
                     <div className="h-[70vh] flex flex-col justify-center items-center gap-y-5">
 
                         {/* No file found Icon */}
@@ -88,22 +141,36 @@ export const FolderPage: React.FC = () => {
                         {/* No files found */}
                         <p className="flex items-center justify-center gap-x-2">No Files Uploaded in this folder: <span className="text-placeholder capitalize">{folderName}</span></p>
                     </div>
-                ) : (
-                    <p className="mt-9 text-center">{getErrorMessage(error)}</p>
-                )
-            ) : (
-                <>
-                    <section className="flex flex-wrap gap-4">
-                        {data?.map((file: FileResponseType, index: number) => {
-                            return (
-                                <UserFile key={index} file={file} />
-                            )
-                        })}
-                    </section>
-                </>
-            )
+                ) :
+                    (
+                        <>
+                            <section className="flex flex-wrap gap-4">
+                                {data?.map((file: FileResponseType, index: number) => {
+                                    return (
+                                        <UserFile handleDeleteUserFile={handleDeleteUserFile} key={index} file={file} />
+                                    )
+                                })}
+                            </section>
+                        </>
+                    )
 
-            }
+
+            )}
+
+            {/* Consent modal */}
+            {actionConsent.status && (
+                <Modal closeModal={() => setActionConsent({ status: false, data: undefined })}>
+                    <DeleteConfirmation
+                        title="Delete File"
+                        desc="Are you sure you want to delete this file?"
+                        cancel={() => setActionConsent({ status: false, data: undefined })}
+                        next={() => deleteUSerFile(actionConsent.data)}
+                        isLoading={isDeleteFileLoading}
+                        loadingTitle="Deleting..."
+                    />
+                </Modal>
+            )}
+
 
             {/* Modals */}
             {fileUploadModal && (
@@ -130,6 +197,10 @@ export const FolderPage: React.FC = () => {
                         setFileUploadModal(false)
                     }} buttonTitle="Close" />
                 </Modal>
+            )}
+
+            {isGetFileFetching && (
+                <LineLoader />
             )}
         </div>
     )

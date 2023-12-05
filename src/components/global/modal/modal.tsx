@@ -19,9 +19,6 @@ export function Modal({ closeModal, children, bare, info }: ModalProps) {
         };
     }, []);
 
-    console.log(bare);
-    console.log(info);
-
     return (
         <div
             className="fixed inset-0 bg-black/30 flex justify-center items-center transition-colors z-[999]"

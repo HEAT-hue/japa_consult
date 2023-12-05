@@ -1,7 +1,7 @@
 // jshint esversion:6
 import { UserFolder, UserUploadFile } from "@/components/user/files";
 import UploadIcon from "@/assets/global/export.svg"
-import {  useState } from "react";
+import { useState } from "react";
 import { Modal } from "@/components/global";
 import { useUploadFileHook } from "@/hooks/user";
 import { Notification } from "@/components/global";
@@ -53,6 +53,12 @@ export const FilesPage: React.FC = () => {
     const { data: billingFolder } = useGetFilesHook({ folderName: "billing" })
     const { data: visaFolder } = useGetFilesHook({ folderName: "visa" })
     const { data: contractFolder } = useGetFilesHook({ folderName: "contracts" })
+
+    console.log(academicFolder);
+    console.log(generalFolder);
+    console.log(billingFolder);
+    console.log(visaFolder);
+    console.log(contractFolder);
 
     // useEffect(() => {
     //     console.log("component mounts")
@@ -108,11 +114,11 @@ export const FilesPage: React.FC = () => {
             <div className="flex flex-col-reverse md:flex-row justify-between gap-5 ">
                 {/* Folder container */}
                 <div className="flex flex-wrap gap-5">
-                    <UserFolder name="General" url="file/general" numberOfItems={generalFolder == undefined ? 0 : generalFolder.length} />
-                    <UserFolder name="Billing" url="file/billing" numberOfItems={billingFolder?.length ?? 0} />
-                    <UserFolder name="Academics" url="file/academics" numberOfItems={academicFolder?.length ?? 0} />
-                    <UserFolder name="Visa" url="file/visa" numberOfItems={visaFolder?.length ?? 0} />
-                    <UserFolder name="Contract" url="file/contract" numberOfItems={contractFolder?.length ?? 0} />
+                    <UserFolder name="General" url="file/general" files={generalFolder} />
+                    <UserFolder name="Billing" url="file/billing" files={billingFolder} />
+                    <UserFolder name="Academics" url="file/academics" files={academicFolder} />
+                    <UserFolder name="Visa" url="file/visa" files={visaFolder} />
+                    <UserFolder name="Contract" url="file/contract" files={contractFolder} />
                 </div>
 
                 {/* Upload Button */}
