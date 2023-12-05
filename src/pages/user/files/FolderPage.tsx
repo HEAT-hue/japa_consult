@@ -63,8 +63,6 @@ export const FolderPage: React.FC = () => {
 
         const response = await uploadUserFile({ folder_name: folderName, files: filesUploaded });
 
-        console.log(response);
-
         if (!response.success) {
             setErrorMessage(response.message);
             return;
@@ -87,8 +85,6 @@ export const FolderPage: React.FC = () => {
 
         const response = await deleteFile({ fileId: file.file_id });
 
-        console.log(response);
-
         if (!response.success) {
             setErrorMessage(response.message);
             timeoutID = setTimeout(() => {
@@ -98,10 +94,6 @@ export const FolderPage: React.FC = () => {
 
         // Close consent modal
         setActionConsent({ status: false, data: undefined })
-
-        // if (response.success) {
-        //     await fetchUserFiles();
-        // }
     }
 
 
@@ -111,9 +103,6 @@ export const FolderPage: React.FC = () => {
 
     return (
         <div className="mt-5">
-            {/* {isGetFileFetching && (
-                <LineLoader />
-            )} */}
 
             <div className="flex justify-end my-2">
                 {/* Upload Button */}
@@ -153,8 +142,6 @@ export const FolderPage: React.FC = () => {
                             </section>
                         </>
                     )
-
-
             )}
 
             {/* Consent modal */}

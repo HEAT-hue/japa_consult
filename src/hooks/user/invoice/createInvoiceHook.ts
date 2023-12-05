@@ -18,13 +18,10 @@ export const useCreateInvoiceHook = () => {
     }
 
     function next() {
-        // console.log("Presing next");
-        // Some Code
         setCurrentIndex((prev) => (prev += 1));
     }
 
     function prev() {
-        // console.log("pressing prev");
         setCurrentIndex((prev) => (prev -= 1));
     }
 

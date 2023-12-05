@@ -56,7 +56,6 @@ export const UpdateInvoiceStatus: React.FC<UpdateInvoiceStatusProp> = ({ invoice
         // timeout
         timeoutID = setTimeout(() => {
             setSuccess(false);
-            console.log("Closing modal");
             closeModal();
         }, 2000)
     }

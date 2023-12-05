@@ -7,45 +7,8 @@ import { useUploadFileHook } from "@/hooks/user";
 import { Notification } from "@/components/global";
 import { useGetFilesHook } from "@/hooks/user/files";
 import { RecentFileUploadWrapper } from "@/components/user/files/recentFileUpload";
-// import { useLazyGetFileQuery } from "@/app/services/user/files";
-
-// type folders = {
-//     general: {
-//         length: number | undefined
-//     },
-//     academics: {
-//         length: number | undefined
-//     },
-//     billing: {
-//         length: number | undefined
-//     },
-//     visa: {
-//         length: number | undefined
-//     },
-//     contracts: {
-//         length: number | undefined
-//     },
-// }
 
 export const FilesPage: React.FC = () => {
-
-    // const [folders, setFolders] = useState<folders>({
-    //     general: {
-    //         length: undefined
-    //     },
-    //     academics: {
-    //         length: undefined
-    //     },
-    //     billing: {
-    //         length: undefined
-    //     },
-    //     visa: {
-    //         length: undefined
-    //     },
-    //     contracts: {
-    //         length: undefined
-    //     },
-    // })
 
     // Get files hook
     const { data: academicFolder } = useGetFilesHook({ folderName: "academics" })
@@ -53,26 +16,6 @@ export const FilesPage: React.FC = () => {
     const { data: billingFolder } = useGetFilesHook({ folderName: "billing" })
     const { data: visaFolder } = useGetFilesHook({ folderName: "visa" })
     const { data: contractFolder } = useGetFilesHook({ folderName: "contracts" })
-
-    console.log(academicFolder);
-    console.log(generalFolder);
-    console.log(billingFolder);
-    console.log(visaFolder);
-    console.log(contractFolder);
-
-    // useEffect(() => {
-    //     console.log("component mounts")
-    //     // refetchAcademic();
-    //     // refetchGeneral()
-    //     // refetchBilling()
-    //     // refetchVisa()
-    //     // refetchContracts();
-    //     return () => {
-    //         console.log("component unmounts");
-    //     }
-    // }, [])
-
-    // console.log(generalFolder);
 
     // Upload success
     const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);

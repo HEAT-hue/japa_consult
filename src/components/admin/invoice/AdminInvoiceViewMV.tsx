@@ -27,8 +27,6 @@ export const AdminInvoiceViewMV: React.FC<InvoiceView> = ({ invoiceData, handleI
                 {invoiceData
                     .map((invoice: PaidInvoiceType, index: number) => {
 
-                        console.log(invoice);
-
                         // Due date
                         const { day: dayDue, monthShort: monthShortDue, year: yearDue } = getFormattedDate(new Date(invoice.due_date))
 

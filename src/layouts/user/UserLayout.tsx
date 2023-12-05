@@ -55,7 +55,6 @@ export function UserLayout() {
         }
     }, [])
 
-    console.log(currentLocationPathname);
 
     return (
         <div className="grid grid-rows-1 h-screen">

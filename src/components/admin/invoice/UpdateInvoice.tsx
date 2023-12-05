@@ -29,8 +29,6 @@ let timeoutID: any;
 
 export const UpdateInvoice: React.FC<SelectInvoiceProp> = ({ invoiceType, invoice, closeModal }) => {
 
-    // console.log(title);
-
     // const navigate = useNavigate()
 
     const [title, setTitle] = useState<string>(invoice.title ?? "");

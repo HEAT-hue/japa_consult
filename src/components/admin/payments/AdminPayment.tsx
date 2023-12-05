@@ -48,8 +48,6 @@ export const AdminPayment: React.FC<PaymentActivityProp> = ({ data, handlePaymen
                                 // .slice(11, 12)
                                 .map((paymentData: PaymentResponse, index: number) => {
 
-                                    console.log(paymentData);
-
                                     return (
 
                                         // Trade Item Data
