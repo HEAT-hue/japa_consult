@@ -23,3 +23,13 @@ export type GetRecentFilesUploadedRequest = {
 }
 
 export type GetRecentFilesUploadedResponse = FileResponseType[]
+
+export type DeleteUserFileRequest = {
+    fileId: string
+}
+
+export type DeleteUserFileResponse = {
+    msg: string,
+    file_id: string,
+    file_name: string
+}

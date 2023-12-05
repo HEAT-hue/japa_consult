@@ -3,12 +3,12 @@ import { emptySplitApi } from "../../api";
 import {
     UploadUserFileRequest, UploadUserFileResponse,
     GetFilesRequest, GetFilesResponse,
-    GetRecentFilesUploadedRequest, GetRecentFilesUploadedResponse
+    GetRecentFilesUploadedRequest, GetRecentFilesUploadedResponse, DeleteUserFileRequest, DeleteUserFileResponse
 } from "@/data/users/files";
 
 export const fileAPI = emptySplitApi.injectEndpoints({
     endpoints: (builder) => ({
-        
+
         // Get user profile
         uploadFile: builder.mutation<UploadUserFileResponse, UploadUserFileRequest>({
             query: (credentials) => ({
@@ -38,7 +38,17 @@ export const fileAPI = emptySplitApi.injectEndpoints({
             }),
             providesTags: ['GET_FILES']
         }),
+
+        // delete user file
+        deleteFile: builder.mutation<DeleteUserFileResponse, DeleteUserFileRequest>({
+            query: (params) => ({
+                url: `documents/removeMyFile`,
+                method: "DELETE",
+                params
+            }),
+            invalidatesTags: ['GET_FILES']
+        }),
     })
 })
 
-export const { useUploadFileMutation, useGetFileQuery, useGetUserRecentFileUploadsQuery } = fileAPI
+export const { useUploadFileMutation, useGetFileQuery, useGetUserRecentFileUploadsQuery, useDeleteFileMutation, useLazyGetFileQuery} = fileAPI

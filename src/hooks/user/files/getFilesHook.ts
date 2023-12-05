@@ -10,9 +10,9 @@ type UseGetTradeDetailProps = {
 export const useGetFilesHook = ({ folderName }: UseGetTradeDetailProps) => {
 
     // Fetch the trade detail
-    const { data, isError, isLoading, error, isSuccess, isFetching } = useGetFileQuery({ folderName }, {refetchOnMountOrArgChange: true});
+    const { data, isError, isLoading, error, isSuccess, isFetching, refetch } = useGetFileQuery({ folderName }, { refetchOnMountOrArgChange: true });
 
     return (
-        { data, isError, isLoading, error, isSuccess, isFetching }
+        { data, isError, isLoading, error, isSuccess, isFetching, refetch }
     );
 }

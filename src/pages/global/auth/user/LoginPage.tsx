@@ -5,7 +5,6 @@ import AuthImg from "@/assets/auth/auth_img.png";
 import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
 import jwt_decode from "jwt-decode";
 import { Modal, Notification } from "@/components/global";
-import { getErrorMessage } from "@/utils/global";
 import { Toast } from "@/components/global";
 
 import { z } from "zod";
@@ -67,27 +66,10 @@ export const LoginPage: React.FC = () => {
     }, [])
 
     async function UserEmailVerification(userData: FormData) {
-        try {
+        // Send verification link to user email
+        const response = await authSendEmailToken(userData.email, EMAIL_VERIFICATION_TYPE.NEW_USER);
 
-            // Send verification link to user email
-            const response = await authSendEmailToken(userData.email, EMAIL_VERIFICATION_TYPE.NEW_USER);
-
-            console.log(response);
-
-            if (!response.success) {
-                throw new Error(response.message);
-            }
-
-            // Inform user of successful password verification link
-            return true;
-
-        } catch (error) {
-            const errorData = getErrorMessage(error);
-            setErrorMessage(errorData);
-            timeoutId = setTimeout(() => {
-                setErrorMessage(undefined);
-            }, 2000)
-        }
+        return response;
     }
 
     const onSubmit = async (data: FormData) => {
@@ -123,8 +105,14 @@ export const LoginPage: React.FC = () => {
         // Inform user if not verified
         if (!userInfo.is_verified) {
             const verificationResponse = await UserEmailVerification(data);
-            if (verificationResponse) {
+            if (verificationResponse.success) {
                 setVerificationModalOpen(true);
+            }
+            else {
+                setErrorMessage(verificationResponse.message)
+                timeoutId = setTimeout(() => {
+                    setErrorMessage(undefined);
+                }, 2500);
             }
             return;
         }
@@ -255,8 +243,8 @@ export const LoginPage: React.FC = () => {
                 <Modal closeModal={() => {
                     setVerificationModalOpen(false);
                 }}>
-                    <Notification title="Info"
-                        desc={<p>A verification link has been sent to your email address, please click on the link to verify your email.</p>}
+                    <Notification title="Verify your account"
+                        desc={<p>Seems your account hasn't been verified, not to worry we've sent a verification link to your mail to help you get verified. Check mail inbox or spam box, see you soon.</p>}
                         action={() => {
                             setVerificationModalOpen(false);
                         }} buttonTitle="Close" />

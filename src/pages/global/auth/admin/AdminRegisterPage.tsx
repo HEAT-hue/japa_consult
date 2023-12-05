@@ -8,11 +8,12 @@ import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { USERROLES } from "@/data/global/auth";
 
 import { useNavigate } from "react-router-dom";
+import { Toast } from "@/components/global";
 
 // Create user Schema for form data
 const schema = z.object({
@@ -33,6 +34,9 @@ const schema = z.object({
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
 
+// Set timeout to be cleared when component unmounts
+let timeoutID: any;
+
 export const AdminRegisterPage: React.FC = () => {
 
     const navigate = useNavigate();
@@ -44,12 +48,20 @@ export const AdminRegisterPage: React.FC = () => {
 
     // Error messages
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+    const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined);
 
     /***************************** FORM VALIDATION ******************************/
     const { register, handleSubmit, formState: { errors, isValid: formValid } } = useForm<FormData>({ resolver: zodResolver(schema) });
 
     // Register user
     const { authRegister, isError, isLoading: signUploading, } = useAuthRegisterHook()
+
+    // Clear timeout when component unmounts
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutID);
+        }
+    }, [])
 
     // Register
     const onSubmit = async (data: FormData) => {
@@ -62,6 +74,14 @@ export const AdminRegisterPage: React.FC = () => {
             setErrorMessage(response.message ?? "Could not login!")
             return;
         }
+
+        setSuccessMessage("Account created successfully!");
+
+        timeoutID = setTimeout(() => {
+            setSuccessMessage(undefined);
+            // Navigate to login
+            navigate("/login");
+        }, 2500)
 
         // Navigate to login
         navigate("/login");
@@ -243,6 +263,18 @@ export const AdminRegisterPage: React.FC = () => {
                     </div>
                 </section >
             </section >
+
+            {
+                successMessage && (
+                    <>
+                        <Toast desc={successMessage} action={() => {
+                            setSuccessMessage(undefined);
+                            // Navigate to login
+                            navigate("/login");
+                        }} />
+                    </>
+                )
+            }
         </>
     )
 }

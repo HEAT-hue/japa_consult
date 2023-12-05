@@ -8,11 +8,12 @@ import BrandLogo from "@/assets/auth/LogoMakr-6zrJ19.png.png"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { USERROLES } from "@/data/global/auth";
 
 import { useNavigate } from "react-router-dom";
+import { Toast } from "@/components/global";
 
 // Create user Schema for form data
 const schema = z.object({
@@ -33,6 +34,8 @@ const schema = z.object({
 // Extract inferred type from schema
 type FormData = z.infer<typeof schema>;
 
+let timeoutID: any;
+
 export const RegisterPage: React.FC = () => {
 
     const navigate = useNavigate();
@@ -45,11 +48,21 @@ export const RegisterPage: React.FC = () => {
     // Error messages
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+    const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined);
+
     /***************************** FORM VALIDATION ******************************/
     const { register, handleSubmit, formState: { errors, isValid: formValid } } = useForm<FormData>({ resolver: zodResolver(schema) });
 
     // Register user
     const { authRegister, isError, isLoading: signUploading, } = useAuthRegisterHook()
+
+    // Clear timeout when component unmounts
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutID);
+        }
+    }, [])
+
 
     // Register
     const onSubmit = async (data: FormData) => {
@@ -63,8 +76,14 @@ export const RegisterPage: React.FC = () => {
             return;
         }
 
-        // Navigate to login
-        navigate("/login");
+        setSuccessMessage("Account created successfully!");
+
+        timeoutID = setTimeout(() => {
+            setSuccessMessage(undefined);
+            // Navigate to login
+            navigate("/login");
+        }, 2500)
+
     };
 
     return (
@@ -156,7 +175,7 @@ export const RegisterPage: React.FC = () => {
                                             <input
                                                 {...register("phone")}
                                                 className="w-full h-full px-4 pr-6 bg-inputFieldBg font-Inter-Regular text-base rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 "
-                                                placeholder="Phone number +234"
+                                                placeholder="Phone number +2348012345678"
                                                 type="tel"
                                                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                                                     e.target.value = e.target.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1')
@@ -243,6 +262,18 @@ export const RegisterPage: React.FC = () => {
                     </div>
                 </section >
             </section >
+
+            {
+                successMessage && (
+                    <>
+                        <Toast desc={successMessage} action={() => {
+                            setSuccessMessage(undefined);
+                            // Navigate to login
+                            navigate("/login");
+                        }} />
+                    </>
+                )
+            }
         </>
     )
 }
