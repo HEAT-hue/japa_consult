@@ -12,7 +12,7 @@ const adminTags: string[] = ['GET_ALL_FILES', 'GET_ALL_USERS', 'GET_ALL_ADMINS',
 const baseQuery = fetchBaseQuery({
 
     // Target URL
-    baseUrl: "https://japaconsults.sammykingx.tech/",
+    baseUrl: "https://japaconsults.sammykingx.com.ng",
 
     // Prepare headers for all requests sent to the server
     prepareHeaders(headers, api) {
